@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="姚凌宇的个人介绍页面。">
+    <title>姚凌宇｜个人介绍</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="page-overlay"></div>
+
+    <main class="profile-page" id="home">
+        <section class="profile-card" aria-labelledby="profile-name">
+            <!-- 个人头像 -->
+            <img
+                class="profile-avatar"
+                src="./images/profile-avatar.jpg"
+                alt="姚凌宇的个人头像"
+            >
+
+            <div class="profile-content">
+                <p class="intro-label">HELLO, WELCOME TO MY PAGE</p>
+                <h1 id="profile-name">你好，我是<br><span>姚凌宇</span></h1>
+                <p class="role">项目经理 · 测试</p>
+
+                <p class="summary" id="about">
+                    
+                </p>
+
+                <div class="detail-grid" id="skills">
+                    <article class="detail-item">
+                        <span>01</span>
+                        <div>
+                            <h2>目前方向</h2>
+                            <p>前端网页设计与开发</p>
+                        </div>
+                    </article>
+
+                    <article class="detail-item">
+                        <span>02</span>
+                        <div>
+                            <h2>正在学习</h2>
+                            <p>HTML、CSS、JavaScript、ML</p>
+                        </div>
+                    </article>
+
+                    <article class="detail-item">
+                        <span>03</span>
+                        <div>
+                            <h2>项目目标</h2>
+                            <p>制作机器学习教学网站</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="profile-actions" id="contact">
+                    <button class="primary-link" id="OpenContactButton" type="button">联系我</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 联系方式弹窗：默认隐藏，由 JavaScript 打开 -->
+    <dialog class="contact-dialog" id="contactDialog">
+        <div class="dialog-content">
+            <p class="dialog-label">CONTACT</p>
+            <h2>联系我</h2>
+            <p>邮箱：yaolingyu04@gmail.com</p>
+            <p>QQ： 3045412978</p>
+
+            <!-- method="dialog" 是提交按钮自动关闭弹窗 -->
+            <form method="dialog">
+                <button class="close-button" type="submit">关闭</button>
+            </form>
+        </div>
+    </dialog>
+
+    <!-- 在 HTML 内容加载完成后运行 JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
