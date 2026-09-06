@@ -77,6 +77,20 @@ a { color: inherit; text-decoration: none; }
 .main-nav { display: flex; align-items: center; gap: 30px; color: var(--text-muted); }
 .main-nav a:hover, .main-nav .active { color: var(--purple-700); }
 .account-actions { display: flex; gap: 10px; }
+.account-user {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 8px 16px;
+    color: var(--purple-700);
+    background: var(--purple-50);
+    border: 1px solid var(--purple-100);
+    border-radius: 8px;
+    font-weight: 600;
+}
+.account-user:hover { color: var(--purple-600); background: var(--purple-100); }
+.account-user[hidden],
+.account-actions .button[hidden] { display: none; }
 
 /* 欢迎区域 */
 .hero { padding: 92px 0; background: var(--purple-50); border-bottom: 1px solid var(--border); }
@@ -137,7 +151,7 @@ a { color: inherit; text-decoration: none; }
 .content-card p { color: var(--text-muted); }
 .content-card a { display: inline-block; margin-top: 12px; color: var(--purple-700); font-weight: 600; }
 
-/* 后续内容预留区 */
+/* 项目框架区域 */
 .future-section { padding: 0 0 88px; }
 .future-box {
     display: flex;
@@ -176,6 +190,7 @@ a { color: inherit; text-decoration: none; }
     .brand > span:last-child { display: none; }
     .button { padding-inline: 14px; }
     .main-nav { gap: 20px; font-size: 14px; }
+    .account-actions { flex-wrap: wrap; }
     .hero h1 { font-size: 40px; }
     .hero-actions { align-items: flex-start; flex-direction: column; }
     .future-box { padding: 28px; }

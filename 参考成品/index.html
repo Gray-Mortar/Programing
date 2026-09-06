@@ -12,11 +12,12 @@
         <div class="container header-inner">
             <a class="brand" href="#" aria-label="返回首页"><span class="brand-mark">ML</span><span>ML Learn</span></a>
             <nav class="main-nav" aria-label="主导航">
-                <a class="active" href="#home">首页</a><a href="#courses">课程</a><a href="#practice">互动练习</a><a href="#about">关于我们</a>
+                <a class="active" href="#home">首页</a><a href="courses/index.html">课程</a><a href="courses/practice/index.html">互动练习</a><a href="account/profile.html">学习情况</a><a href="#about">关于我们</a>
             </nav>
             <div class="account-actions">
-                <a class="button button-secondary" href="account/login.html">登录</a>
-                <a class="button button-primary" href="account/register.html">注册</a>
+                <a class="button button-secondary" id="login-button" href="account/login.html">登录</a>
+                <a class="button button-primary" id="register-button" href="account/register.html">注册</a>
+                <a class="account-user" id="account-user" href="account/profile.html" data-profile-href="account/profile.html" hidden>我的账号</a>
             </div>
         </div>
     </header>
@@ -34,7 +35,7 @@
                     </div>
                 </div>
                 <div class="hero-placeholder" aria-label="互动演示预留区域">
-                    <div class="placeholder-icon">✦</div><p>互动演示区域</p><span>后续可以放置 KNN 可视化等内容</span>
+                    <div class="placeholder-icon">✦</div><p>KNN 可视化</p><span>通过调节参数观察分类过程</span>
                 </div>
             </div>
         </section>
@@ -42,20 +43,20 @@
         <section class="content-section" id="courses">
             <div class="container">
                 <div class="section-heading">
-                    <p class="eyebrow">学习内容</p><h2>从这里开始探索</h2><p>以下卡片是内容占位，后续可以替换成具体课程。</p>
+                    <p class="eyebrow">学习内容</p><h2>从这里开始探索</h2><p>从基础概念、经典算法到互动练习，按照完整学习路径前进。</p>
                 </div>
                 <div class="card-grid">
-                    <article class="content-card"><span class="card-number">01</span><h3>基础知识</h3><p>放置机器学习基础概念、学习路线和准备知识。</p><a href="#">内容待添加 →</a></article>
-                    <article class="content-card" id="practice"><span class="card-number">02</span><h3>经典算法</h3><p>放置 KNN、线性回归等算法的讲解与互动演示。</p><a href="#">内容待添加 →</a></article>
-                    <article class="content-card"><span class="card-number">03</span><h3>练习与总结</h3><p>放置课后练习、知识测验和学习成果记录。</p><a href="#">内容待添加 →</a></article>
+                    <article class="content-card"><span class="card-number">01</span><h3>基础知识</h3><p>了解机器学习的概念、任务类型和数据基础。</p><a href="courses/basics/index.html">进入学习 →</a></article>
+                    <article class="content-card" id="practice"><span class="card-number">02</span><h3>经典算法</h3><p>认识 KNN、线性回归、决策树等常见算法。</p><a href="courses/algorithms/index.html">进入学习 →</a></article>
+                    <article class="content-card"><span class="card-number">03</span><h3>互动练习</h3><p>通过判断、选择、填空巩固所学知识。</p><a href="courses/practice/index.html">开始练习 →</a></article>
                 </div>
             </div>
         </section>
 
         <section class="future-section" id="about">
             <div class="container future-box">
-                <div><p class="eyebrow">继续建设</p><h2>这里留给下一阶段的内容</h2></div>
-                <p>后续可添加个人介绍、项目目标、学习进度或更多教学模块。</p>
+                <div><p class="eyebrow">项目框架</p><h2>围绕学习过程组织内容</h2></div>
+                <p>网站包含基础知识、经典算法、互动练习和个人学习记录，形成完整的学习流程。</p>
             </div>
         </section>
     </main>
@@ -63,9 +64,11 @@
     <footer class="site-footer">
         <div class="container footer-inner">
             <div><a class="brand footer-brand" href="#"><span class="brand-mark">ML</span><span>ML Learn</span></a><p>让机器学习变得清晰、直观、有趣。</p></div>
-            <div class="footer-links"><a href="#home">首页</a><a href="#courses">课程</a><a href="#about">关于</a></div>
+            <div class="footer-links"><a href="#home">首页</a><a href="courses/index.html">课程</a><a href="courses/practice/index.html">互动练习</a><a href="#about">关于</a></div>
             <p class="copyright">© 2026 ML Learn</p>
         </div>
     </footer>
+    <script src="account/auth.js"></script>
+    <script src="account/session.js"></script>
 </body>
 </html>

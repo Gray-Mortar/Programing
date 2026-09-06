@@ -1,0 +1,279 @@
+:root {
+    --account-accent: var(--purple-600);
+    --account-accent-dark: var(--purple-700);
+    --account-muted: var(--text-muted);
+    --account-border: var(--border);
+}
+
+.account-page {
+    min-height: calc(100vh - 72px);
+    background: var(--purple-50);
+}
+
+.account-shell {
+    width: min(520px, 100%);
+    margin: 0 auto;
+    padding: 56px 0 72px;
+}
+
+.account-card {
+    padding: 38px 36px 42px;
+    background: var(--white);
+    border: 1px solid var(--account-border);
+    border-radius: 16px;
+    box-shadow: 0 16px 40px rgba(53, 36, 112, 0.08);
+}
+
+.account-card h1 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 28px;
+    line-height: 1.3;
+}
+
+.account-intro {
+    margin: 10px 0 26px;
+    color: var(--account-muted);
+}
+
+.auth-form {
+    display: grid;
+    gap: 18px;
+}
+
+.form-group {
+    display: grid;
+    gap: 7px;
+    align-content: start;
+}
+
+.form-group label {
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group .required {
+    margin-left: 3px;
+    color: var(--purple-600);
+}
+
+.form-control {
+    width: 100%;
+    min-height: 44px;
+    padding: 9px 13px;
+    border: 1px solid var(--account-border);
+    border-radius: 9px;
+    color: var(--text-main);
+    background: var(--white);
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.form-control:focus {
+    outline: 2px solid rgba(109, 75, 209, 0.25);
+    border-color: var(--purple-600);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+}
+
+.form-hint {
+    margin-top: 4px;
+    color: var(--account-muted);
+    font-size: 13px;
+}
+
+.auth-message {
+    min-height: 22px;
+    color: var(--account-muted);
+    font-size: 14px;
+}
+
+.auth-message.is-error {
+    color: #b42318;
+}
+
+.auth-message.is-success {
+    color: #197a47;
+}
+
+.auth-actions {
+    display: grid;
+    gap: 12px;
+}
+
+.auth-switch {
+    color: var(--account-muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+.auth-switch a {
+    color: var(--purple-700);
+    font-weight: 600;
+}
+
+.back-home {
+    display: block;
+    margin-top: 18px;
+    color: var(--account-muted);
+    font-size: 14px;
+    text-align: center;
+}
+
+.back-home a {
+    color: var(--purple-700);
+    font-weight: 600;
+}
+
+.profile-page {
+    background: var(--purple-50);
+}
+
+.profile-shell {
+    width: min(860px, 100%);
+}
+
+.profile-card {
+    padding: 44px 46px 48px;
+}
+
+.profile-heading {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--account-border);
+}
+
+.profile-heading h1 {
+    font-size: 30px;
+}
+
+.profile-avatar {
+    display: grid;
+    width: 76px;
+    height: 76px;
+    flex: 0 0 auto;
+    place-items: center;
+    color: var(--white);
+    background: var(--purple-600);
+    border-radius: 18px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.profile-name {
+    margin: 4px 0 0;
+    color: var(--purple-700);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.profile-muted {
+    color: var(--account-muted);
+}
+
+.profile-section {
+    padding: 30px 0 8px;
+}
+
+.profile-section h2 {
+    margin: 0 0 14px;
+    color: var(--text-main);
+    font-size: 21px;
+}
+
+.profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.profile-info-item,
+.profile-status-card {
+    padding: 18px;
+    background: var(--purple-50);
+    border: 1px solid var(--account-border);
+    border-radius: 12px;
+}
+
+.profile-info-item span,
+.profile-status-label {
+    display: block;
+    color: var(--account-muted);
+    font-size: 13px;
+}
+
+.profile-info-item strong,
+.profile-status-value {
+    display: block;
+    margin-top: 6px;
+    color: var(--text-main);
+    font-size: 16px;
+}
+
+.profile-status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.profile-status-card p {
+    margin: 8px 0 0;
+    color: var(--account-muted);
+    font-size: 14px;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-start;
+    padding-top: 28px;
+}
+
+.profile-page .account-user[hidden],
+.profile-page .button[hidden] {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .profile-card {
+        padding: 30px 22px 34px;
+    }
+
+    .profile-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-info-grid,
+    .profile-status-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .account-shell {
+        padding: 36px 0 48px;
+    }
+
+    .account-card {
+        padding: 30px 22px 34px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .profile-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}

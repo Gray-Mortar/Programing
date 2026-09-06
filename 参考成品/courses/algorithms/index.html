@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ML Learn 经典算法">
+    <title>经典算法 - ML Learn</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../courses.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="../../index.html" aria-label="返回首页">
+                <span class="brand-mark">ML</span>
+                <span>ML Learn</span>
+            </a>
+            <nav class="main-nav" aria-label="主导航">
+                <a href="../../index.html">首页</a>
+                <a class="active" href="../index.html">课程</a>
+                <a href="../practice/index.html">互动练习</a>
+                <a href="../../account/profile.html">学习情况</a>
+                <a href="../../index.html#about">关于我们</a>
+            </nav>
+            <div class="account-actions">
+                <a class="button button-secondary" id="login-button" href="../../account/login.html">登录</a>
+                <a class="button button-primary" id="register-button" href="../../account/register.html">注册</a>
+                <a class="account-user" id="account-user" href="../../account/profile.html" data-profile-href="../../account/profile.html" hidden>我的账号</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="courses-page">
+        <div class="courses-shell">
+            <p class="courses-breadcrumb"><a href="../index.html">课程中心</a> / 经典算法</p>
+            <section class="courses-hero">
+                <div>
+                    <p class="eyebrow">经典算法</p>
+                    <h1>认识常见机器学习算法</h1>
+                    <p>先建立算法的使用场景和核心思想，再逐步补充详细步骤、公式和互动演示。</p>
+                </div>
+                <div class="courses-progress">
+                    <span>已收录算法</span>
+                    <strong>5 / 5</strong>
+                    <span>覆盖分类、回归与聚类</span>
+                </div>
+            </section>
+
+            <div class="course-layout">
+                <aside class="course-sidebar" aria-label="算法分类">
+                    <h2>算法分类</h2>
+                    <a class="active" href="#classification">分类算法</a>
+                    <a href="#regression">回归算法</a>
+                    <a href="#clustering">聚类算法</a>
+                    <a href="#compare">算法对比</a>
+                </aside>
+
+                <div class="course-content">
+                    <section class="course-card" id="classification">
+                        <span class="course-number">01</span>
+                        <h2>分类算法</h2>
+                        <p>常用于预测样本属于哪个类别。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>KNN 最近邻</h3>
+                                <p>根据最近 K 个训练样本的类别进行投票。</p>
+                                <span class="tag-list"><span class="tag">计划重点</span><span class="tag">互动实验</span></span>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>逻辑回归</h3>
+                                <p>通过概率判断样本属于某一个类别。</p>
+                                <span class="tag-list"><span class="tag">分类</span></span>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>决策树</h3>
+                                <p>通过一步步条件判断完成分类或回归。</p>
+                                <span class="tag-list"><span class="tag">解释性强</span></span>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="regression">
+                        <span class="course-number">02</span>
+                        <h2>回归算法</h2>
+                        <p>常用于预测连续数值。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>线性回归</h3>
+                                <p>用一条直线拟合输入特征和目标值之间的关系。</p>
+                                <span class="tag-list"><span class="tag">回归</span></span>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="clustering">
+                        <span class="course-number">03</span>
+                        <h2>聚类算法</h2>
+                        <p>用于在没有标签的数据中发现相似样本组。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>K-Means</h3>
+                                <p>把样本划分成 K 个中心较近的簇。</p>
+                                <span class="tag-list"><span class="tag">无监督</span></span>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="compare">
+                        <span class="course-number">04</span>
+                        <h2>算法对比</h2>
+                        <div class="course-table-wrap">
+                            <table class="course-table">
+                                <thead>
+                                    <tr><th>算法</th><th>任务类型</th><th>适用场景</th><th>主要特点</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>KNN</td><td>分类 / 回归</td><td>小规模数据、距离关系明显</td><td>直观，K 值影响较大</td></tr>
+                                    <tr><td>线性回归</td><td>回归</td><td>连续数值预测</td><td>简单，适合线性关系</td></tr>
+                                    <tr><td>逻辑回归</td><td>分类</td><td>二分类、概率输出</td><td>可解释性较好</td></tr>
+                                    <tr><td>决策树</td><td>分类 / 回归</td><td>规则清晰的教学场景</td><td>通常易于理解</td></tr>
+                                    <tr><td>K-Means</td><td>聚类</td><td>无标签数据分组</td><td>需要预先指定簇数</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <a class="brand footer-brand" href="../../index.html">
+                    <span class="brand-mark">ML</span>
+                    <span>ML Learn</span>
+                </a>
+                <p>让机器学习变得清晰、直观、有趣。</p>
+            </div>
+            <div class="footer-links">
+                <a href="../../index.html#home">首页</a>
+                <a href="../index.html">课程</a>
+                <a href="../practice/index.html">互动练习</a>
+                <a href="../../index.html#about">关于</a>
+            </div>
+            <p class="copyright">© 2026 ML Learn</p>
+        </div>
+    </footer>
+
+    <script src="../../account/auth.js"></script>
+    <script src="../../account/session.js"></script>
+</body>
+</html>
