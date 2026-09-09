@@ -1,169 +1,272 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="一个面向初学者的机器学习互动学习网站。">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="一个面向初学者的机器学习互动学习网站。" />
     <title>ML Learn - 机器学习互动课堂</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="site-header">
-        <div class="container header-inner">
-            <a class="brand" href="#" aria-label="返回首页"><span class="brand-mark">ML</span><span>ML Learn</span></a>
-            <nav class="main-nav" aria-label="主导航">
-                <a class="active" href="#home">首页</a><a href="#ml-background">了解历史</a><a href="course/index.html">课程</a><a href="course/practice/index.html">互动练习</a><a href="experiments/index.html">可视化实验</a><a href="account/profile.html">学习情况</a><a href="members/index.html">关于我们</a>
-            </nav>
-            <div class="account-actions">
-                <a class="button button-secondary" id="login-button" href="account/login.html">登录</a>
-                <a class="button button-primary" id="register-button" href="account/register.html">注册</a>
-                <a class="account-user" id="account-user" href="account/profile.html" data-profile-href="account/profile.html" hidden>我的账号</a>
-            </div>
+      <div class="container header-inner">
+        <a class="brand" href="#" aria-label="返回首页"
+          ><span class="brand-mark">ML</span><span>ML Learn</span></a
+        >
+        <nav class="main-nav" aria-label="主导航">
+          <a class="active" href="#home">首页</a
+          ><a href="#ml-background">了解历史</a
+          ><a href="course/index.html">课程</a
+          ><a href="course/practice/index.html">互动练习</a
+          ><a href="experiments/index.html">可视化实验</a
+          ><a href="account/profile.html">学习情况</a
+          ><a href="members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="account/login.html"
+            >登录</a
+          >
+          <a
+            class="button button-primary"
+            id="register-button"
+            href="account/register.html"
+            >注册</a
+          >
+          <a
+            class="account-user"
+            id="account-user"
+            href="account/profile.html"
+            data-profile-href="account/profile.html"
+            hidden
+            >我的账号</a
+          >
         </div>
+      </div>
     </header>
 
     <main>
-        <section class="hero" id="home">
-            <div class="container hero-inner">
-                <div class="hero-copy">
-                    <p class="eyebrow">轻松开启机器学习之旅</p>
-                    <h1>在互动中理解<br><span>机器学习</span></h1>
-                    <p class="hero-description">从基础概念到经典算法，用清晰的讲解和可操作的演示，帮助你一步步建立机器学习知识体系。</p>
-                    <div class="hero-actions">
-                        <a class="button button-primary button-large" href="#courses">开始学习</a>
-                        <a class="text-link" href="members/index.html">认识团队 <span aria-hidden="true">→</span></a>
-                    </div>
-                </div>
-                <div class="hero-placeholder" aria-label="互动演示预留区域">
-                    <div class="placeholder-icon">✦</div><p>KNN 可视化</p><span>通过调节参数观察分类过程</span>
-                </div>
+      <section class="hero" id="home">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">轻松开启机器学习之旅</p>
+            <h1>在互动中理解<br /><span>机器学习</span></h1>
+            <p class="hero-description">
+              从基础概念到经典算法，用清晰的讲解和可操作的演示，帮助你一步步建立机器学习知识体系。
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary button-large" href="#courses"
+                >开始学习</a
+              >
+              <a class="text-link" href="members/index.html"
+                >认识团队 <span aria-hidden="true">→</span></a
+              >
             </div>
-        </section>
+          </div>
+          <div class="hero-placeholder" aria-label="互动演示预留区域">
+            <div class="placeholder-icon">✦</div>
+            <p>KNN 可视化</p>
+            <span>通过调节参数观察分类过程</span>
+          </div>
+        </div>
+      </section>
 
-        <section class="timeline-section" id="ml-background">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">机器学习的起源</p>
-                    <h2>从构想到现实</h2>
-                    <p>机器学习并非一蹴而就，它经历了数十年的探索与突破，从最初的理论构想逐步发展为改变世界的核心技术。</p>
-                </div>
-                <div class="timeline">
-                    <div class="timeline-line"></div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">1950</div>
-                        <div class="timeline-content">
-                            <h3>图灵测试</h3>
-                            <p>Alan Turing 提出"机器能否思考"的问题，奠定了人工智能的哲学基础。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">1957</div>
-                        <div class="timeline-content">
-                            <h3>感知机诞生</h3>
-                            <p>Frank Rosenblatt 发明感知机，开创了神经网络研究的先河。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">1986</div>
-                        <div class="timeline-content">
-                            <h3>反向传播算法</h3>
-                            <p>Hinton 等人推广反向传播算法，使多层神经网络的训练成为可能。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">1997</div>
-                        <div class="timeline-content">
-                            <h3>深蓝击败棋王</h3>
-                            <p>IBM 深蓝计算机战胜国际象棋世界冠军卡斯帕罗夫，引发全球关注。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">2012</div>
-                        <div class="timeline-content">
-                            <h3>深度学习崛起</h3>
-                            <p>AlexNet 在 ImageNet 竞赛中大幅领先，深度学习迎来爆发式发展。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">2016</div>
-                        <div class="timeline-content">
-                            <h3>AlphaGo 战胜人类</h3>
-                            <p>DeepMind 的 AlphaGo 击败围棋世界冠军李世石，标志着 AI 的里程碑。</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-year">2022</div>
-                        <div class="timeline-content">
-                            <h3>大语言模型时代</h3>
-                            <p>以 ChatGPT 为代表的大语言模型问世，AI 进入通用化应用新阶段。</p>
-                        </div>
-                    </div>
-                </div>
+      <section class="timeline-section" id="ml-background">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">机器学习的起源</p>
+            <h2>从构想到现实</h2>
+            <p>
+              机器学习并非一蹴而就，它经历了数十年的探索与突破，从最初的理论构想逐步发展为改变世界的核心技术。
+            </p>
+          </div>
+          <div class="timeline">
+            <div class="timeline-line"></div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">1950</div>
+              <div class="timeline-content">
+                <h3>图灵测试</h3>
+                <p>
+                  Alan Turing
+                  提出"机器能否思考"的问题，奠定了人工智能的哲学基础。
+                </p>
+              </div>
             </div>
-        </section>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">1957</div>
+              <div class="timeline-content">
+                <h3>感知机诞生</h3>
+                <p>Frank Rosenblatt 发明感知机，开创了神经网络研究的先河。</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">1986</div>
+              <div class="timeline-content">
+                <h3>反向传播算法</h3>
+                <p>
+                  Hinton 等人推广反向传播算法，使多层神经网络的训练成为可能。
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">1997</div>
+              <div class="timeline-content">
+                <h3>深蓝击败棋王</h3>
+                <p>
+                  IBM 深蓝计算机战胜国际象棋世界冠军卡斯帕罗夫，引发全球关注。
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2012</div>
+              <div class="timeline-content">
+                <h3>深度学习崛起</h3>
+                <p>
+                  AlexNet 在 ImageNet 竞赛中大幅领先，深度学习迎来爆发式发展。
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2016</div>
+              <div class="timeline-content">
+                <h3>AlphaGo 战胜人类</h3>
+                <p>
+                  DeepMind 的 AlphaGo 击败围棋世界冠军李世石，标志着 AI
+                  的里程碑。
+                </p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-year">2022</div>
+              <div class="timeline-content">
+                <h3>大语言模型时代</h3>
+                <p>
+                  以 ChatGPT 为代表的大语言模型问世，AI 进入通用化应用新阶段。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <section class="content-section" id="courses">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">学习内容</p><h2>从这里开始探索</h2><p>从基础概念、经典算法到互动练习，按照完整学习路径前进。</p>
-                </div>
-                <div class="card-grid">
-                    <article class="content-card"><span class="card-number">01</span><h3>基础知识</h3><p>了解机器学习的概念、任务类型和数据基础。</p><a href="course/basics/index.html">进入学习 →</a></article>
-                    <article class="content-card" id="practice"><span class="card-number">02</span><h3>经典算法</h3><p>认识 KNN、线性回归、决策树等常见算法。</p><a href="course/algorithms/index.html">进入学习 →</a></article>
-                    <article class="content-card"><span class="card-number">03</span><h3>互动练习</h3><p>通过判断、选择、填空巩固所学知识。</p><a href="course/practice/index.html">开始练习 →</a></article>
-                    <article class="content-card"><span class="card-number">04</span><h3>手写数字识别</h3><p>亲手写下数字，观察模型如何进行图像分类。</p><a href="tools/digit-recognition/index.html">开始体验 →</a></article>
-                </div>
-            </div>
-        </section>
+      <section class="content-section" id="courses">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">学习内容</p>
+            <h2>从这里开始探索</h2>
+            <p>从基础概念、经典算法到互动练习，按照完整学习路径前进。</p>
+          </div>
+          <div class="card-grid">
+            <article class="content-card">
+              <span class="card-number">01</span>
+              <h3>基础知识</h3>
+              <p>了解机器学习的概念、任务类型和数据基础。</p>
+              <a href="course/basics/index.html">进入学习 →</a>
+            </article>
+            <article class="content-card" id="practice">
+              <span class="card-number">02</span>
+              <h3>经典算法</h3>
+              <p>认识 KNN、线性回归、决策树等常见算法。</p>
+              <a href="course/algorithms/index.html">进入学习 →</a>
+            </article>
+            <article class="content-card">
+              <span class="card-number">03</span>
+              <h3>互动练习</h3>
+              <p>通过判断、选择、填空巩固所学知识。</p>
+              <a href="course/practice/index.html">开始练习 →</a>
+            </article>
+            <article class="content-card">
+              <span class="card-number">04</span>
+              <h3>手写数字识别</h3>
+              <p>亲手写下数字，观察模型如何进行图像分类。</p>
+              <a href="tools/digit-recognition/index.html">开始体验 →</a>
+            </article>
+          </div>
+        </div>
+      </section>
 
-        <section class="visual-lab-section" id="visual-lab">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="eyebrow">可视化实验</p>
-                    <h2>动手观察算法如何工作</h2>
-                    <p>通过画板和数据可视化，把抽象的机器学习过程变成可以操作、观察和记录的实验。</p>
-                </div>
-                <div class="visual-lab-grid">
-                    <a class="visual-lab-card visual-lab-card-mnist" href="tools/digit-recognition/index.html">
-                        <span class="lab-icon">✍</span><span class="card-number">实验 01</span>
-                        <h3>手写数字识别</h3>
-                        <p>在 Canvas 画板上书写 0-9，观察模型输出的预测数字与 Top-3 置信度。</p>
-                        <span class="lab-link">进入实验 →</span>
-                    </a>
-                    <a class="visual-lab-card visual-lab-card-knn" href="experiments/knn-iris/index.html">
-                        <span class="lab-icon">◈</span><span class="card-number">实验 02</span>
-                        <h3>KNN 鸢尾花分类</h3>
-                        <p>调节四个花朵特征和 K 值，查看最近邻、距离连线以及分类投票过程。</p>
-                        <span class="lab-link">进入实验 →</span>
-                    </a>
-                </div>
-            </div>
-        </section>
+      <section class="visual-lab-section" id="visual-lab">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">可视化实验</p>
+            <h2>动手观察算法如何工作</h2>
+            <p>
+              通过画板和数据可视化，把抽象的机器学习过程变成可以操作、观察和记录的实验。
+            </p>
+          </div>
+          <div class="visual-lab-grid">
+            <a
+              class="visual-lab-card visual-lab-card-mnist"
+              href="tools/digit-recognition/index.html"
+            >
+              <span class="lab-icon">✍</span
+              ><span class="card-number">实验 01</span>
+              <h3>手写数字识别</h3>
+              <p>
+                在 Canvas 画板上书写 0-9，观察模型输出的预测数字与 Top-3
+                置信度。
+              </p>
+              <span class="lab-link">进入实验 →</span>
+            </a>
+            <a
+              class="visual-lab-card visual-lab-card-knn"
+              href="experiments/knn-iris/index.html"
+            >
+              <span class="lab-icon">◈</span
+              ><span class="card-number">实验 02</span>
+              <h3>KNN 鸢尾花分类</h3>
+              <p>
+                调节四个花朵特征和 K 值，查看最近邻、距离连线以及分类投票过程。
+              </p>
+              <span class="lab-link">进入实验 →</span>
+            </a>
+          </div>
+        </div>
+      </section>
 
-        <section class="future-section" id="about">
-            <div class="container future-box">
-                <div><p class="eyebrow">项目框架</p><h2>围绕学习过程组织内容</h2></div>
-                <p>网站包含基础知识、经典算法、互动练习和个人学习记录，形成完整的学习流程。</p>
-                <a class="button button-primary" href="members/index.html">查看项目成员</a>
-            </div>
-        </section>
+      <section class="future-section" id="about">
+        <div class="container future-box">
+          <div>
+            <p class="eyebrow">项目框架</p>
+            <h2>围绕学习过程组织内容</h2>
+          </div>
+          <p>
+            网站包含基础知识、经典算法、互动练习和个人学习记录，形成完整的学习流程。
+          </p>
+          <a class="button button-primary" href="members/index.html"
+            >查看项目成员</a
+          >
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container footer-inner">
-            <div><a class="brand footer-brand" href="#"><span class="brand-mark">ML</span><span>ML Learn</span></a><p>让机器学习变得清晰、直观、有趣。</p></div>
-            <div class="footer-links"><a href="#home">首页</a><a href="course/index.html">课程</a><a href="course/practice/index.html">互动练习</a><a href="experiments/index.html">可视化实验</a><a href="members/index.html">关于</a></div>
-            <p class="copyright">© 2026 ML Learn</p>
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="#"
+            ><span class="brand-mark">ML</span><span>ML Learn</span></a
+          >
+          <p>让机器学习变得清晰、直观、有趣。</p>
         </div>
+        <div class="footer-links">
+          <a href="#home">首页</a><a href="course/index.html">课程</a
+          ><a href="course/practice/index.html">互动练习</a
+          ><a href="experiments/index.html">可视化实验</a
+          ><a href="members/index.html">关于</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
     </footer>
     <script src="account/auth.js"></script>
     <script src="account/session.js"></script>
-</body>
+  </body>
 </html>

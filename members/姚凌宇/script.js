@@ -8,23 +8,22 @@ const aboutDialog = document.querySelector("#aboutDialog");
 
 // 点击“联系我”按钮时，打开模态弹窗
 openContactButton.addEventListener("click", function () {
-    contactDialog.showModal();
+  contactDialog.showModal();
 });
 
 // 点击弹窗外的深色遮罩时，也可以关闭弹窗
 contactDialog.addEventListener("click", function (event) {
-    if (event.target === contactDialog) {
-        contactDialog.close();
-    }
+  if (event.target === contactDialog) {
+    contactDialog.close();
+  }
 });
 
 openAboutButton.addEventListener("click", function () {
-    aboutDialog.showModal();
+  aboutDialog.showModal();
 });
 
 aboutDialog.addEventListener("click", function (event) {
-    if (event.target === aboutDialog) {
-        aboutDialog.close();
-    }
+  if (event.target === aboutDialog) {
+    aboutDialog.close();
+  }
 });
-

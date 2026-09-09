@@ -1,108 +1,165 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="在浏览器中体验手写数字识别。">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="在浏览器中体验手写数字识别。" />
     <title>手写数字识别｜ML Learn</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header class="site-header">
-        <div class="container header-inner">
-            <a class="brand" href="../../index.html"><span class="brand-mark">ML</span><span>ML Learn</span></a>
-            <a class="back-link" href="../../index.html">← 返回首页</a>
-        </div>
+      <div class="container header-inner">
+        <a class="brand" href="../../index.html"
+          ><span class="brand-mark">ML</span><span>ML Learn</span></a
+        >
+        <a class="back-link" href="../../index.html">← 返回首页</a>
+      </div>
     </header>
 
     <main class="tool-main">
-        <section class="container intro">
-            <p class="eyebrow">INTERACTIVE DEMO</p>
-            <h1>手写数字识别</h1>
-            <p>在画板中央写下一个 0～9 的数字，模型将在浏览器本地完成识别。</p>
-        </section>
+      <section class="container intro">
+        <p class="eyebrow">INTERACTIVE DEMO</p>
+        <h1>手写数字识别</h1>
+        <p>在画板中央写下一个 0～9 的数字，模型将在浏览器本地完成识别。</p>
+      </section>
 
-        <section class="container workspace" aria-label="手写数字识别工具">
-            <div class="drawing-panel panel">
-                <div class="panel-heading">
-                    <div><span class="step">01</span><h2>写一个数字</h2></div>
-                    <span class="model-status" id="modelStatus" role="status">正在加载模型…</span>
-                </div>
-
-                <div class="canvas-shell">
-                    <canvas id="drawingCanvas" width="280" height="280" aria-label="手写数字画板"></canvas>
-                    <span class="canvas-hint" id="canvasHint">用鼠标或手指书写</span>
-                </div>
-
-                <div class="actions">
-                    <button class="button button-secondary" id="clearButton" type="button">清空画板</button>
-                    <button class="button button-primary" id="predictButton" type="button" disabled>开始识别</button>
-                </div>
-                <p class="message" id="message" aria-live="polite">请等待模型加载完成。</p>
+      <section class="container workspace" aria-label="手写数字识别工具">
+        <div class="drawing-panel panel">
+          <div class="panel-heading">
+            <div>
+              <span class="step">01</span>
+              <h2>写一个数字</h2>
             </div>
+            <span class="model-status" id="modelStatus" role="status"
+              >正在加载模型…</span
+            >
+          </div>
 
-            <div class="result-panel panel">
-                <div class="panel-heading">
-                    <div><span class="step">02</span><h2>识别结果</h2></div>
-                    <div class="preview-box">
-                        <canvas id="previewCanvas" width="28" height="28" aria-label="模型接收的二十八乘二十八图像"></canvas>
-                        <span>模型输入</span>
-                    </div>
-                </div>
+          <div class="canvas-shell">
+            <canvas
+              id="drawingCanvas"
+              width="280"
+              height="280"
+              aria-label="手写数字画板"
+            ></canvas>
+            <span class="canvas-hint" id="canvasHint">用鼠标或手指书写</span>
+          </div>
 
-                <div class="prediction-summary">
-                    <span>预测数字</span>
-                    <strong id="predictedDigit">—</strong>
-                    <p id="confidenceText">等待识别</p>
-                </div>
+          <div class="actions">
+            <button
+              class="button button-secondary"
+              id="clearButton"
+              type="button"
+            >
+              清空画板
+            </button>
+            <button
+              class="button button-primary"
+              id="predictButton"
+              type="button"
+              disabled
+            >
+              开始识别
+            </button>
+          </div>
+          <p class="message" id="message" aria-live="polite">
+            请等待模型加载完成。
+          </p>
+        </div>
 
-                <div class="probabilities" id="probabilityList" aria-label="数字概率分布"></div>
+        <div class="result-panel panel">
+          <div class="panel-heading">
+            <div>
+              <span class="step">02</span>
+              <h2>识别结果</h2>
             </div>
-        </section>
-
-        <section class="container process-section" aria-labelledby="processTitle">
-            <div class="process-heading">
-                <p class="eyebrow">HOW IT WORKS</p>
-                <h2 id="processTitle">从手写数字到识别结果</h2>
-                <p>点击“开始识别”后，网页会按下面 5 个步骤处理你写下的数字。整个过程都在当前浏览器中完成，不会上传图片。</p>
+            <div class="preview-box">
+              <canvas
+                id="previewCanvas"
+                width="28"
+                height="28"
+                aria-label="模型接收的二十八乘二十八图像"
+              ></canvas>
+              <span>模型输入</span>
             </div>
+          </div>
 
-            <div class="process-list">
-                <article class="process-step">
-                    <span class="process-number">01</span>
-                    <h3>读取手写笔迹</h3>
-                    <p>画板会记录你用鼠标或手指画出的白色线条，并把整块画板读取成一张图片。</p>
-                    <small>可以理解为：先给画板拍一张照片。</small>
-                </article>
-                <article class="process-step">
-                    <span class="process-number">02</span>
-                    <h3>找到数字并居中</h3>
-                    <p>程序找出所有白色笔迹的范围，去掉四周多余的黑色区域，再按比例缩放并放到正中央。</p>
-                    <small>这样无论数字写在画板哪里，模型看到的位置都比较统一。</small>
-                </article>
-                <article class="process-step">
-                    <span class="process-number">03</span>
-                    <h3>转换为 28×28 图像</h3>
-                    <p>处理后的数字会缩小成 28×28 像素的灰度图，每个像素都会转换成 0 到 1 之间的数值。</p>
-                    <small>这是 MNIST 模型训练时使用的标准输入格式。</small>
-                </article>
-                <article class="process-step">
-                    <span class="process-number">04</span>
-                    <h3>交给本地模型判断</h3>
-                    <p>ONNX Runtime Web 把这些像素数值送入已经训练好的 mnist-8.onnx 模型，由模型比较它与 0～9 的特征。</p>
-                    <small>推理只在你的电脑中进行，不需要后端服务器。</small>
-                </article>
-                <article class="process-step">
-                    <span class="process-number">05</span>
-                    <h3>显示数字和概率</h3>
-                    <p>模型会为 0～9 分别给出一个分数。网页将分数转换成百分比，并把最高的一项作为预测结果。</p>
-                    <small>下面的概率条还能帮助你观察模型是否在几个数字之间犹豫。</small>
-                </article>
-            </div>
-        </section>
+          <div class="prediction-summary">
+            <span>预测数字</span>
+            <strong id="predictedDigit">—</strong>
+            <p id="confidenceText">等待识别</p>
+          </div>
+
+          <div
+            class="probabilities"
+            id="probabilityList"
+            aria-label="数字概率分布"
+          ></div>
+        </div>
+      </section>
+
+      <section class="container process-section" aria-labelledby="processTitle">
+        <div class="process-heading">
+          <p class="eyebrow">HOW IT WORKS</p>
+          <h2 id="processTitle">从手写数字到识别结果</h2>
+          <p>
+            点击“开始识别”后，网页会按下面 5
+            个步骤处理你写下的数字。整个过程都在当前浏览器中完成，不会上传图片。
+          </p>
+        </div>
+
+        <div class="process-list">
+          <article class="process-step">
+            <span class="process-number">01</span>
+            <h3>读取手写笔迹</h3>
+            <p>
+              画板会记录你用鼠标或手指画出的白色线条，并把整块画板读取成一张图片。
+            </p>
+            <small>可以理解为：先给画板拍一张照片。</small>
+          </article>
+          <article class="process-step">
+            <span class="process-number">02</span>
+            <h3>找到数字并居中</h3>
+            <p>
+              程序找出所有白色笔迹的范围，去掉四周多余的黑色区域，再按比例缩放并放到正中央。
+            </p>
+            <small>这样无论数字写在画板哪里，模型看到的位置都比较统一。</small>
+          </article>
+          <article class="process-step">
+            <span class="process-number">03</span>
+            <h3>转换为 28×28 图像</h3>
+            <p>
+              处理后的数字会缩小成 28×28 像素的灰度图，每个像素都会转换成 0 到 1
+              之间的数值。
+            </p>
+            <small>这是 MNIST 模型训练时使用的标准输入格式。</small>
+          </article>
+          <article class="process-step">
+            <span class="process-number">04</span>
+            <h3>交给本地模型判断</h3>
+            <p>
+              ONNX Runtime Web 把这些像素数值送入已经训练好的 mnist-8.onnx
+              模型，由模型比较它与 0～9 的特征。
+            </p>
+            <small>推理只在你的电脑中进行，不需要后端服务器。</small>
+          </article>
+          <article class="process-step">
+            <span class="process-number">05</span>
+            <h3>显示数字和概率</h3>
+            <p>
+              模型会为 0～9
+              分别给出一个分数。网页将分数转换成百分比，并把最高的一项作为预测结果。
+            </p>
+            <small
+              >下面的概率条还能帮助你观察模型是否在几个数字之间犹豫。</small
+            >
+          </article>
+        </div>
+      </section>
     </main>
 
     <script src="vendor/ort.min.js"></script>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

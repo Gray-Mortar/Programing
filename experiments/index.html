@@ -1,5 +1,117 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>可视化实验 - ML Learn</title><link rel="stylesheet" href="../style.css"><link rel="stylesheet" href="experiments.css"></head><body>
-<header class="site-header"><div class="container header-inner"><a class="brand" href="../index.html"><span class="brand-mark">ML</span><span>ML Learn</span></a><nav class="main-nav"><a href="../index.html">首页</a><a href="../index.html#ml-background">了解历史</a><a href="../course/index.html">课程</a><a href="../course/practice/index.html">互动练习</a><a class="active" href="index.html">可视化实验</a><a href="../account/profile.html">学习情况</a><a href="../members/index.html">关于我们</a></nav><div class="account-actions"><a class="button button-secondary" id="login-button" href="../account/login.html">登录</a><a class="button button-primary" id="register-button" href="../account/register.html">注册</a><a class="account-user" id="account-user" href="../account/profile.html" data-profile-href="../account/profile.html" hidden>我的账号</a></div></div></header>
-<main class="experiment-page"><div class="experiment-shell"><p class="experiment-breadcrumb"><a href="../index.html">首页</a> / 可视化实验</p><section class="experiment-hero"><div><p class="eyebrow">可视化实验</p><h1>动手观察机器学习算法</h1><p>选择一个实验，在浏览器中直接调整参数、观察数据变化并记录操作结果。</p></div><div class="experiment-badge">Canvas + KNN + 数据可视化</div></section>
-<section class="visual-lab-section" style="padding-top:22px"><div class="container" style="width:100%;padding:0"><div class="section-heading"><p class="eyebrow">实验列表</p><h2>选择实验</h2></div><div class="visual-lab-grid"><a class="visual-lab-card visual-lab-card-mnist" href="../tools/digit-recognition/index.html"><span class="lab-icon">✍</span><span class="card-number">实验 01</span><h3>手写数字识别</h3><p>在 Canvas 画板上书写 0-9，观察模型输出的预测数字与完整置信度分布。</p><span class="lab-link">进入实验 →</span></a><a class="visual-lab-card visual-lab-card-knn" href="knn-iris/index.html"><span class="lab-icon">◈</span><span class="card-number">实验 02</span><h3>KNN 鸢尾花分类</h3><p>调节四个花朵特征和 K 值，查看最近邻、距离连线以及分类投票过程。</p><span class="lab-link">进入实验 →</span></a></div></div></section></div></main>
-<footer class="site-footer"><div class="container footer-inner"><div><a class="brand footer-brand" href="../index.html"><span class="brand-mark">ML</span><span>ML Learn</span></a><p>让机器学习变得清晰、直观、有趣。</p></div><div class="footer-links"><a href="../index.html">首页</a><a href="../course/index.html">课程</a><a href="../course/practice/index.html">互动练习</a><a class="active" href="index.html">可视化实验</a></div><p class="copyright">© 2026 ML Learn</p></div></footer><script src="../account/auth.js"></script><script src="../account/session.js"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>可视化实验 - ML Learn</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="experiments.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../index.html">
+          <span class="brand-mark">ML</span>
+          <span>ML Learn</span>
+        </a>
+        <nav class="main-nav">
+          <a href="../index.html">首页</a>
+          <a href="../index.html#ml-background">了解历史</a>
+          <a href="../course/index.html">课程</a
+          ><a href="../course/practice/index.html">互动练习</a
+          ><a class="active" href="index.html">可视化实验</a
+          ><a href="../account/profile.html">学习情况</a
+          ><a href="../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="../account/login.html"
+            >登录</a
+          ><a
+            class="button button-primary"
+            id="register-button"
+            href="../account/register.html"
+            >注册</a
+          ><a
+            class="account-user"
+            id="account-user"
+            href="../account/profile.html"
+            data-profile-href="../account/profile.html"
+            hidden
+            >我的账号</a
+          >
+        </div>
+      </div>
+    </header>
+    <main class="experiment-page">
+      <div class="experiment-shell">
+        <p class="experiment-breadcrumb">
+          <a href="../index.html">首页</a> / 可视化实验
+        </p>
+        <section class="experiment-hero">
+          <div>
+            <p class="eyebrow">可视化实验</p>
+            <h1>动手观察机器学习算法</h1>
+            <p>
+              选择一个实验，在浏览器中直接调整参数、观察数据变化并记录操作结果。
+            </p>
+          </div>
+          <div class="experiment-badge">Canvas + KNN + 数据可视化</div>
+        </section>
+        <section class="visual-lab-section" style="padding-top: 22px">
+          <div class="container" style="width: 100%; padding: 0">
+            <div class="section-heading">
+              <p class="eyebrow">实验列表</p>
+              <h2>选择实验</h2>
+            </div>
+            <div class="visual-lab-grid">
+              <a
+                class="visual-lab-card visual-lab-card-mnist"
+                href="../tools/digit-recognition/index.html"
+                ><span class="lab-icon">✍</span
+                ><span class="card-number">实验 01</span>
+                <h3>手写数字识别</h3>
+                <p>
+                  在 Canvas 画板上书写
+                  0-9，观察模型输出的预测数字与完整置信度分布。
+                </p>
+                <span class="lab-link">进入实验 →</span></a
+              ><a
+                class="visual-lab-card visual-lab-card-knn"
+                href="knn-iris/index.html"
+                ><span class="lab-icon">◈</span
+                ><span class="card-number">实验 02</span>
+                <h3>KNN 鸢尾花分类</h3>
+                <p>
+                  调节四个花朵特征和 K
+                  值，查看最近邻、距离连线以及分类投票过程。
+                </p>
+                <span class="lab-link">进入实验 →</span></a
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../index.html"
+            ><span class="brand-mark">ML</span><span>ML Learn</span></a
+          >
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">首页</a><a href="../course/index.html">课程</a
+          ><a href="../course/practice/index.html">互动练习</a
+          ><a class="active" href="index.html">可视化实验</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+    <script src="../account/auth.js"></script>
+    <script src="../account/session.js"></script>
+  </body>
+</html>
