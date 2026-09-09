@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>丁子杰 | 个人主页</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .profile-container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部横幅 */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), #34495e);
+            color: white;
+            padding: 50px 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            margin: 0 0 20px 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tags span {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* 主体内容区 */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px;
+            gap: 40px;
+        }
+
+        .left-panel {
+            flex: 2;
+            min-width: 300px;
+        }
+
+        .right-panel {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* 标题样式 */
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
+            margin-bottom: 25px;
+        }
+
+        /* 基础信息列表 */
+        .info-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 40px 0;
+        }
+
+        .info-list li {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px dashed #eaeaea;
+        }
+
+        .info-list span.label {
+            font-weight: bold;
+            width: 100px;
+            color: var(--text-muted);
+        }
+
+        /* 兴趣爱好网格 */
+        .hobbies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .hobby-card {
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .hobby-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .hobby-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* 关于我与座右铭 */
+        .about-text {
+            line-height: 1.8;
+            color: var(--text-main);
+            text-align: justify;
+        }
+
+        .motto {
+            background-color: #fdebed;
+            border-left: 4px solid var(--accent-color);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin-top: 30px;
+            font-style: italic;
+            font-weight: bold;
+            color: #c0392b;
+        }
+
+        /* 照片占位区 */
+        .photo-box {
+            background: #e9ecef;
+            height: 350px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-muted);
+            border: 2px dashed #ced4da;
+            overflow: hidden;
+        }
+        
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <div class="header">
+        <h1>丁子杰</h1>
+        <p>理性的代码构建者 / 极客与艺术的交汇点</p>
+        <div class="tags">
+            <span>💻 25级CS人</span>
+            <span>🎲 魔方高玩</span>
+            <span>🏃 跑者</span>
+            <span>🐉 凛冬将至</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="left-panel">
+            <h2>基本信息</h2>
+            <ul class="info-list">
+                <li><span class="label">姓名</span> 丁子杰</li>
+                <li><span class="label">年级</span> 2025级</li>
+                <li><span class="label">专业</span> 计算机科学与技术 (CS)</li>
+                <li><span class="label">个人状态</span> 在0和1的世界里写诗，在现实世界里奔跑。</li>
+            </ul>
+
+            <h2>关于我</h2>
+            <div class="about-text">
+                <p>我是一名游走在理性逻辑与感性创作边缘的 CS 专业学生。我的生活不止有算法和 Debug，也充满了颜料的色彩与长跑的汗水。</p>
+                <p>作为《冰与火之歌》的骨灰级粉丝，维斯特洛大陆的史诗感深深影响了我的审美与创作欲。我最大的梦想不仅是在计算机领域留下足迹，更希望有朝一日能用自己的笔触，亲手续写完那冰与火的最后两卷宏大篇章。</p>
+                <p>无论是在代码的竞技场，还是生活的赛道上，我都信奉绝对的实力与专注。</p>
+            </div>
+            
+            <div class="motto">
+                “被我击败之人，从不会被我视作是对手。”
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="photo-box">
+                <img src="the dog.png" alt="丁子杰(bushi)">
+            </div>
+
+            <h2>兴趣领域</h2>
+            <div class="hobbies-grid">
+                <div class="hobby-card">
+                    <h3>🎲 魔方</h3>
+                    <p>指尖的算法与空间逻辑，享受复原那一瞬间的极致掌控感。</p>
+                </div>
+                <div class="hobby-card">
+                    <h3>🏃‍♂️ 长跑</h3>
+                    <p>一项与自己对话的运动。脚步不停，思考不止，耐力与毅力的试炼场。</p>
+                </div>
+                <div class="hobby-card">
+                    <h3>🎨 美术</h3>
+                    <p>跳脱出二进制定律，用色彩和线条去捕捉世界感性的另一面。</p>
+                </div>
+                <div class="hobby-card">
+                    <h3>📖 奇幻小说</h3>
+                    <p>钟情于《冰与火之歌》的宏大叙事，立志填上马丁老爷子留下的坑。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

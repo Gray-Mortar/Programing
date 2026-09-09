@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ML Learn 经典算法与深度学习基础">
+    <title>经典算法 - ML Learn</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../courses.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a class="brand" href="../../index.html" aria-label="返回首页"><span class="brand-mark">ML</span><span>ML Learn</span></a>
+            <nav class="main-nav" aria-label="主导航">
+                <a href="../../index.html">首页</a><a href="../../index.html#ml-background">了解历史</a><a class="active" href="../index.html">课程</a><a href="../practice/index.html">互动练习</a><a href="../../experiments/index.html">可视化实验</a><a href="../../account/profile.html">学习情况</a><a href="../../members/index.html">关于我们</a>
+            </nav>
+            <div class="account-actions">
+                <a class="button button-secondary" id="login-button" href="../../account/login.html">登录</a>
+                <a class="button button-primary" id="register-button" href="../../account/register.html">注册</a>
+                <a class="account-user" id="account-user" href="../../account/profile.html" data-profile-href="../../account/profile.html" hidden>我的账号</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="courses-page">
+        <div class="courses-shell">
+            <p class="courses-breadcrumb"><a href="../index.html">课程中心</a> / 经典算法</p>
+            <section class="courses-hero">
+                <div>
+                    <p class="eyebrow">经典算法</p>
+                    <h1>从算法原理到使用边界</h1>
+                    <p>先理解算法在做什么，再根据数据规模、特征类型、可解释性和错误成本判断是否适合使用。每个算法都同时说明核心思想、适用场景与局限性。</p>
+                </div>
+                <div class="courses-progress"><span>算法模块</span><strong>8</strong><span>回归 / 分类 / 聚类 / 集成 / 神经网络</span></div>
+            </section>
+
+            <div class="course-layout">
+                <aside class="course-sidebar" aria-label="算法分类">
+                    <h2>算法目录</h2>
+                    <a class="active" href="#regression">回归算法</a>
+                    <a href="#classification">分类算法</a>
+                    <a href="#tree-ensemble">树模型与集成</a>
+                    <a href="#clustering">聚类与降维</a>
+                    <a href="#neural-network">神经网络</a>
+                    <a href="#svm-anomaly">SVM 与异常检测</a>
+                    <a href="#advanced-deep-learning">迁移与生成模型</a>
+                    <a href="#compare">算法对比</a>
+                </aside>
+
+                <div class="course-content">
+                    <section class="course-card" id="regression">
+                        <span class="course-number">01</span>
+                        <h2>回归算法</h2>
+                        <p>回归模型用于预测连续数值，例如房价、销量、温度、等待时间或风险金额。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>线性回归</h3>
+                                <p>假设目标可以由特征的加权组合近似，通常通过最小化均方误差或最大似然估计参数。它训练速度快、系数含义清楚，适合建立第一个基线。</p>
+                                <p><strong>适用场景：</strong>特征与目标近似线性、需要解释每个特征方向和影响大小的任务。</p>
+                                <p><strong>局限性：</strong>对非线性关系、异常值和特征共线性敏感，需要检查残差并配合正则化。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>多项式与正则化回归</h3>
+                                <p>通过交互项、多项式项或样条基函数表达曲线关系，再用 L1、L2 或弹性网络限制模型复杂度。</p>
+                                <p><strong>适用场景：</strong>样本量中等、希望保留线性模型可解释性但又需要表达温和非线性的任务。</p>
+                                <p><strong>局限性：</strong>阶数过高会导致特征数量爆炸和过拟合，必须通过验证集选择复杂度。</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="classification">
+                        <span class="course-number">02</span>
+                        <h2>分类算法</h2>
+                        <p>分类模型输出离散类别或类别概率，阈值应结合误报、漏报和实际资源约束选择。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>逻辑回归</h3>
+                                <p>把线性得分通过 sigmoid 函数映射为 0 到 1 的概率，并以交叉熵或负对数似然训练。</p>
+                                <p><strong>适用场景：</strong>二分类、稀疏特征、需要稳定概率和较强解释性的任务。</p>
+                                <p><strong>局限性：</strong>决策边界本质上线性，复杂交互需要人工构造特征或换用非线性模型。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>KNN 最近邻</h3>
+                                <p>预测时查找距离最近的 K 个训练样本，分类进行投票，回归进行加权平均。</p>
+                                <p><strong>适用场景：</strong>数据规模较小、局部相似性有意义且距离度量可靠的任务。</p>
+                                <p><strong>局限性：</strong>推理成本随样本量增加，严重依赖特征尺度和距离度量，维度过高时会出现维度灾难。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>朴素贝叶斯</h3>
+                                <p>基于给定类别后特征条件独立的假设，使用贝叶斯公式计算类别后验概率。</p>
+                                <p><strong>适用场景：</strong>文本分类等高维稀疏数据，或需要快速建立概率基线的任务。</p>
+                                <p><strong>局限性：</strong>独立性假设较强，概率往往需要校准，特征之间的复杂关系难以表达。</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="tree-ensemble">
+                        <span class="course-number">03</span>
+                        <h2>决策树、随机森林与梯度提升</h2>
+                        <p>树模型可以通过一系列条件切分特征空间，天然表达非线性和特征交互，是结构化数据的常用方法。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>决策树</h3>
+                                <p>每次选择一个特征和切分点，让子节点尽可能纯。分类常用基尼系数或信息增益，回归常用方差减少。</p>
+                                <p><strong>适用场景：</strong>需要规则表达、特征类型混合、关系明显非线性的教学和业务任务。</p>
+                                <p><strong>局限性：</strong>深树方差较大，对训练样本的小变化敏感，必须限制树深或使用剪枝。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>随机森林</h3>
+                                <p>对样本进行 Bootstrap 抽样并训练多棵树，同时在每次分裂时随机选择特征子集，再通过投票或平均降低方差。</p>
+                                <p><strong>适用场景：</strong>中小规模表格数据、特征关系复杂且需要较稳健基线的任务。</p>
+                                <p><strong>局限性：</strong>模型体积可能较大，概率校准和外推能力有限，原生特征重要性可能偏向取值较多的特征。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>梯度提升树</h3>
+                                <p>按顺序训练弱学习器，每一步拟合前面模型的残差或损失负梯度。XGBoost、LightGBM 和 CatBoost 都属于常用实现。</p>
+                                <p><strong>适用场景：</strong>结构化数据、非线性关系明显、对预测精度要求较高的任务。</p>
+                                <p><strong>局限性：</strong>对学习率、树数、深度和采样策略敏感，训练与验证过程必须严格防止数据泄露。</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="clustering">
+                        <span class="course-number">04</span>
+                        <h2>聚类与降维</h2>
+                        <p>无监督算法不依赖人工标签，而是尝试发现样本之间的相似结构、密度差异或低维表示。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>K-Means</h3>
+                                <p>反复执行“分配样本—更新中心”，最小化簇内平方距离。肘部法则、轮廓系数和 Gap 统计量可以辅助选择簇数。</p>
+                                <p><strong>适用场景：</strong>簇大致呈球状、规模相近，且可以使用均值代表一组样本的任务。</p>
+                                <p><strong>局限性：</strong>需要预先指定 K，对初始化敏感，无法自然表达细长或密度差异很大的簇。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>DBSCAN 与层次聚类</h3>
+                                <p>DBSCAN 依据密度发现任意形状的簇并标记噪声；层次聚类通过逐步合并或拆分形成树状图，可以选择不同粒度。</p>
+                                <p><strong>适用场景：</strong>需要识别噪声、簇形状不规则，或希望从树状结构观察多个分组层次。</p>
+                                <p><strong>局限性：</strong>DBSCAN 对半径和最小样本数敏感，层次聚类在大规模数据上的计算成本较高。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>PCA、t-SNE 与 UMAP</h3>
+                                <p>PCA 保留方差较大的线性方向，t-SNE 和 UMAP 更强调局部邻域，常用于压缩或二维可视化。</p>
+                                <p><strong>适用场景：</strong>可视化高维数据、去除共线性、压缩输入或探索潜在结构。</p>
+                                <p><strong>局限性：</strong>可视化中的距离和簇间空隙不能过度解释，结果受尺度、随机种子和超参数影响。</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="neural-network">
+                        <span class="course-number">05</span>
+                        <h2>神经网络与深度学习</h2>
+                        <p>神经网络通过多层线性变换和非线性激活函数学习层次化表示，适合图像、文本、语音和复杂多模态数据。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>基础结构</h3>
+                                <p>神经元先计算加权和，再通过 ReLU、sigmoid 或 tanh 等激活函数引入非线性。前向传播得到预测，反向传播依据链式法则计算梯度。</p>
+                                <p><strong>适用场景：</strong>样本量较大、输入结构复杂、需要从原始数据自动学习表示的任务。</p>
+                                <p><strong>局限性：</strong>训练成本、数据需求和调参复杂度较高，结果通常比线性模型和浅层树模型更难解释。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>CNN、RNN 与 Transformer</h3>
+                                <p>CNN 用局部感受野和权重共享处理图像网格；RNN、LSTM 和 GRU 通过隐藏状态处理序列；Transformer 以注意力机制捕捉长程依赖并支持并行训练。</p>
+                                <p><strong>适用场景：</strong>图像、语音频谱、文本、时间序列和需要迁移学习的大规模任务。</p>
+                                <p><strong>局限性：</strong>需要谨慎处理过拟合、梯度消失、计算资源、概率过度自信和生成内容的安全风险。</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="svm-anomaly">
+                        <span class="course-number">06</span>
+                        <h2>支持向量机与异常检测</h2>
+                        <p>这两类方法分别解决最大间隔分类和少数异常样本识别问题，适合中小规模、边界清晰或异常样本稀缺的数据。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>支持向量机（SVM）</h3>
+                                <p>SVM 寻找能够最大化类别间隔的分隔超平面，真正决定边界的是距离超平面最近的支持向量。软间隔参数 C 用于平衡间隔宽度和训练误差，核函数则把线性方法扩展到非线性边界。</p>
+                                <p><strong>训练与选择：</strong>先标准化特征，再通过交叉验证联合选择 C、核函数和核参数；线性核适合高维稀疏特征，RBF 核适合样本量中等的非线性关系。</p>
+                                <p><strong>局限性：</strong>核 SVM 在大样本上的时间和内存成本较高，概率输出需要额外校准，参数不当时容易欠拟合或过拟合。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>孤立森林、单类 SVM 与局部离群因子</h3>
+                                <p>孤立森林利用异常点更容易被随机切分隔离的特点计算异常分数；单类 SVM 学习正常数据的边界；局部离群因子比较样本与邻域的局部密度。</p>
+                                <p><strong>适用场景：</strong>欺诈检测、设备故障、网络攻击和数据质量监控。阈值应结合人工核验能力与误报成本，而不是只看无监督分数。</p>
+                                <p><strong>局限性：</strong>异常通常缺少稳定标签且会随时间变化，离线评估需要构造可信验证集，上线后还要持续监控分布漂移。</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="advanced-deep-learning">
+                        <span class="course-number">07</span>
+                        <h2>迁移学习与生成模型</h2>
+                        <p>当标注数据不足或任务需要生成新内容时，可以复用预训练表示，或直接学习数据分布并从中采样。</p>
+                        <div class="course-grid">
+                            <article class="course-link-card">
+                                <h3>迁移学习与微调</h3>
+                                <p>迁移学习先使用大规模通用数据训练基础模型，再将已学到的表示迁移到目标任务。实践中可先冻结骨干网络只训练任务头，再逐步解冻并使用更小学习率微调。</p>
+                                <p><strong>适用场景：</strong>图像分类、文本理解、语音识别以及目标领域标注样本有限的任务。</p>
+                                <p><strong>局限性：</strong>源域与目标域差异过大会产生负迁移；微调还可能导致灾难性遗忘，需要分层学习率、早停和独立验证集。</p>
+                            </article>
+                            <article class="course-link-card">
+                                <h3>VAE、GAN 与扩散模型</h3>
+                                <p>VAE 通过概率潜变量学习连续表示；GAN 让生成器与判别器对抗训练；扩散模型通过逐步加噪和学习反向去噪过程生成高质量样本。</p>
+                                <p><strong>适用场景：</strong>图像与文本生成、数据增强、缺失信息补全、表征学习和创意辅助。</p>
+                                <p><strong>局限性：</strong>生成质量不能只靠视觉判断，还应检查多样性、真实性、偏见、隐私泄露和版权风险，并对输出建立安全审查机制。</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <section class="course-card" id="compare">
+                        <span class="course-number">08</span>
+                        <h2>算法对比与选择建议</h2>
+                        <p>算法没有脱离数据和目标的绝对优劣，选择时应先建立简单基线，再根据误差分析决定是否增加复杂度。</p>
+                        <div class="course-table-wrap">
+                            <table class="course-table">
+                                <thead><tr><th>算法</th><th>任务类型</th><th>适用场景</th><th>主要优势</th><th>主要局限性</th></tr></thead>
+                                <tbody>
+                                    <tr><td>线性回归</td><td>回归</td><td>近似线性且需要解释</td><td>快速、稳定、系数清晰</td><td>难表达复杂非线性</td></tr>
+                                    <tr><td>逻辑回归</td><td>分类</td><td>二分类、稀疏特征</td><td>可输出概率、易解释</td><td>边界偏线性</td></tr>
+                                    <tr><td>KNN</td><td>分类 / 回归</td><td>小规模、局部相似</td><td>直观、训练简单</td><td>推理慢、怕高维</td></tr>
+                                    <tr><td>决策树</td><td>分类 / 回归</td><td>规则和交互明显</td><td>表达非线性、易讲解</td><td>容易过拟合</td></tr>
+                                    <tr><td>随机森林</td><td>分类 / 回归</td><td>稳健的表格基线</td><td>降低方差、对预处理要求较低</td><td>模型较大、外推有限</td></tr>
+                                    <tr><td>梯度提升树</td><td>分类 / 回归</td><td>结构化数据精度优先</td><td>通常具有很强的预测能力</td><td>调参与防泄露要求高</td></tr>
+                                    <tr><td>K-Means</td><td>聚类</td><td>球状、规模相近的簇</td><td>速度快、易实现</td><td>需要指定簇数</td></tr>
+                                    <tr><td>神经网络</td><td>分类 / 回归 / 生成</td><td>大规模复杂数据</td><td>自动学习高阶表示</td><td>训练和解释成本较高</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>实践中可以按“业务目标 → 数据切分 → 可解释基线 → 误差分析 → 复杂模型 → 上线监控”的顺序推进。只有当复杂模型在正确验证协议下带来稳定收益，并且收益足以覆盖维护成本时，才值得投入更高的系统复杂度。</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div><a class="brand footer-brand" href="../../index.html"><span class="brand-mark">ML</span><span>ML Learn</span></a><p>让机器学习变得清晰、直观、有趣。</p></div>
+            <div class="footer-links"><a href="../../index.html#home">首页</a><a href="../index.html">课程</a><a href="../practice/index.html">互动练习</a><a href="../../members/index.html">关于</a></div>
+            <p class="copyright">© 2026 ML Learn</p>
+        </div>
+    </footer>
+
+    <script src="../../account/auth.js"></script>
+    <script src="../../account/session.js"></script>
+</body>
+</html>
