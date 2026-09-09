@@ -44,6 +44,17 @@
   font-weight: 700;
   white-space: nowrap;
 }
+.experiment-list {
+  margin-top: 22px;
+  padding: 26px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+.experiment-list-inner {
+  width: 100%;
+  padding: 0;
+}
 .experiment-card {
   margin-top: 22px;
   padding: 26px;
