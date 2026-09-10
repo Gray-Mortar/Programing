@@ -238,6 +238,7 @@ a {
   min-width: 130px;
   padding: 0 8px;
   text-align: center;
+  color: inherit;
 }
 .timeline-dot {
   position: relative;
@@ -268,6 +269,11 @@ a {
   color: var(--text-muted);
   font-size: 13px;
   line-height: 1.5;
+}
+
+.timeline-cta {
+  margin-top: 32px;
+  text-align: center;
 }
 
 /* 课程卡片 */
