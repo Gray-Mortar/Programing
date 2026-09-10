@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="机器学习发展关键里程碑时间轴" />
+    <title>了解历史 - ML Learn</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="history.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../index.html" aria-label="返回首页">
+          <span class="brand-mark">ML</span>
+          <span>ML Learn</span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a href="../index.html#home">首页</a>
+          <a class="active" href="index.html">了解历史</a>
+          <a href="../course/index.html">课程</a>
+          <a href="../course/practice/index.html">互动练习</a>
+          <a href="../experiments/index.html">可视化实验</a>
+          <a href="../account/profile.html">学习情况</a>
+          <a href="../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="../account/login.html"
+            >登录</a
+          >
+          <a
+            class="button button-primary"
+            id="register-button"
+            href="../account/register.html"
+            >注册</a
+          >
+          <a
+            class="account-user"
+            id="account-user"
+            href="../account/profile.html"
+            data-profile-href="../account/profile.html"
+            hidden
+            >我的账号</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="history-page">
+      <div class="container">
+        <section class="history-intro">
+          <p class="eyebrow">机器学习关键里程碑</p>
+          <h1>从哲学思辨到通用智能</h1>
+          <p>
+            点击时间轴上的每一个节点，查看这个里程碑背后的思想、技术与时代影响。
+          </p>
+        </section>
+
+        <section class="history-timeline" aria-label="机器学习发展时间轴">
+          <div class="timeline-scroller" id="milestone-list"></div>
+        </section>
+
+        <section class="detail-shell" id="detail-panel" aria-live="polite"></section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../index.html">
+            <span class="brand-mark">ML</span>
+            <span>ML Learn</span>
+          </a>
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html#home">首页</a>
+          <a href="../course/index.html">课程</a>
+          <a href="../course/practice/index.html">互动练习</a>
+          <a href="../members/index.html">关于</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+
+    <script src="../account/auth.js"></script>
+    <script src="../account/session.js"></script>
+    <script src="history.js"></script>
+  </body>
+</html>

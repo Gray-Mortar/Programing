@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KNN 实验记录 - ML Learn</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../experiments.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../../index.html">
+          <span class="brand-mark">ML</span>
+          <span>ML Learn</span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a href="../../index.html#home">首页</a>
+          <a href="../../history/index.html">了解历史</a>
+          <a href="../../course/index.html">课程</a>
+          <a href="../../course/practice/index.html">互动练习</a>
+          <a class="active" href="../index.html">可视化实验</a>
+          <a href="../../account/profile.html">学习情况</a>
+          <a href="../../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="../../account/login.html"
+            >登录</a
+          >
+          <a
+            class="button button-primary"
+            id="register-button"
+            href="../../account/register.html"
+            >注册</a
+          >
+          <a
+            class="account-user"
+            id="account-user"
+            href="../../account/profile.html"
+            data-profile-href="../../account/profile.html"
+            hidden
+            >我的账号</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="experiment-page">
+      <div class="experiment-shell">
+        <p class="experiment-breadcrumb">
+          / <a href="../index.html">可视化实验</a> / KNN 实验记录
+        </p>
+        <section class="experiment-hero">
+          <div>
+            <p class="eyebrow">实验 02 · 记录详情</p>
+            <h1>KNN 实验记录</h1>
+            <p>
+              查看某次实验保存的完整参数、分类结果、投票情况和最近邻居明细。
+            </p>
+          </div>
+          <div class="experiment-badge">Local Storage</div>
+        </section>
+
+        <section class="experiment-card" id="record-detail-card">
+          <div id="record-empty" class="record-empty">
+            没有找到对应的实验记录。
+          </div>
+
+          <div id="record-content" hidden>
+            <div class="history-heading">
+              <div>
+                <p class="eyebrow">记录摘要</p>
+                <h2 id="record-title">KNN 分类结果</h2>
+                <p id="record-summary"></p>
+              </div>
+              <a class="button button-secondary" href="index.html">返回实验</a>
+            </div>
+
+            <div class="record-detail-grid">
+              <div class="record-detail-item">
+                <span>预测品种</span>
+                <strong id="record-predicted">-</strong>
+              </div>
+              <div class="record-detail-item">
+                <span>置信度</span>
+                <strong id="record-confidence">-</strong>
+              </div>
+              <div class="record-detail-item">
+                <span>K 值</span>
+                <strong id="record-k">-</strong>
+              </div>
+              <div class="record-detail-item">
+                <span>保存时间</span>
+                <strong id="record-time">-</strong>
+              </div>
+            </div>
+
+            <div class="feature-vector" id="record-features">特征向量：-</div>
+
+            <h3>邻居投票</h3>
+            <div class="vote-bars">
+              <div class="vote-row">
+                <span>Setosa</span>
+                <div class="vote-track">
+                  <div class="vote-fill" id="record-vote-bar-Setosa"></div>
+                </div>
+                <b id="record-vote-count-Setosa">0</b>
+              </div>
+              <div class="vote-row">
+                <span>Versicolor</span>
+                <div class="vote-track">
+                  <div class="vote-fill" id="record-vote-bar-Versicolor"></div>
+                </div>
+                <b id="record-vote-count-Versicolor">0</b>
+              </div>
+              <div class="vote-row">
+                <span>Virginica</span>
+                <div class="vote-track">
+                  <div class="vote-fill" id="record-vote-bar-Virginica"></div>
+                </div>
+                <b id="record-vote-count-Virginica">0</b>
+              </div>
+            </div>
+
+            <h3>最近邻居明细</h3>
+            <div class="neighbor-table-wrap">
+              <table class="neighbor-table">
+                <thead>
+                  <tr>
+                    <th>排名</th>
+                    <th>品种</th>
+                    <th>距离</th>
+                    <th>花萼长度</th>
+                    <th>花萼宽度</th>
+                    <th>花瓣长度</th>
+                    <th>花瓣宽度</th>
+                  </tr>
+                </thead>
+                <tbody id="record-neighbor-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../../index.html">
+            <span class="brand-mark">ML</span>
+            <span>ML Learn</span>
+          </a>
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html">可视化实验</a>
+          <a href="index.html">KNN 实验</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+
+    <script src="../../account/auth.js"></script>
+    <script src="../../account/session.js"></script>
+    <script src="history.js"></script>
+  </body>
+</html>

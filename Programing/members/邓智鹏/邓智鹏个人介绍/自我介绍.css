@@ -1,0 +1,10 @@
+body {
+  background-image: url("自我介绍背景.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: white;
+  font-size: 23px;
+  margin: 100px 200px;
+  text-align: center;
+}

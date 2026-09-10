@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="姚凌宇的个人介绍页面。" />
+    <title>姚凌宇｜个人介绍</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <div class="page-overlay"></div>
+
+    <a class="back-to-team" href="../index.html" aria-label="返回项目成员页面">
+      <span aria-hidden="true">←</span> 返回项目成员
+    </a>
+
+    <main class="profile-page" id="home">
+      <section class="profile-card" aria-labelledby="profile-name">
+        <!-- 个人头像 -->
+        <img
+          class="profile-avatar"
+          src="./images/profile-avatar.jpg"
+          alt="姚凌宇的个人头像"
+        />
+
+        <div class="profile-content">
+          <p class="intro-label">HELLO, WELCOME TO MY PAGE</p>
+          <h1 id="profile-name">你好，我是<br /><span>姚凌宇</span></h1>
+          <p class="role">项目经理 · 测试</p>
+
+          <p class="summary" id="about"></p>
+
+          <div class="detail-grid" id="skills">
+            <article class="detail-item">
+              <span>01</span>
+              <div>
+                <h2>目前方向</h2>
+                <p>前端网页设计与开发</p>
+              </div>
+            </article>
+
+            <article class="detail-item">
+              <span>02</span>
+              <div>
+                <h2>正在学习</h2>
+                <p>HTML、CSS、JavaScript、ML</p>
+              </div>
+            </article>
+
+            <article class="detail-item">
+              <span>03</span>
+              <div>
+                <h2>项目目标</h2>
+                <p>制作机器学习教学网站</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="profile-actions" id="contact">
+            <button class="primary-link" id="OpenContactButton" type="button">
+              联系我
+            </button>
+            <button class="primary-link" id="OpenAboutButton" type="button">
+              关于我
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 联系方式弹窗：默认隐藏，由 JavaScript 打开 -->
+    <dialog class="contact-dialog" id="contactDialog">
+      <div class="dialog-content">
+        <p class="dialog-label">CONTACT</p>
+        <h2>联系我</h2>
+        <p>邮箱：yaolingyu04@gmail.com</p>
+        <p>QQ： 3045412978</p>
+
+        <!-- method="dialog" 是提交按钮自动关闭弹窗 -->
+        <form method="dialog">
+          <button class="close-button" type="submit">关闭</button>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog class="contact-dialog about-dialog" id="aboutDialog">
+      <div class="dialog-content">
+        <p class="dialog-label">ABOUT ME</p>
+        <h2>关于我</h2>
+        <h3>落云随水去，风动无弦琴</h3>
+        <p class="about-text">
+          一个和消极生活态度对抗的人，希望自己能闻其风而悦之，做到积极且平静的生活。
+        </p>
+        <p class="about-text">
+          喜欢国学但荒废日久，想学习AGI但是热情冷却。目前是浅度二次元，计算机初学者。
+        </p>
+        <p class="about-text">
+          愿我能和我喜欢的角色一样向往并努力做到念头通达。
+        </p>
+      </div>
+    </dialog>
+
+    <!-- 在 HTML 内容加载完成后运行 JavaScript -->
+    <script src="script.js"></script>
+  </body>
+</html>

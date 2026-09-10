@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ML Learn 个人资料与学习情况" />
+    <title>个人中心 - ML Learn</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="account.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../index.html" aria-label="返回首页">
+          <span class="brand-mark">ML</span>
+          <span>ML Learn</span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a href="../index.html#home">首页</a>
+          <a href="../history/index.html">了解历史</a>
+          <a href="../course/index.html">课程</a>
+          <a href="../course/practice/index.html">互动练习</a>
+          <a href="../experiments/index.html">可视化实验</a>
+          <a class="active" href="profile.html">学习情况</a>
+          <a href="../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="login.html"
+            hidden
+            >登录</a
+          >
+          <a
+            class="button button-primary"
+            id="register-button"
+            href="register.html"
+            hidden
+            >注册</a
+          >
+          <a
+            class="button button-primary"
+            id="back-home-button"
+            href="../index.html"
+            >返回首页</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="account-page profile-page">
+      <div class="account-shell profile-shell">
+        <section
+          class="account-card profile-card"
+          aria-labelledby="profile-title"
+        >
+          <div class="profile-heading">
+            <div class="profile-avatar" aria-hidden="true">ML</div>
+            <div>
+              <p class="eyebrow">个人中心</p>
+              <h1 id="profile-title">个人资料与学习情况</h1>
+              <p class="profile-name" id="profile-nickname">尚未登录</p>
+              <p class="profile-muted" id="profile-username">
+                请先登录后再查看个人信息
+              </p>
+            </div>
+          </div>
+
+          <section class="profile-section" aria-labelledby="profile-info-title">
+            <h2 id="profile-info-title">基本信息</h2>
+            <div class="profile-info-grid">
+              <div class="profile-info-item">
+                <span>性别</span>
+                <strong id="profile-gender">未填写</strong>
+              </div>
+              <div class="profile-info-item">
+                <span>出生日期</span>
+                <strong id="profile-birthdate">未填写</strong>
+              </div>
+              <div class="profile-info-item">
+                <span>邮箱</span>
+                <strong id="profile-email">未填写</strong>
+              </div>
+              <div class="profile-info-item">
+                <span>注册日期</span>
+                <strong id="profile-created-at">未填写</strong>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="profile-section"
+            aria-labelledby="learning-status-title"
+          >
+            <h2 id="learning-status-title">学习情况</h2>
+            <p class="profile-muted">
+              学习进度、实验记录、挑战成绩和最近学习内容将在这里展示。
+            </p>
+            <div class="profile-status-grid">
+              <article class="profile-status-card">
+                <span class="profile-status-label">课程进度</span>
+                <strong class="profile-status-value">暂无数据</strong>
+                <p>展示已完成的课程和学习进度。</p>
+              </article>
+              <article class="profile-status-card">
+                <span class="profile-status-label">实验记录</span>
+                <strong
+                  class="profile-status-value"
+                  id="profile-experiment-record"
+                  >暂无数据</strong
+                >
+                <p>
+                  KNN 鸢尾花实验存档
+                  <a
+                    class="profile-record-link"
+                    href="../experiments/knn-iris/history.html"
+                    >查看记录</a
+                  >
+                </p>
+              </article>
+              <article class="profile-status-card">
+                <span class="profile-status-label">挑战成绩</span>
+                <strong
+                  class="profile-status-value"
+                  id="profile-challenge-score"
+                  >暂无成绩</strong
+                >
+                <p>展示挑战练习得分与正确率。</p>
+              </article>
+              <article class="profile-status-card">
+                <span class="profile-status-label">最近学习</span>
+                <strong
+                  class="profile-status-value"
+                  id="profile-recent-learning"
+                  >暂无记录</strong
+                >
+                <p>展示最近开始或完成的学习内容。</p>
+              </article>
+            </div>
+          </section>
+
+          <div class="profile-actions">
+            <a class="button button-secondary" href="../index.html">返回首页</a>
+            <button
+              class="button button-primary"
+              id="logout-button"
+              type="button"
+            >
+              退出登录
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../index.html">
+            <span class="brand-mark">ML</span>
+            <span>ML Learn</span>
+          </a>
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html#home">首页</a>
+          <a href="../index.html#courses">课程</a>
+          <a href="../members/index.html">关于</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script src="session.js"></script>
+    <script src="profile.js"></script>
+  </body>
+</html>

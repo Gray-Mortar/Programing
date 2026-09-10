@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ML Learn 互动练习" />
+    <title>互动练习 - ML Learn</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../../account/account.css" />
+    <link rel="stylesheet" href="../courses.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../../index.html" aria-label="返回首页">
+          <span class="brand-mark">ML</span>
+          <span>ML Learn</span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a href="../../index.html#home">首页</a>
+          <a href="../../history/index.html">了解历史</a>
+          <a href="../index.html">课程</a>
+          <a class="active" href="index.html">互动练习</a>
+          <a href="../../experiments/index.html">可视化实验</a>
+          <a href="../../account/profile.html">学习情况</a>
+          <a href="../../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="../../account/login.html"
+            >登录</a
+          >
+          <a
+            class="button button-primary"
+            id="register-button"
+            href="../../account/register.html"
+            >注册</a
+          >
+          <a
+            class="account-user"
+            id="account-user"
+            href="../../account/profile.html"
+            data-profile-href="../../account/profile.html"
+            hidden
+            >我的账号</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="courses-page">
+      <div class="courses-shell">
+        <p class="courses-breadcrumb">
+          <a href="../index.html">课程中心</a> / 互动练习
+        </p>
+        <section class="courses-hero">
+          <div>
+            <p class="eyebrow">互动练习</p>
+            <h1>用练习检验学习成果</h1>
+            <p>
+              选择一种题型开始练习。提交后会立即显示答案和解析，完成记录会保存在当前浏览器中。
+            </p>
+          </div>
+          <div class="courses-progress">
+            <span>最近练习</span>
+            <strong id="practice-recent">暂无</strong>
+            <span>保存于浏览器本地</span>
+          </div>
+        </section>
+
+        <div class="practice-stats">
+          <div class="practice-stat">
+            <span>已完成题目</span>
+            <strong id="practice-done">0</strong>
+          </div>
+          <div class="practice-stat">
+            <span>正确率</span>
+            <strong id="practice-correct">0%</strong>
+          </div>
+          <div class="practice-stat">
+            <span>练习类型</span>
+            <strong>3</strong>
+          </div>
+        </div>
+
+        <section class="course-card">
+          <p class="eyebrow">题型库</p>
+          <h2>选择一种题型</h2>
+          <p>
+            先选择章节与出题顺序，再进入对应题型。每道题均提供答案、解析、所属章节与难度。
+          </p>
+          <div class="practice-filters">
+            <label>
+              <span>知识章节</span>
+              <select id="practice-category">
+                <option value="all">全部章节</option>
+              </select>
+            </label>
+            <label>
+              <span>出题顺序</span>
+              <select id="practice-order">
+                <option value="sequential">章节顺序</option>
+                <option value="random">随机顺序</option>
+              </select>
+            </label>
+          </div>
+          <div class="practice-type-grid">
+            <button class="practice-type" type="button" data-start-quiz="judge">
+              <strong>判断题</strong>
+              <span>判断说法是否正确，适合快速回顾概念。</span>
+            </button>
+            <button
+              class="practice-type"
+              type="button"
+              data-start-quiz="choice"
+            >
+              <strong>选择题</strong>
+              <span>从多个选项中选择最合适的答案。</span>
+            </button>
+            <button class="practice-type" type="button" data-start-quiz="fill">
+              <strong>填空题</strong>
+              <span>输入关键概念，检验对术语的记忆。</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="quiz-panel" id="quiz-panel" hidden>
+          <div class="quiz-heading">
+            <div>
+              <p class="eyebrow">当前练习</p>
+              <h2 id="selected-type">请选择题型开始练习</h2>
+            </div>
+            <p class="quiz-progress" id="quiz-progress"></p>
+          </div>
+
+          <p class="quiz-question" id="quiz-question"></p>
+          <div class="quiz-meta" id="quiz-meta"></div>
+          <div class="quiz-options" id="quiz-options"></div>
+          <div class="form-group" id="quiz-input-wrap" hidden>
+            <label for="quiz-answer-input">请输入答案</label>
+            <div id="quiz-answer-input-wrap"></div>
+          </div>
+          <p class="quiz-feedback" id="quiz-feedback"></p>
+
+          <div class="quiz-actions">
+            <button
+              class="button button-primary"
+              id="quiz-submit"
+              type="button"
+            >
+              提交答案
+            </button>
+            <button
+              class="button button-secondary"
+              id="quiz-next"
+              type="button"
+              hidden
+            >
+              下一题
+            </button>
+            <button
+              class="button button-secondary"
+              id="quiz-quit"
+              type="button"
+            >
+              结束练习
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../../index.html">
+            <span class="brand-mark">ML</span>
+            <span>ML Learn</span>
+          </a>
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../../index.html#home">首页</a>
+          <a href="../index.html">课程</a>
+          <a href="index.html">互动练习</a>
+          <a href="../../members/index.html">关于</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+
+    <script src="../../account/auth.js"></script>
+    <script src="../../account/session.js"></script>
+    <script src="../data/questions.js"></script>
+    <script src="practice.js"></script>
+  </body>
+</html>

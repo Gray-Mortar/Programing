@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ML Learn 课程中心" />
+    <title>课程中心 - ML Learn</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="courses.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../index.html" aria-label="返回首页">
+          <span class="brand-mark">ML</span>
+          <span>ML Learn</span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a href="../index.html#home">首页</a>
+          <a href="../history/index.html">了解历史</a>
+          <a class="active" href="index.html">课程</a>
+          <a href="practice/index.html">互动练习</a>
+          <a href="../experiments/index.html">可视化实验</a>
+          <a href="../account/profile.html">学习情况</a>
+          <a href="../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="../account/login.html"
+            >登录</a
+          >
+          <a
+            class="button button-primary"
+            id="register-button"
+            href="../account/register.html"
+            >注册</a
+          >
+          <a
+            class="account-user"
+            id="account-user"
+            href="../account/profile.html"
+            data-profile-href="../account/profile.html"
+            hidden
+            >我的账号</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="courses-page">
+      <div class="courses-shell">
+        <section class="courses-hero">
+          <div>
+            <p class="eyebrow">课程中心</p>
+            <h1>从基础到实践的学习路线</h1>
+            <p>
+              课程中心分为基础知识、经典算法和互动练习三个部分。基础知识覆盖从问题定义、数学统计到部署治理的完整流程，算法页面进一步比较经典模型的原理、适用场景与局限性。
+            </p>
+          </div>
+          <div class="courses-progress">
+            <span>课程模块</span>
+            <strong>3</strong>
+            <span>基础知识 / 经典算法 / 互动练习</span>
+          </div>
+        </section>
+
+        <div class="course-grid">
+          <article class="course-link-card">
+            <span class="course-number">01</span>
+            <h2>基础知识</h2>
+            <p>
+              系统学习机器学习全景、数学统计、数据与特征、评估验证、调参优化、工程化和模型治理。
+            </p>
+            <a href="basics/index.html">进入基础知识 →</a>
+          </article>
+          <article class="course-link-card">
+            <span class="course-number">02</span>
+            <h2>经典算法</h2>
+            <p>
+              按回归、分类、树模型、集成学习、聚类降维和神经网络理解算法原理与使用边界。
+            </p>
+            <a href="algorithms/index.html">进入经典算法 →</a>
+          </article>
+          <article class="course-link-card">
+            <span class="course-number">03</span>
+            <h2>互动练习</h2>
+            <p>题库使用独立数据文件维护，新增题目无需反复修改页面结构。</p>
+            <a href="practice/index.html">进入互动练习 →</a>
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../index.html">
+            <span class="brand-mark">ML</span>
+            <span>ML Learn</span>
+          </a>
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../index.html#home">首页</a>
+          <a href="index.html">课程</a>
+          <a href="practice/index.html">互动练习</a>
+          <a href="../members/index.html">关于</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+
+    <script src="../account/auth.js"></script>
+    <script src="../account/session.js"></script>
+  </body>
+</html>
