@@ -6,53 +6,6 @@
   margin-top: 22px;
 }
 
-.basics-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 28px;
-  margin-top: 26px;
-  padding: 24px 26px;
-  background:
-    radial-gradient(circle at 88% 16%, rgba(222, 241, 226, 0.9), transparent 34%),
-    linear-gradient(135deg, #faf8ff, #f5fbf7);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-}
-
-.basics-toolbar h2 {
-  margin: 0 0 5px;
-  font-size: 22px;
-}
-
-.basics-toolbar p {
-  margin: 0;
-  color: var(--text-muted);
-}
-
-.basics-chapter-section {
-  padding-top: 54px;
-}
-
-.chapter-list-card {
-  display: flex;
-  min-height: 280px;
-  flex-direction: column;
-}
-
-.chapter-list-card > a {
-  margin-top: auto;
-}
-
-.chapter-list-meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin: 4px 0 14px;
-  color: var(--text-muted);
-  font-size: 13px;
-}
-
 .chapter-view {
   display: grid;
   gap: 20px;
@@ -122,18 +75,7 @@
   margin-top: 0;
 }
 
-@media (max-width: 900px) {
-  .basics-toolbar {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
 @media (max-width: 560px) {
-  .basics-toolbar {
-    padding: 21px;
-  }
-
   .basics-hero-actions,
   .chapter-hero-actions {
     align-items: flex-start;

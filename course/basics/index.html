@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="../courses.css" />
     <link rel="stylesheet" href="basics.css" />
+    <link rel="stylesheet" href="tree.css" />
   </head>
   <body>
     <header class="site-header">
@@ -60,11 +61,12 @@
             <p class="eyebrow">基础知识</p>
             <h1>机器学习完整知识体系</h1>
             <p>
-              从基本概念、数学基础和经典算法，延伸到深度学习、模型评估、工程部署与可信机器学习。知识树与章节内容已拆分为独立页面。
+              从基本概念、数学基础和经典算法，延伸到深度学习、模型评估、工程部署与可信机器学习。通过下方知识树理解整体联系，再进入各章详情。
             </p>
             <div class="basics-hero-actions">
-              <a class="button button-primary" href="tree.html">打开知识树</a>
-              <a class="text-link" href="#chapter-list">浏览章节 →</a>
+              <a class="button button-primary" href="#knowledge-tree-panel"
+                >开始探索知识树</a
+              >
             </div>
           </div>
           <div class="courses-progress">
@@ -74,21 +76,57 @@
           </div>
         </section>
 
-        <section class="basics-toolbar">
-          <div>
-            <h2>先看整体，再进入章节</h2>
-            <p>知识树用于建立章节与知识点之间的整体联系，章节卡片则进入每章的独立详解页面。</p>
+        <section
+          class="knowledge-tree-panel"
+          id="knowledge-tree-panel"
+          aria-labelledby="knowledge-tree-title"
+        >
+          <div class="knowledge-tree-heading">
+            <div>
+              <p class="eyebrow">知识树</p>
+              <h2 id="knowledge-tree-title">
+                一棵树连接 <span id="tree-chapter-count">13</span> 个章节与
+                <span id="tree-topic-count">80</span> 个知识点
+              </h2>
+              <p>
+                点击枝条选择章节，点击叶片查看对应知识点，并进入该知识点的章节详情页。
+              </p>
+            </div>
+            <div class="knowledge-tree-legend" aria-label="知识树图例">
+              <span><i class="legend-trunk"></i>知识体系</span>
+              <span><i class="legend-branch"></i>章节</span>
+              <span><i class="legend-leaf"></i>知识点</span>
+            </div>
           </div>
-          <a class="button button-primary" href="tree.html">查看知识树</a>
-        </section>
 
-        <section class="basics-chapter-section">
-          <div class="section-heading">
-            <p class="eyebrow">章节学习</p>
-            <h2>选择章节</h2>
-            <p>每一章的知识点都放在单独页面中，便于专注阅读和分享。</p>
+          <div
+            class="knowledge-tree-tabs"
+            id="tree-chapter-tabs"
+            aria-label="章节快捷导航"
+          ></div>
+
+          <div class="knowledge-tree-canvas" id="knowledge-tree-canvas">
+            <svg
+              class="knowledge-tree-svg"
+              id="knowledge-tree"
+              viewBox="0 0 1400 900"
+              role="img"
+              aria-labelledby="knowledge-tree-svg-title knowledge-tree-svg-desc"
+            >
+              <title id="knowledge-tree-svg-title">机器学习基础知识树</title>
+              <desc id="knowledge-tree-svg-desc">
+                树干连接十三个章节，每个章节枝条上的叶片代表相应知识点。
+              </desc>
+            </svg>
+            <div
+              class="tree-tooltip"
+              id="tree-tooltip"
+              role="tooltip"
+              aria-hidden="true"
+            ></div>
           </div>
-          <div class="course-grid" id="chapter-list"></div>
+
+          <div class="knowledge-tree-inspector" id="knowledge-tree-inspector"></div>
         </section>
       </div>
     </main>
@@ -106,7 +144,7 @@
           <a href="../../index.html#home">首页</a>
           <a href="../index.html">课程</a>
           <a href="../practice/index.html">互动练习</a>
-          <a href="tree.html">知识树</a>
+          <a href="#knowledge-tree-panel">知识树</a>
           <a href="../../members/index.html">关于</a>
         </div>
         <p class="copyright">© 2026 ML Learn</p>
@@ -116,6 +154,6 @@
     <script src="../../account/auth.js"></script>
     <script src="../../account/session.js"></script>
     <script src="../data/basics.js"></script>
-    <script src="../content.js"></script>
+    <script src="tree.js"></script>
   </body>
 </html>

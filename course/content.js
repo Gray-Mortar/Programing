@@ -120,26 +120,6 @@
     });
   }
 
-  function renderChapterList(sections, target) {
-    target.innerHTML = "";
-    sections.forEach(function (section) {
-      const card = createElement("article", "course-link-card chapter-list-card");
-      card.appendChild(createElement("span", "course-number", section.number));
-      card.appendChild(createElement("h2", "", section.title));
-      card.appendChild(createElement("p", "", section.summary));
-
-      const meta = createElement("div", "chapter-list-meta");
-      meta.appendChild(createElement("span", "", section.topics.length + " 个知识点"));
-      meta.appendChild(createElement("span", "", "第 " + section.number + " 章"));
-      card.appendChild(meta);
-
-      const link = createElement("a", "", "进入本章 →");
-      link.href = getChapterHref(section);
-      card.appendChild(link);
-      target.appendChild(card);
-    });
-  }
-
   function renderChapterView(sections, view) {
     const requestedId = document.body.getAttribute("data-chapter-id");
     const chapterIndex = sections.findIndex(function (section) {
@@ -177,7 +157,7 @@
 
     const actions = createElement("div", "chapter-hero-actions");
     const treeLink = createElement("a", "button button-secondary", "在知识树中查看");
-    treeLink.href = "tree.html";
+    treeLink.href = "index.html#knowledge-tree-panel";
     const indexLink = createElement("a", "text-link", "返回基础知识 →");
     indexLink.href = "index.html";
     actions.appendChild(treeLink);
@@ -252,28 +232,10 @@
     });
   }
 
-  function updateSummaryCount(sections) {
-    const summary = document.getElementById("course-summary-count");
-    if (!summary) {
-      return;
-    }
-    const topicCount = sections.reduce(function (total, section) {
-      return total + section.topics.length;
-    }, 0);
-    summary.textContent = sections.length + " 章 / " + topicCount + " 点";
-  }
-
   function boot() {
     const sections = getSections();
     if (!sections.length) {
       return;
-    }
-
-    updateSummaryCount(sections);
-
-    const chapterList = document.getElementById("chapter-list");
-    if (chapterList) {
-      renderChapterList(sections, chapterList);
     }
 
     const chapterView = document.getElementById("chapter-view");
