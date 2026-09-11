@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ML Learning Club 对话式登录入口" />
+    <title>ML Learning Club | 对话式登录</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="chat-layout" aria-labelledby="pageTitle">
+        <header class="topbar">
+          <a class="brand" href="../index.html"><span class="brand-mark">ML</span><span>Learning Club</span></a>
+          <span class="secure-status"><i></i> 对话已加密</span>
+        </header>
+        <div class="chat-stage">
+          <aside class="bot-illustration" aria-label="学习伙伴机器人">
+            <img src="./微信图片_20260910193624_696_21.png" alt="学习伙伴机器人" />
+          </aside>
+          <div class="chat-intro">
+            <p class="club-kicker">YOUR LEARNING COMPANION</p>
+            <h1 id="pageTitle">先聊几句，<em>马上出发。</em></h1>
+            <p>不用填写复杂表单，我会一步一步帮你完成登录或加入。</p>
+          </div>
+          <div class="conversation" id="conversation" aria-live="polite" aria-label="登录助手对话记录"></div>
+          <aside class="bot-profile" aria-label="学习伙伴信息">
+            <div class="bot-avatar"><img src="./微信图片_20260910210947_730_2.png" alt="学习伙伴" /></div>
+            <strong>小 ML</strong><span>在线陪伴</span>
+          </aside>
+        </div>
+        <form class="composer" id="authForm" novalidate>
+          <div class="composer-label"><span id="composerHint">点击选项，或直接输入</span><kbd>Enter</kbd></div>
+          <div class="composer-row">
+            <input id="chatInput" name="answer" type="text" autocomplete="off" placeholder="输入你的回答..." aria-label="输入回答" />
+            <button class="send-button" type="submit" aria-label="发送回答" title="发送回答">↑</button>
+          </div>
+          <div class="quick-actions" id="quickActions"></div>
+        </form>
+        <button class="restart-button" id="restartButton" type="button">重新开始</button>
+      </section>
+    </main>
+    <section class="learning-overlay" id="learningOverlay" hidden aria-labelledby="learningTitle">
+      <div class="loading-panel" id="loadingPanel">
+        <div class="loading-orbit" aria-hidden="true"><span></span><b>ML</b></div>
+        <p class="club-kicker">PREPARING YOUR SPACE</p>
+        <h2 id="loadingTitle">正在准备你的学习空间</h2>
+        <p class="loading-copy">正在同步课程、练习和你的学习进度</p>
+        <div class="loading-track" aria-hidden="true"><span></span></div>
+      </div>
+      <div class="ready-panel" id="readyPanel" hidden>
+        <div class="ready-check" aria-hidden="true">✓</div>
+        <p class="club-kicker">YOUR NEXT CHAPTER</p>
+        <h2 id="learningTitle">准备好了，开始学习吧</h2>
+        <p>你的学习空间已经就位，下一步由你来决定。</p>
+        <button class="start-learning" id="startLearning" type="button">开始学习 <span aria-hidden="true">→</span></button>
+      </div>
+    </section>
+    <!--
+      <section class="view welcome-view" id="welcomeView" aria-labelledby="welcomeTitle">
+        <div class="welcome-copy">
+          <p class="club-kicker">ML LEARNING CLUB</p>
+          <h1 id="welcomeTitle">欢迎来到<br /><em>ML Learning Club</em></h1>
+          <p class="welcome-intro">让每一次提问，都成为理解机器学习的下一步。</p>
+        </div>
+        <div class="welcome-art" role="img" aria-label="机器人趴在对话框上欢迎新老学员">
+          <div class="welcome-bubble">
+            <span class="bubble-dot"></span>
+            <p>嗨！我是你的学习伙伴，<br />今天想从哪里开始？</p>
+          </div>
+          <img src="./微信图片_20260910210947_730_2.png" alt="趴在对话框上的机器人" />
+        </div>
+        <nav class="choice-panel" aria-label="选择学员身份">
+          <p class="choice-label">请选择你的身份</p>
+          <div class="choice-actions">
+            <a class="choice-card" href="#register" data-route="register">
+              <span class="choice-number">01</span>
+              <span><strong>我是新学员</strong><small>初来乍到，请多指教</small></span>
+              <span class="choice-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="choice-card choice-card-secondary" href="#login" data-route="login">
+              <span class="choice-number">02</span>
+              <span><strong>我已是老学员</strong><small>欢迎回来，继续学习</small></span>
+              <span class="choice-arrow" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </nav>
+      </section>
+
+      <section class="view auth-view" id="authView" hidden aria-live="polite">
+        <button class="back-button" type="button" data-route="welcome" aria-label="返回身份选择">← 返回选择身份</button>
+        <div class="auth-art" aria-hidden="true">
+          <img src="./微信图片_20260910210947_730_22.png" alt="" />
+          <div class="form-board" id="formBoard">
+            <div class="form-heading">
+              <p class="club-kicker">ML LEARNING CLUB</p>
+              <h2 id="formTitle">创建你的学习档案</h2>
+              <p id="formSubtitle">注册后，开启你的机器学习旅程。</p>
+            </div>
+            <form id="authForm" novalidate>
+              <label class="field field-name" id="nameField">
+                <span>你的昵称</span>
+                <input id="nameInput" name="name" type="text" autocomplete="name" placeholder="例如：小明" />
+              </label>
+              <label class="field">
+                <span>邮箱地址</span>
+                <input id="emailInput" name="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+              </label>
+              <label class="field">
+                <span>密码</span>
+                <input id="passwordInput" name="password" type="password" autocomplete="new-password" placeholder="至少 6 位字符" required minlength="6" />
+              </label>
+              <label class="field field-confirm" id="confirmField">
+                <span>确认密码</span>
+                <input id="confirmInput" name="confirm" type="password" autocomplete="new-password" placeholder="再次输入密码" />
+              </label>
+              <p class="form-message" id="formMessage" role="status"></p>
+              <button class="submit-button" id="submitButton" type="submit">创建学习档案 <span aria-hidden="true">→</span></button>
+            </form>
+            <button class="switch-mode" id="switchMode" type="button">已经有账号？直接登录</button>
+          </div>
+        </div>
+      </section>
+    </main>-->
+    <script src="./script.js"></script>
+  </body>
+</html>
