@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="ML Learn 机器学习基础知识" />
-    <title>基础知识 - ML Learn</title>
+    <meta name="description" content="ML Learn 机器学习基础知识章节" />
+    <title>基础知识章节 - ML Learn</title>
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="../courses.css" />
     <link rel="stylesheet" href="basics.css" />
   </head>
-  <body>
+  <body data-chapter-id="chapter-10">
     <header class="site-header">
       <div class="container header-inner">
         <a class="brand" href="../../index.html" aria-label="返回首页">
@@ -53,43 +53,11 @@
     <main class="courses-page">
       <div class="courses-shell">
         <p class="courses-breadcrumb">
-          <a href="../index.html">课程中心</a> / 基础知识
+          <a href="../index.html">课程中心</a> /
+          <a href="index.html">基础知识</a> /
+          <span id="chapter-breadcrumb-current">章节</span>
         </p>
-        <section class="courses-hero">
-          <div>
-            <p class="eyebrow">基础知识</p>
-            <h1>机器学习完整知识体系</h1>
-            <p>
-              从基本概念、数学基础和经典算法，延伸到深度学习、模型评估、工程部署与可信机器学习。知识树与章节内容已拆分为独立页面。
-            </p>
-            <div class="basics-hero-actions">
-              <a class="button button-primary" href="tree.html">打开知识树</a>
-              <a class="text-link" href="#chapter-list">浏览章节 →</a>
-            </div>
-          </div>
-          <div class="courses-progress">
-            <span>基础章节</span>
-            <strong id="course-summary-count">13 章 / 80 点</strong>
-            <span>每章使用独立页面</span>
-          </div>
-        </section>
-
-        <section class="basics-toolbar">
-          <div>
-            <h2>先看整体，再进入章节</h2>
-            <p>知识树用于建立章节与知识点之间的整体联系，章节卡片则进入每章的独立详解页面。</p>
-          </div>
-          <a class="button button-primary" href="tree.html">查看知识树</a>
-        </section>
-
-        <section class="basics-chapter-section">
-          <div class="section-heading">
-            <p class="eyebrow">章节学习</p>
-            <h2>选择章节</h2>
-            <p>每一章的知识点都放在单独页面中，便于专注阅读和分享。</p>
-          </div>
-          <div class="course-grid" id="chapter-list"></div>
-        </section>
+        <div class="chapter-view" id="chapter-view"></div>
       </div>
     </main>
 
@@ -105,7 +73,7 @@
         <div class="footer-links">
           <a href="../../index.html#home">首页</a>
           <a href="../index.html">课程</a>
-          <a href="../practice/index.html">互动练习</a>
+          <a href="index.html">基础知识</a>
           <a href="tree.html">知识树</a>
           <a href="../../members/index.html">关于</a>
         </div>
