@@ -166,10 +166,10 @@ function resetAll() {
   });
   selectedAnimals.clear(); trainingAnimals.forEach((animal) => selectedAnimals.add(animal.id));
   resetZone(elements.yesZone); resetZone(elements.noZone); elements.yesCount.textContent = "0"; elements.noCount.textContent = "0";
-  elements.start.disabled = false; elements.start.textContent = "请机器人开始第 1 层筛选";
+  elements.start.disabled = false; elements.start.textContent = "请 Iris 开始第 1 层筛选";
   elements.skip.hidden = true; elements.skip.disabled = false; elements.manualError.hidden = true;
   elements.robot.className = "lab-robot"; elements.robot.removeAttribute("style"); elements.robotFrame.src = "assets/robot-frames/walk-0.png";
-  elements.message.classList.remove("is-complete"); elements.message.textContent = "我在这里待机，将按你排列的顺序逐层筛选。";
+  elements.message.classList.remove("is-complete"); elements.message.textContent = "我是 Iris，将按你排列的顺序逐层筛选。";
   elements.challenge.disabled = true; elements.challenge.className = "locked-sample";
   elements.challenge.innerHTML = "<span>?</span><strong>神秘动物</strong><small>完成学习后解锁</small>";
   elements.challenge.setAttribute("aria-expanded", "false");
@@ -273,7 +273,7 @@ function prepareNext() {
   elements.yesZone.querySelectorAll(".animal-card").forEach((card) => { card.classList.remove("is-sorted"); card.disabled = false; card.draggable = true; elements.tray.append(card); });
   currentCandidates = latestSplit.yes.slice(); activeLevel += 1; selectedFeature = featureOrder[activeLevel]; latestSplit = null; awaitingNext = false;
   resetZone(elements.yesZone); resetZone(elements.noZone); elements.yesCount.textContent = "0"; elements.noCount.textContent = "0";
-  elements.start.textContent = `请机器人开始第 ${activeLevel + 1} 层筛选`; elements.message.classList.remove("is-complete"); elements.message.textContent = `已保留上一层“是”分支，现在进入第 ${activeLevel + 1} 层。`;
+  elements.start.textContent = `请 Iris 开始第 ${activeLevel + 1} 层筛选`; elements.message.classList.remove("is-complete"); elements.message.textContent = `已保留上一层“是”分支，现在进入第 ${activeLevel + 1} 层。`;
   setProgress(activeLevel + 1); refreshOrder(); updateSummary();
 }
 
@@ -451,7 +451,7 @@ async function startFiltering() {
   beginExperiment();
   const remaining = currentCandidates.filter((a) => $(`.animal-card[data-animal-id="${a.id}"]`)?.parentElement === elements.tray);
   if (!remaining.length) return completeLevel();
-  const token = ++runToken; running = true; skipRequested = false; elements.start.disabled = true; elements.start.textContent = `机器人正在筛选第 ${activeLevel + 1} 层…`; elements.skip.hidden = false; elements.skip.disabled = false;
+  const token = ++runToken; running = true; skipRequested = false; elements.start.disabled = true; elements.start.textContent = `Iris 正在筛选第 ${activeLevel + 1} 层…`; elements.skip.hidden = false; elements.skip.disabled = false;
   let done = 0;
   for (let i = 0; i < remaining.length; i += 1) { if (!await transport(remaining[i], i, remaining.length, token)) break; done = i + 1; }
   if (token !== runToken) return;
@@ -469,7 +469,7 @@ function manualDrop(animalId, answer) {
   if (Boolean(animal[selectedFeature]) !== answer) {
     elements.manualError.hidden = false;
     dispatchEvent(new CustomEvent("manualClassificationError", { detail: { animalId, level: activeLevel + 1, feature: selectedFeature, chosenAnswer: answer } }));
-    elements.message.textContent = "分类位置不正确，机器人将卡片送回正确分支。";
+    elements.message.textContent = "分类位置不正确，Iris 会把卡片送回正确分支。";
     const token = ++runToken; running = true; transport(animal, 0, 1, token).then(() => { running = false; elements.manualError.hidden = true; if (currentCandidates.every((a) => $(`.animal-card[data-animal-id="${a.id}"]`).parentElement !== elements.tray)) completeLevel(); });
   } else {
     addToBranch(animal, answer);
@@ -487,7 +487,7 @@ function manualDrop(animalId, answer) {
 elements.start.addEventListener("click", startFiltering); elements.reset.addEventListener("click", resetAll); elements.quickAnalysis.addEventListener("click", quickEnterAnalysis);
 elements.skip.addEventListener("click", () => { if (running) { skipRequested = true; elements.skip.disabled = true; elements.message.textContent = "正在快速完成本层剩余分类…"; } });
 elements.challenge.addEventListener("click", testChallenge);
-elements.analysisRobot.addEventListener("click", () => moveAnalysis(1));
+elements.analysisRobot.addEventListener("iris-activate", () => moveAnalysis(1));
 elements.analysisNext.addEventListener("click", () => moveAnalysis(1));
 elements.analysisBack.addEventListener("click", () => moveAnalysis(-1));
 elements.returnFilter.addEventListener("click", (event) => {
