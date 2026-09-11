@@ -80,8 +80,9 @@
             <strong id="practice-correct">0%</strong>
           </div>
           <div class="practice-stat">
-            <span>练习类型</span>
-            <strong>3</strong>
+            <span>累计成功救援</span>
+            <strong id="practice-rescue-count">0</strong>
+            <small>正确率达到 70% 计为成功</small>
           </div>
         </div>
 
@@ -91,82 +92,35 @@
           <p>
             先选择章节与出题顺序，再进入对应题型。每道题均提供答案、解析、所属章节与难度。
           </p>
-          <div class="practice-filters">
-            <label>
-              <span>知识章节</span>
-              <select id="practice-category">
-                <option value="all">全部章节</option>
-              </select>
-            </label>
-            <label>
-              <span>出题顺序</span>
-              <select id="practice-order">
-                <option value="sequential">章节顺序</option>
-                <option value="random">随机顺序</option>
-              </select>
-            </label>
-          </div>
           <div class="practice-type-grid">
-            <button class="practice-type" type="button" data-start-quiz="judge">
+            <a class="practice-type" href="session.html?type=judge">
               <strong>判断题</strong>
               <span>判断说法是否正确，适合快速回顾概念。</span>
-            </button>
-            <button
+            </a>
+            <a
               class="practice-type"
-              type="button"
-              data-start-quiz="choice"
+              href="session.html?type=choice"
             >
               <strong>选择题</strong>
               <span>从多个选项中选择最合适的答案。</span>
-            </button>
-            <button class="practice-type" type="button" data-start-quiz="fill">
+            </a>
+            <a class="practice-type" href="session.html?type=fill">
               <strong>填空题</strong>
-              <span>输入关键概念，检验对术语的记忆。</span>
-            </button>
-          </div>
-        </section>
-
-        <section class="quiz-panel" id="quiz-panel" hidden>
-          <div class="quiz-heading">
-            <div>
-              <p class="eyebrow">当前练习</p>
-              <h2 id="selected-type">请选择题型开始练习</h2>
-            </div>
-            <p class="quiz-progress" id="quiz-progress"></p>
-          </div>
-
-          <p class="quiz-question" id="quiz-question"></p>
-          <div class="quiz-meta" id="quiz-meta"></div>
-          <div class="quiz-options" id="quiz-options"></div>
-          <div class="form-group" id="quiz-input-wrap" hidden>
-            <label for="quiz-answer-input">请输入答案</label>
-            <div id="quiz-answer-input-wrap"></div>
-          </div>
-          <p class="quiz-feedback" id="quiz-feedback"></p>
-
-          <div class="quiz-actions">
-            <button
-              class="button button-primary"
-              id="quiz-submit"
-              type="button"
+              <span>补全关键知识，检验对概念本身的理解。</span>
+            </a>
+            <a
+              class="practice-type practice-type-matching"
+              href="session.html?type=matching"
             >
-              提交答案
-            </button>
-            <button
-              class="button button-secondary"
-              id="quiz-next"
-              type="button"
-              hidden
-            >
-              下一题
-            </button>
-            <button
-              class="button button-secondary"
-              id="quiz-quit"
-              type="button"
-            >
-              结束练习
-            </button>
+              <strong>配对题</strong>
+              <span>拖动图形卡片，把概念和正确说明连接起来。</span>
+            </a>
+          </div>
+          <div class="practice-lobby-note">
+            <strong>任务式答题</strong>
+            <p>
+              选择题型后进入独立任务页，可设置知识章节与出题顺序，鸢尾伴学官会在答题过程中给出反馈。
+            </p>
           </div>
         </section>
       </div>
@@ -194,6 +148,8 @@
     <script src="../../account/auth.js"></script>
     <script src="../../account/session.js"></script>
     <script src="../data/questions.js"></script>
+    <script src="../data/questions-update.js"></script>
+    <script src="../data/questions-expansion.js"></script>
     <script src="practice.js"></script>
   </body>
 </html>

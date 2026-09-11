@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="ML Learn 互动练习任务页" />
+    <title>练习任务 - ML Learn</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../../account/account.css" />
+    <link rel="stylesheet" href="../courses.css" />
+    <link rel="stylesheet" href="session.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../../index.html" aria-label="返回首页">
+          <span class="brand-mark">ML</span>
+          <span>ML Learn</span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a href="../../index.html#home">首页</a>
+          <a href="../../history/index.html">了解历史</a>
+          <a href="../index.html">课程</a>
+          <a class="active" href="index.html">互动练习</a>
+          <a href="../../experiments/index.html">可视化实验</a>
+          <a href="../../account/profile.html">学习情况</a>
+          <a href="../../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="../../account/login.html"
+            >登录</a
+          >
+          <a
+            class="button button-primary"
+            id="register-button"
+            href="../../account/register.html"
+            >注册</a
+          >
+          <a
+            class="account-user"
+            id="account-user"
+            href="../../account/profile.html"
+            data-profile-href="../../account/profile.html"
+            hidden
+            >我的账号</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="practice-session-page">
+      <div class="practice-session-shell">
+        <p class="courses-breadcrumb">
+          <a href="index.html">互动练习</a> / 练习任务
+        </p>
+
+        <section class="practice-session-hero">
+          <div>
+            <p class="eyebrow">模型核心救援任务</p>
+            <h1 id="session-title">正在加载练习任务</h1>
+            <p>
+              每次正确作答都会修复一个知识节点。答错不会扣除能量，先查看解析再继续。
+            </p>
+          </div>
+          <div class="mission-status" aria-label="任务稳定度">
+            <span>核心稳定度</span>
+            <strong id="mission-stability">0%</strong>
+            <div class="mission-track">
+              <div class="mission-fill" id="mission-stability-bar"></div>
+            </div>
+            <small
+              >已修复 <b id="mission-correct-count">0</b> /
+              <b id="mission-question-count">0</b></small
+            >
+          </div>
+        </section>
+
+        <div class="practice-session-layout">
+          <div class="practice-session-main">
+            <section class="course-card session-controls">
+              <div>
+                <p class="eyebrow">任务设置</p>
+                <h2>选择章节与出题顺序</h2>
+              </div>
+              <div class="session-filter-grid">
+                <label>
+                  <span>知识章节</span>
+                  <select id="practice-category">
+                    <option value="all">全部章节</option>
+                  </select>
+                </label>
+                <label>
+                  <span>出题顺序</span>
+                  <select id="practice-order">
+                    <option value="sequential">章节顺序</option>
+                    <option value="random">随机顺序</option>
+                  </select>
+                </label>
+              </div>
+              <button
+                class="button button-primary"
+                id="session-start"
+                type="button"
+              >
+                开始救援
+              </button>
+            </section>
+
+            <section class="quiz-panel session-quiz-panel" id="quiz-panel" hidden>
+              <div class="quiz-heading">
+                <div>
+                  <p class="eyebrow">当前任务</p>
+                  <h2 id="selected-type">准备开始</h2>
+                </div>
+                <p class="quiz-progress" id="quiz-progress"></p>
+              </div>
+
+              <div class="quiz-question-block">
+                <span class="quiz-block-label">题目区</span>
+                <p class="quiz-question" id="quiz-question"></p>
+                <div class="quiz-meta" id="quiz-meta"></div>
+              </div>
+
+              <div class="quiz-answer-block">
+                <span class="quiz-block-label">作答区</span>
+                <div class="quiz-options" id="quiz-options"></div>
+                <div class="form-group" id="quiz-input-wrap" hidden>
+                  <label for="quiz-answer-input">请输入答案</label>
+                  <div id="quiz-answer-input-wrap"></div>
+                </div>
+              </div>
+
+              <p class="quiz-feedback" id="quiz-feedback"></p>
+
+              <div class="quiz-actions">
+                <button
+                  class="button button-primary"
+                  id="quiz-submit"
+                  type="button"
+                >
+                  提交答案
+                </button>
+                <button
+                  class="button button-secondary"
+                  id="quiz-next"
+                  type="button"
+                  hidden
+                >
+                  下一题
+                </button>
+                <button
+                  class="button button-secondary"
+                  id="quiz-quit"
+                  type="button"
+                >
+                  结束任务
+                </button>
+              </div>
+            </section>
+
+            <section class="course-card session-complete" id="session-complete" hidden>
+              <p class="eyebrow">任务报告</p>
+              <h2 id="session-complete-title">任务结算</h2>
+              <p id="session-complete-message"></p>
+              <div class="session-complete-actions">
+                <button
+                  class="button button-primary"
+                  id="session-restart"
+                  type="button"
+                >
+                  再执行一次
+                </button>
+                <a class="button button-secondary" href="index.html"
+                  >返回题型大厅</a
+                >
+              </div>
+            </section>
+          </div>
+
+          <aside class="companion-panel" aria-label="鸢尾伴学官">
+            <div class="companion-bubble" id="robot-message" role="status">
+              任务连接中，选择一个章节，我们就出发。
+            </div>
+            <div class="companion-stage is-idle" id="robot-stage">
+              <img
+                class="companion-robot"
+                src="assets/iris-bot.png"
+                alt="鸢尾伴学机器人"
+              />
+            </div>
+            <p class="companion-rule">
+              正确率达到70%算成功，做完所有题目才能结算。
+            </p>
+            <div class="companion-mini-stats">
+              <div>
+                <span>本次完成</span>
+                <strong id="session-completed">0 / 0</strong>
+              </div>
+              <div>
+                <span>本次正确率</span>
+                <strong id="session-accuracy">0%</strong>
+              </div>
+            </div>
+            <p class="companion-recent" id="session-complete-status"></p>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../../index.html">
+            <span class="brand-mark">ML</span>
+            <span>ML Learn</span>
+          </a>
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../../index.html">首页</a>
+          <a href="index.html">互动练习</a>
+          <a href="../index.html">课程</a>
+          <a href="../../members/index.html">关于</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+
+    <script src="../../account/auth.js"></script>
+    <script src="../../account/session.js"></script>
+    <script src="../data/questions.js"></script>
+    <script src="../data/questions-update.js"></script>
+    <script src="../data/questions-expansion.js"></script>
+    <script src="session.js"></script>
+    <script src="practice.js"></script>
+  </body>
+</html>
