@@ -328,7 +328,7 @@ a {
 }
 .visual-lab-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 22px;
 }
 .visual-lab-card {
@@ -352,6 +352,9 @@ a {
 .visual-lab-card-knn {
   background: linear-gradient(135deg, #f2fbf8, #fff);
 }
+.visual-lab-card-tree {
+  background: linear-gradient(135deg, #fff8e8, #fff);
+}
 .lab-icon {
   display: grid;
   width: 54px;
@@ -366,6 +369,10 @@ a {
 .visual-lab-card-knn .lab-icon {
   color: #23745e;
   background: #dff3eb;
+}
+.visual-lab-card-tree .lab-icon {
+  color: #9a6417;
+  background: #fff0c9;
 }
 .visual-lab-card h3 {
   margin: 14px 0 8px;

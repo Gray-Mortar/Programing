@@ -7,3 +7,7 @@
 
 # 本地学习指引不上传 GitHub
 /参考成品/网站模仿制作指引.md
+
+# 决策树实验的本地预览与计划书生成工具不上传
+/experiments/decision-tree-birds/previews/
+/experiments/decision-tree-birds/create-plan.ps1
