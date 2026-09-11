@@ -204,41 +204,120 @@
       note: "这一里程碑标志着 AI 正式进入通用化应用新阶段，生成式 AI 开始深刻改变内容创作、软件开发与客户服务。",
     },
     {
-      id: "2024",
-      year: "2024-2026",
-      title: "多模态、具身智能与 AI for Science",
-      short: "爆发式扩展的新阶段",
+      id: "2023",
+      year: "2023",
+      title: "生成式 AI 爆发",
+      short: "AI 进入全民创作时代",
       summary:
-        "2024 至 2026 年，AI 呈现多模态融合、具身智能落地、赋能科学研究与治理体系完善的多维度全面演进。",
+        "2023 年，以 GPT-4、Claude、Llama 为代表的大模型密集发布，生成式 AI 从技术演示迅速走向办公、创作、编程和日常生活。",
       sections: [
         {
-          title: "多模态融合与模型竞赛",
-          body: "大模型竞争转向全模态、长上下文与高性价比。GPT-4o、Gemini 2.5 Pro、Gemini 3、Claude 4、DeepSeek-R1 等模型在推理、编程、长文本和多模态输出上不断刷新纪录，并推动开源模型的繁荣。",
+          title: "从对话到多模态创作",
+          body: "GPT-4 在复杂推理、长文本和图像理解上大幅提升，Midjourney 等工具让普通人也能生成高质量图像。AI 写作、代码补全、翻译和内容创作进入规模化落地。",
         },
         {
-          title: "具身智能与人形机器人",
-          body: "2024 年被视为人形机器人商业化元年。特斯拉 Optimus、优必选 Walker S、宇树 G1 等产品进入车厂、物流和家庭场景；中国采用“大脑大模型+小脑大模型”的分层方案，带动全球出货量快速增长。",
+          title: "百模大战与开源浪潮",
+          body: "国内外科技公司相继发布自研大模型，Meta 开源 Llama 系列，推动模型本地化部署与生态繁荣。围绕算力、数据与训练框架的竞争，让大模型成为新一代基础设施。",
+        },
+      ],
+      chips: [
+        {
+          label: "标志事件",
+          text: "GPT-4、Llama、Claude 等模型密集发布",
         },
         {
-          title: "AI for Science 深化",
-          body: "AI 成为主流科学界认可的研究范式。AlphaFold 破解蛋白质结构预测难题，GNoME 预测新晶体结构，AI 将药物研发和材料设计的周期大幅缩短。2024 年诺贝尔奖授予神经网络与 AI 蛋白质结构预测研究者，是对这一方向的高度认可。",
+          label: "社会影响",
+          text: "生成式 AI 进入办公、设计、教育与软件开发的日常场景",
+        },
+      ],
+      note: "AI 第一次以“人人可用”的生成工具形态进入大众生活，也为后续智能体时代打下基础。",
+    },
+    {
+      id: "2024",
+      year: "2024",
+      title: "AI 科学新时代",
+      short: "从实验室走向诺奖殿堂",
+      summary:
+        "2024 年，诺贝尔物理学奖与化学奖分别授予神经网络基础研究和 AlphaFold 蛋白质结构预测研究者，AI for Science 成为公认的科学新范式。",
+      sections: [
+        {
+          title: "诺奖级认可",
+          body: "Hinton 与 Hopfield 因神经网络与统计物理的交叉贡献获诺贝尔物理学奖；Hassabis 与 Jumper 因 AlphaFold 获诺贝尔化学奖。这标志着 AI 从工程工具升格为基础科学的一部分。",
         },
         {
-          title: "治理与伦理加速",
-          body: "欧盟《AI 法案》、中国生成式 AI 管理办法等监管框架纷纷出台，AI 幻觉、数据隐私、就业冲击与算法偏见成为全球焦点。AI 安全研究正从附属议题发展为独立学科。",
+          title: "加速科学发现",
+          body: "AlphaFold 已覆盖数亿个蛋白质结构，GNoME 预测出大量新晶体材料。AI 正在药物研发、材料设计、气候模拟和天文发现中缩短周期，成为科学家的“第二大脑”。",
+        },
+      ],
+      chips: [
+        {
+          label: "诺贝尔奖",
+          text: "物理学奖：神经网络；化学奖：AlphaFold",
+        },
+        {
+          label: "应用方向",
+          text: "蛋白质、材料、药物、气候与天文",
+        },
+      ],
+      note: "AI 不再只是“预测工具”，而是能够提出假设、设计实验并发现规律的科研伙伴。",
+    },
+    {
+      id: "2025",
+      year: "2025",
+      title: "Agent 与推理模型元年",
+      short: "从回答问题到完成任务",
+      summary:
+        "2025 年，大模型从“会对话”向“会推理、会执行”演进。深度推理模型和 AI Agent 开始自主拆解任务、调用工具并完成多步操作。",
+      sections: [
+        {
+          title: "推理能力跃升",
+          body: "o3、o4-mini、GPT-5、DeepSeek-R1 等模型通过思维链、搜索与强化学习提升复杂数学、编程和科学推理能力。模型不再只依赖单次直觉回答，而是会“先思考再回答”。",
+        },
+        {
+          title: "智能体与自主工作流",
+          body: "编码智能体、计算机操作智能体、多智能体协作系统开始进入真实工作流，能够阅读代码、运行测试、操作软件和处理重复任务。AI 的角色从助手变成协作者与执行者。",
+        },
+      ],
+      chips: [
+        {
+          label: "关键技术",
+          text: "思维链、强化学习、工具调用、多智能体协作",
+        },
+        {
+          label: "行业变化",
+          text: "软件工程、客服、数据分析和研究岗位出现新的 AI 工作方式",
+        },
+      ],
+      note: "智能体让 AI 的边界从“生成内容”扩展到“完成目标”，成为通用人工智能发展的重要一步。",
+    },
+    {
+      id: "2026",
+      year: "2026",
+      title: "具身智能与可信 AI",
+      short: "走向物理世界与负责任治理",
+      summary:
+        "2026 年，AI 加速进入物理世界：人形机器人在工厂、物流和家庭场景落地，同时全球监管与安全研究同步强化，让技术发展更强调可控与可信。",
+      sections: [
+        {
+          title: "具身智能落地",
+          body: "大模型赋予机器人更强的感知、规划与操作能力，Optimus、Walker S、G1 等人形机器人从实验室走向产线巡检、搬运和养老服务。具身智能开始把数字智能转化为物理行动。",
+        },
+        {
+          title: "治理、安全与对齐",
+          body: "欧盟《AI 法案》进入执行阶段，中国持续完善生成式 AI 监管，行业建立更严格的安全评测、幻觉检测与可解释性标准。AI 对齐、安全审计和模型责任机制成为产品开发的基本要求。",
         },
       ],
       chips: [
         {
           label: "代表方向",
-          text: "多模态大模型、具身智能、AI for Science、AI 治理",
+          text: "人形机器人、世界模型、AI 安全与对齐",
         },
         {
-          label: "核心趋势",
-          text: "从感知、决策到物理世界交互，AI 正成为人类认知与能力的延伸",
+          label: "长期命题",
+          text: "在能力快速扩张的同时，确保 AI 公平、安全、可解释且对人类有益",
         },
       ],
-      note: "下一个里程碑不仅取决于算力与算法，也取决于人类在技术洪流中如何构建安全、公平与可信的治理体系。",
+      note: "下一个里程碑不仅取决于模型能力，更取决于人类如何让强大技术沿着安全、公平与可信的方向发展。",
     },
   ];
 
@@ -301,6 +380,17 @@
     )
     .join("");
 
+  function scrollDetail(smooth) {
+    const target = document.getElementById("detail-panel");
+    const header = document.querySelector(".site-header");
+    const headerHeight = header ? header.getBoundingClientRect().height : 72;
+    const top = Math.max(
+      0,
+      target.getBoundingClientRect().top + window.scrollY - headerHeight - 16,
+    );
+    window.scrollTo({ top, behavior: smooth ? "smooth" : "auto" });
+  }
+
   list.addEventListener("click", (event) => {
     const btn = event.target.closest(".milestone-button");
     if (!btn) return;
@@ -311,12 +401,14 @@
     } catch (_) {
       // 本地文件打开时不强制改写地址栏。
     }
-    document.getElementById("detail-panel").scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    scrollDetail(true);
   });
 
   const initial = new URLSearchParams(window.location.search).get("year");
   setActive(initial || milestones[0].id);
+  if (initial) {
+    requestAnimationFrame(function () {
+      scrollDetail(false);
+    });
+  }
 })();

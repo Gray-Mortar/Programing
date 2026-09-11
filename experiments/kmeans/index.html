@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K-Means 聚类 - ML Learn</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="../experiments.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../../index.html"
+          ><span class="brand-mark">ML</span><span>ML Learn</span></a
+        >
+        <nav class="main-nav">
+          <a href="../../index.html">首页</a
+          ><a href="../../history/index.html">了解历史</a
+          ><a href="../../course/index.html">课程</a
+          ><a href="../../course/practice/index.html">互动练习</a
+          ><a class="active" href="../index.html">可视化实验</a
+          ><a href="../../account/profile.html">学习情况</a
+          ><a href="../../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a
+            class="button button-secondary"
+            id="login-button"
+            href="../../account/login.html"
+            >登录</a
+          ><a
+            class="button button-primary"
+            id="register-button"
+            href="../../account/register.html"
+            >注册</a
+          ><a
+            class="account-user"
+            id="account-user"
+            href="../../account/profile.html"
+            data-profile-href="../../account/profile.html"
+            hidden
+            >我的账号</a
+          >
+        </div>
+      </div>
+    </header>
+    <main class="experiment-page">
+      <div class="experiment-shell">
+        <p class="experiment-breadcrumb">
+          <a href="../../index.html">首页</a> /
+          <a href="../index.html">可视化实验</a> / K-Means 聚类
+        </p>
+        <section class="experiment-hero">
+          <div>
+            <p class="eyebrow">实验 03 · K-MEANS</p>
+            <h1>K-Means 聚类</h1>
+            <p>
+              添加或生成样本数据，观察样本如何被分配到最近质心，并在迭代中逐步收敛。
+            </p>
+          </div>
+          <div class="experiment-badge">无监督聚类 · K=2-6</div>
+        </section>
+        <section class="experiment-card">
+          <h2>聚类实验台</h2>
+          <p>左侧调整参数，中间观察聚类过程，右侧查看数据点与收敛指标。</p>
+          <div class="experiment-grid">
+            <aside class="experiment-panel">
+              <h3>聚类参数</h3>
+              <div class="control-group">
+                <label>簇数量 K <output id="k-value">3</output></label>
+                <input
+                  type="range"
+                  id="k-slider"
+                  min="2"
+                  max="6"
+                  step="1"
+                  value="3"
+                />
+              </div>
+              <div class="control-group">
+                <label>动画速度 <output id="speed-value">5</output></label>
+                <input
+                  type="range"
+                  id="speed-slider"
+                  min="1"
+                  max="10"
+                  step="1"
+                  value="5"
+                />
+              </div>
+              <div class="kmeans-actions">
+                <button
+                  class="button button-primary"
+                  id="start-btn"
+                  type="button"
+                >
+                  自动运行
+                </button>
+                <button
+                  class="button button-secondary"
+                  id="step-btn"
+                  type="button"
+                >
+                  单步执行
+                </button>
+                <button
+                  class="button button-secondary kmeans-action-green"
+                  id="gen-btn"
+                  type="button"
+                >
+                  随机生成
+                </button>
+                <button
+                  class="button button-secondary kmeans-action-danger"
+                  id="reset-btn"
+                  type="button"
+                >
+                  清空数据
+                </button>
+              </div>
+              <p class="kmeans-help">
+                在画布上点击可以添加数据点，设置 K 值后再开始聚类。
+              </p>
+            </aside>
+            <div class="experiment-panel canvas-panel">
+              <h3>聚类过程</h3>
+              <div class="kmeans-canvas-box">
+                <canvas id="canvas" width="700" height="500"></canvas>
+              </div>
+              <p class="knn-chart-caption" id="coord-display">
+                鼠标坐标: (-, -)
+              </p>
+              <div class="kmeans-legend">
+                <span
+                  ><i class="kmeans-swatch kmeans-dot-swatch"></i>样本点</span
+                >
+                <span
+                  ><i class="kmeans-swatch kmeans-cross-swatch"></i>质心</span
+                >
+              </div>
+            </div>
+            <aside class="experiment-panel">
+              <h3>运行指标</h3>
+              <div class="result-card">
+                <span class="result-label">数据点数</span>
+                <strong class="result-value" id="point-count">0</strong>
+              </div>
+              <div class="kmeans-stat-grid">
+                <div class="kmeans-stat-item">
+                  <span>迭代次数</span>
+                  <strong id="iter-count">0</strong>
+                </div>
+                <div class="kmeans-stat-item">
+                  <span>SSE</span>
+                  <strong id="sse-value">0</strong>
+                </div>
+              </div>
+              <div class="kmeans-status" id="status">状态：就绪</div>
+            </aside>
+          </div>
+        </section>
+        <section class="experiment-card experiment-guide">
+          <p class="eyebrow">实验说明</p>
+          <h2>实验步骤与原理</h2>
+          <div class="experiment-guide-grid">
+            <div>
+              <h3>实验步骤</h3>
+              <ol class="guide-steps">
+                <li>
+                  <strong>准备数据</strong>
+                  <p>点击画布添加数据点，或点击“随机生成”创建示例数据。</p>
+                </li>
+                <li>
+                  <strong>设置 K 值</strong>
+                  <p>用滑块选择需要划分的簇数量。</p>
+                </li>
+                <li>
+                  <strong>初始化质心</strong>
+                  <p>系统随机选择 K 个初始质心。</p>
+                </li>
+                <li>
+                  <strong>分配样本</strong>
+                  <p>把每个数据点分配到距离最近的质心。</p>
+                </li>
+                <li>
+                  <strong>更新质心</strong>
+                  <p>用每个簇内点的均值更新质心，重复迭代直到收敛。</p>
+                </li>
+              </ol>
+            </div>
+            <div class="guide-principle">
+              <h3>算法原理</h3>
+              <p>
+                K-Means 是一种无监督聚类算法，目标是把数据划分成 K
+                个簇，并最小化每个点到所属质心的平方距离和，也就是 SSE。
+              </p>
+              <p>
+                算法通过“分配样本—更新质心”的交替迭代逼近局部最优。K
+                需要提前指定，更适合簇形状接近球状、规模相近的数据。
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../../index.html"
+            ><span class="brand-mark">ML</span><span>ML Learn</span></a
+          >
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../../index.html">首页</a
+          ><a href="../knn-iris/index.html">KNN 实验</a
+          ><a href="index.html">K-Means 实验</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+    <script src="../../account/auth.js"></script>
+    <script src="../../account/session.js"></script>
+    <script src="kmeans.js"></script>
+  </body>
+</html>

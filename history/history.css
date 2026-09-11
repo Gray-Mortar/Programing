@@ -51,28 +51,36 @@
   opacity: 0.9;
 }
 
+.history-timeline::after {
+  content: "";
+  position: absolute;
+  top: 204px;
+  left: 0;
+  right: calc(100% / 6);
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--teal), var(--amber));
+  border-radius: 999px;
+  opacity: 0.9;
+}
+
 .timeline-scroller {
-  display: flex;
-  gap: 18px;
-  overflow-x: auto;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: 116px 116px;
+  gap: 22px 18px;
+  overflow: visible;
   padding: 0 2px 14px;
-  scrollbar-width: thin;
-  scrollbar-color: #cbc5e8 transparent;
 }
 
 .timeline-scroller::-webkit-scrollbar {
-  height: 8px;
-}
-
-.timeline-scroller::-webkit-scrollbar-thumb {
-  background: #cbc5e8;
-  border-radius: 999px;
+  display: none;
 }
 
 .milestone-button {
   position: relative;
   display: flex;
-  flex: 0 0 148px;
+  width: 100%;
+  min-width: 0;
   min-height: 116px;
   flex-direction: column;
   align-items: center;
@@ -158,6 +166,7 @@
 .detail-shell {
   margin-top: 28px;
   padding: 34px;
+  scroll-margin-top: 100px;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--line);
   border-radius: 18px;
@@ -253,11 +262,22 @@
   }
 
   .timeline-scroller {
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto;
+    gap: 18px 12px;
+    overflow: visible;
   }
 
   .milestone-button {
-    flex-basis: 126px;
+    width: 100%;
+    min-width: 0;
+    min-height: 108px;
+  }
+
+  .history-timeline::before,
+  .history-timeline::after {
+    display: none;
   }
 
   .detail-shell {

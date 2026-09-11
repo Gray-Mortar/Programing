@@ -189,6 +189,63 @@
   font-size: 21px;
 }
 
+.profile-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.profile-section-heading h2 {
+  margin: 0;
+}
+
+.profile-edit-button {
+  min-height: 38px;
+  padding: 6px 16px;
+}
+
+.profile-edit-panel {
+  display: grid;
+  gap: 18px;
+  margin-top: 16px;
+  padding: 20px;
+  background: var(--white);
+  border: 1px solid var(--account-border);
+  border-radius: 12px;
+}
+
+.profile-edit-panel[hidden] {
+  display: none;
+}
+
+.profile-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.profile-edit-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.profile-edit-status {
+  min-height: 22px;
+  margin: 0;
+  color: var(--account-muted);
+  font-size: 14px;
+}
+
+.profile-edit-status.is-error {
+  color: #b42318;
+}
+
+.profile-edit-status.is-success {
+  color: #197a47;
+}
+
 .profile-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -258,7 +315,8 @@
   }
 
   .profile-info-grid,
-  .profile-status-grid {
+  .profile-status-grid,
+  .profile-edit-grid {
     grid-template-columns: 1fr;
   }
 }
