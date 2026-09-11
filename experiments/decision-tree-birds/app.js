@@ -12,9 +12,9 @@ const elements = {
   tray: $("#animal-tray"), count: $("#sample-count"), hint: $("#selection-hint"),
   featureList: $("#feature-list"), question: $("#current-question-text"),
   yesHeading: $("#yes-heading"), noHeading: $("#no-heading"), yesZone: $("#yes-dropzone"), noZone: $("#no-dropzone"),
-  yesCount: $("#yes-count"), noCount: $("#no-count"), start: $("#start-filter"), reset: $("#reset-experiment"),
+  yesCount: $("#yes-count"), noCount: $("#no-count"), start: $("#start-filter"), reset: $("#reset-experiment"), quickAnalysis: $("#quick-analysis"),
   robot: $("#lab-robot"), robotFrame: $("#lab-robot-frame"), message: $("#robot-message"), manualError: $("#manual-error"), skip: $("#skip-animation"),
-  tree: $("#tree-canvas"), challenge: $("#challenge-sample"), challengeDescription: $("#challenge-description"),
+  tree: $("#tree-canvas"), challenge: $("#challenge-sample"), challengeDescription: $("#challenge-description"), challengeComparison: $("#challenge-comparison"),
   progressValue: $(".hero-progress strong"), progressBar: $(".progress-track i"),
   filterView: $("#filter-view"), analysisView: $("#analysis-view"), analysisTree: $("#analysis-tree"),
   analysisRobot: $("#analysis-robot"), analysisCard: $("#analysis-card"), analysisTag: $("#analysis-tag"),
@@ -172,8 +172,10 @@ function resetAll() {
   elements.message.classList.remove("is-complete"); elements.message.textContent = "我在这里待机，将按你排列的顺序逐层筛选。";
   elements.challenge.disabled = true; elements.challenge.className = "locked-sample";
   elements.challenge.innerHTML = "<span>?</span><strong>神秘动物</strong><small>完成学习后解锁</small>";
+  elements.challenge.setAttribute("aria-expanded", "false");
   elements.challenge.setAttribute("aria-label", "神秘挑战样本尚未解锁");
   elements.challengeDescription.textContent = "完成指标学习后，神秘动物才会出现。";
+  elements.challengeComparison.hidden = true; elements.challengeComparison.innerHTML = "";
   $(".challenge-result")?.remove(); setProgress(1); refreshOrder(); updateSummary();
 }
 
@@ -365,6 +367,17 @@ function enterAnalysis() {
   elements.analysisView.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function quickEnterAnalysis() {
+  runToken += 1;
+  running = false; skipRequested = false; awaitingNext = false;
+  elements.skip.hidden = true; elements.manualError.hidden = true;
+  if (!started) beginExperiment();
+  recalculateForCurrentOrder();
+  elements.message.classList.add("is-complete");
+  elements.message.textContent = "已跳过搬运动画，并按当前顺序完成四层筛选。";
+  enterAnalysis();
+}
+
 function moveAnalysis(direction) {
   const steps = analysisSteps();
   const next = Math.max(0, Math.min(steps.length - 1, analysisStep + direction));
@@ -378,17 +391,49 @@ function moveAnalysis(direction) {
 
 function unlockChallenge() {
   elements.challenge.disabled = false; elements.challenge.className = "locked-sample is-unlocked";
-  elements.challenge.innerHTML = `<img src="${challengeAnimal.image}" alt="" /><strong>${challengeAnimal.name}</strong><small>点击放入四层决策树</small>`;
+  elements.challenge.setAttribute("aria-expanded", "false");
+  elements.challenge.innerHTML = `<img src="${challengeAnimal.image}" alt="" /><strong>${challengeAnimal.name}</strong><small>点击比较两棵树</small>`;
   elements.challengeDescription.textContent = "训练数据中的鸵鸟已经是“不会飞的鸟类”反例。现在神秘动物揭晓：企鹅，点击它检验这棵树能否推广到新样本。";
+  elements.challengeComparison.hidden = true;
+  elements.challengeComparison.innerHTML = "";
   elements.start.disabled = true; elements.start.textContent = "四层建树完成"; setProgress(4);
 }
 
 function testChallenge() {
-  if (history.length < 4) return; const failed = featureOrder.findIndex((feature) => !challengeAnimal[feature]); const correct = failed < 0;
-  elements.challenge.classList.toggle("is-error", !correct); elements.challenge.classList.toggle("is-success", correct);
-  let result = $(".challenge-result"); if (!result) { result = document.createElement("p"); elements.challengeDescription.after(result); }
-  result.className = `challenge-result ${correct ? "success" : "error"}`;
-  result.textContent = correct ? "判断正确：企鹅通过四层筛选，被保留为鸟类。" : `出现误判：企鹅在第 ${failed + 1} 层“${featureInfo[featureOrder[failed]].name}”回答“否”并退出，但企鹅和训练数据中的鸵鸟一样，都是不会飞的鸟类。`;
+  if (history.length < 4) return;
+  const failed = featureOrder.findIndex((feature) => !challengeAnimal[feature]);
+  const originalPath = featureOrder.slice(0, failed < 0 ? featureOrder.length : failed + 1).map((feature, index, path) => {
+    const answer = Boolean(challengeAnimal[feature]);
+    return `<div class="challenge-route-node"><small>第 ${index + 1} 层</small><strong>${featureInfo[feature].name}</strong><span class="route-answer ${answer ? "is-yes" : "is-no"}">${answer ? featureInfo[feature].yes : featureInfo[feature].no}</span></div>${index < path.length - 1 ? '<i class="route-arrow" aria-hidden="true">→</i>' : ""}`;
+  }).join("");
+
+  elements.challengeComparison.innerHTML = `
+    <article class="challenge-tree is-wrong">
+      <header><div><small>原来的四层树</small><h3>所有条件都必须回答“是”</h3></div><b>误判</b></header>
+      <div class="penguin-route">
+        <div class="route-animal"><img src="${challengeAnimal.image}" alt="企鹅" /><strong>企鹅</strong></div>
+        <i class="route-arrow" aria-hidden="true">→</i>
+        <div class="challenge-route-steps">${originalPath}<i class="route-arrow" aria-hidden="true">→</i><div class="challenge-route-result is-wrong"><strong>非鸟类</strong><span>错误：企鹅被提前排除</span></div></div>
+      </div>
+      <p>企鹅在第 ${failed + 1} 层“${featureInfo[featureOrder[failed]].name}”回答“否”，因此没有机会继续证明自己有羽毛。</p>
+    </article>
+    <article class="challenge-tree is-correct">
+      <header><div><small>改进后的决策树</small><h3>先判断真正能区分类别的特征</h3></div><b>正确</b></header>
+      <div class="penguin-route">
+        <div class="route-animal"><img src="${challengeAnimal.image}" alt="企鹅" /><strong>企鹅</strong></div>
+        <i class="route-arrow" aria-hidden="true">→</i>
+        <div class="challenge-route-steps"><div class="challenge-route-node"><small>关键节点</small><strong>是否有羽毛</strong><span class="route-answer is-yes">有羽毛</span></div><i class="route-arrow" aria-hidden="true">→</i><div class="challenge-route-result is-correct"><strong>鸟类</strong><span>正确保留企鹅</span></div></div>
+      </div>
+      <p>“会飞”不是鸟类的必要条件；把“有羽毛”作为关键划分，企鹅和鸵鸟都不会再被误排。</p>
+    </article>`;
+  elements.challengeComparison.hidden = false;
+  elements.challenge.setAttribute("aria-expanded", "true");
+  elements.challenge.classList.add("is-success");
+  elements.challenge.querySelector("small").textContent = "已展示，点击可重新播放";
+  elements.challengeComparison.classList.remove("is-replaying");
+  void elements.challengeComparison.offsetWidth;
+  elements.challengeComparison.classList.add("is-replaying");
+  elements.challengeComparison.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function beginExperiment() {
@@ -439,7 +484,7 @@ function manualDrop(animalId, answer) {
   option.addEventListener("keydown", (event) => { if (!orderEditable() || !["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) return; event.preventDefault(); const before = ["ArrowLeft", "ArrowUp"].includes(event.key); const sibling = before ? option.previousElementSibling : option.nextElementSibling; if (!sibling) return; elements.featureList.insertBefore(before ? option : sibling, before ? sibling : option); refreshOrder(); option.focus(); });
 });
 
-elements.start.addEventListener("click", startFiltering); elements.reset.addEventListener("click", resetAll);
+elements.start.addEventListener("click", startFiltering); elements.reset.addEventListener("click", resetAll); elements.quickAnalysis.addEventListener("click", quickEnterAnalysis);
 elements.skip.addEventListener("click", () => { if (running) { skipRequested = true; elements.skip.disabled = true; elements.message.textContent = "正在快速完成本层剩余分类…"; } });
 elements.challenge.addEventListener("click", testChallenge);
 elements.analysisRobot.addEventListener("click", () => moveAnalysis(1));

@@ -373,7 +373,7 @@
     .map(
       (m) => `
       <button class="milestone-button" type="button" data-year="${m.id}" aria-pressed="false">
-        <span class="milestone-dot" aria-hidden="true">${m.year.slice(0, 4)}</span>
+        <span class="milestone-dot" aria-hidden="true"></span>
         <strong>${m.year}</strong>
         <span>${m.short}</span>
       </button>`

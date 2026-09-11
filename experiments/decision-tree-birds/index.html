@@ -68,6 +68,7 @@
               <div class="control-actions">
                 <button class="primary-button" id="start-filter" type="button">请机器人开始筛选</button>
                 <button class="secondary-button reset-button" id="reset-experiment" type="button">重新开始</button>
+                <button class="secondary-button quick-analysis-button" id="quick-analysis" type="button">快速进入结果分析</button>
               </div>
             </div>
             <p class="build-note" id="feature-tip" hidden>先看看「能否飞行」会不会产生错误。</p>
@@ -153,7 +154,8 @@
 
         <section class="challenge-panel panel" id="analysis-challenge" hidden>
           <div class="challenge-copy"><span class="step-number">✓</span><div><p class="eyebrow">最终挑战</p><h2>用新动物检验决策树</h2><p id="challenge-description">完成指标学习后，神秘动物才会出现。</p></div></div>
-          <button class="locked-sample" id="challenge-sample" type="button" disabled aria-label="神秘挑战样本尚未解锁"><span>?</span><strong>神秘动物</strong><small>完成学习后解锁</small></button>
+          <button class="locked-sample" id="challenge-sample" type="button" disabled aria-label="神秘挑战样本尚未解锁" aria-expanded="false"><span>?</span><strong>神秘动物</strong><small>完成学习后解锁</small></button>
+          <div class="challenge-comparison" id="challenge-comparison" hidden aria-live="polite"></div>
         </section>
       </div>
     </section>
