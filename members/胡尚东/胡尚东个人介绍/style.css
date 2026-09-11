@@ -1,0 +1,209 @@
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    background: linear-gradient(135deg, #fdf6ec 0%, #fbeede 40%, #f7e7d3 100%);
+    min-height: 100vh;
+    color: #3d2f24;
+    line-height: 1.7;
+    padding: 40px 20px;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(160, 120, 70, 0.18);
+    overflow: hidden;
+  }
+
+  /* 顶部横幅 */
+  .hero {
+    background: linear-gradient(120deg, #e8874b 0%, #d96b3f 45%, #c2542f 100%);
+    color: #fff;
+    padding: 46px 50px 40px;
+    position: relative;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    right: -40px;
+    top: -40px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .hero h1 {
+    font-size: 40px;
+    letter-spacing: 4px;
+    font-weight: 700;
+  }
+  .hero .sub {
+    margin-top: 10px;
+    font-size: 17px;
+    opacity: 0.95;
+    letter-spacing: 1px;
+  }
+  .hero .tags {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .hero .tags span {
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 4px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  /* 主内容：左文右图 */
+  .main {
+    display: flex;
+    gap: 36px;
+    padding: 40px 50px 46px;
+  }
+  .text-side { flex: 1.25; }
+  .photo-side { flex: 0.85; }
+
+  .section {
+    margin-bottom: 28px;
+  }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 19px;
+    font-weight: 700;
+    color: #c2542f;
+    margin-bottom: 12px;
+  }
+  .section-title::before {
+    content: "";
+    width: 6px;
+    height: 18px;
+    border-radius: 3px;
+    background: linear-gradient(#e8874b, #c2542f);
+  }
+
+  /* 基本信息表 */
+  .info-list { list-style: none; }
+  .info-list li {
+    display: flex;
+    align-items: baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e8d8c6;
+    font-size: 15px;
+  }
+  .info-list li:last-child { border-bottom: none; }
+  .info-list .label {
+    width: 88px;
+    flex-shrink: 0;
+    color: #a0744f;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* 爱好卡片 */
+  .hobby-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .hobby-card {
+    background: #fff8ef;
+    border: 1px solid #f0dfc8;
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .hobby-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(160, 120, 70, 0.15);
+  }
+  .hobby-card .icon { font-size: 24px; }
+  .hobby-card h3 {
+    font-size: 16px;
+    margin: 6px 0 6px;
+    color: #8a4b28;
+  }
+  .hobby-card p {
+    font-size: 13.5px;
+    color: #6b5543;
+    line-height: 1.65;
+  }
+
+  /* 自我介绍段落 */
+  .intro-text p {
+    font-size: 15px;
+    margin-bottom: 12px;
+    text-align: justify;
+  }
+  .intro-text p:last-child { margin-bottom: 0; }
+
+  /* 座右铭 */
+  .quote {
+    background: linear-gradient(120deg, #fff3e2, #fdecd6);
+    border-left: 4px solid #e8874b;
+    border-radius: 0 12px 12px 0;
+    padding: 14px 18px;
+    font-size: 15px;
+    color: #8a4b28;
+    font-style: italic;
+    margin-top: 6px;
+  }
+  .quote b { font-style: normal; font-weight: 700; }
+
+  /* 照片区 */
+  .photo-side { display: flex; flex-direction: column; align-items: center; }
+  .photo-frame {
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 14px 34px rgba(120, 85, 45, 0.28);
+    border: 6px solid #fff;
+    background: #fff;
+  }
+  .photo-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+  }
+  .photo-caption {
+    margin-top: 14px;
+    font-size: 13px;
+    color: #a0744f;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  /* 页脚 */
+  .footer {
+    text-align: center;
+    padding: 18px 20px 22px;
+    font-size: 13px;
+    color: #b49a7c;
+    background: rgba(0, 0, 0, 0.02);
+    letter-spacing: 1px;
+  }
+
+  /* 响应式 */
+  @media (max-width: 760px) {
+    .hero { padding: 34px 26px; }
+    .hero h1 { font-size: 30px; }
+    .main {
+      flex-direction: column-reverse;
+      padding: 26px 24px 32px;
+      gap: 28px;
+    }
+    .photo-frame img { aspect-ratio: 4 / 3; }
+    .hobby-grid { grid-template-columns: 1fr; }
+  }
+</style>
