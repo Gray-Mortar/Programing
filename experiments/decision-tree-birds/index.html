@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="排列四个筛选问题，观察机器人如何逐层构建鸟类决策树，并理解基尼系数与信息熵。" />
+    <meta name="description" content="排列四个筛选问题，观察 Iris 如何逐层构建鸟类决策树，并理解基尼系数与信息熵。" />
     <title>鸟类决策树实验 - ML Learn</title>
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="style.css" />
@@ -39,8 +39,8 @@
         <section class="lab-hero">
           <div>
             <p class="eyebrow">实验 03 · Decision Tree</p>
-            <h1>帮机器人找出鸟类</h1>
-            <p class="hero-copy">排列四个筛选问题，让机器人逐层保留符合条件的动物，并观察一棵决策树如何形成。</p>
+            <h1>帮 Iris 找出鸟类</h1>
+            <p class="hero-copy">排列四个筛选问题，让 Iris 逐层保留符合条件的动物，并观察一棵决策树如何形成。</p>
           </div>
           <div class="hero-progress" aria-label="实验共四个阶段，当前处于第一个阶段">
             <span>实验进度</span>
@@ -66,7 +66,7 @@
                 <button class="feature-option" type="button" draggable="true" data-feature="feathers"><em>4</em><span><b>是否有羽毛</b><small>拖动调整顺序</small></span><i aria-hidden="true">⋮⋮</i></button>
               </div>
               <div class="control-actions">
-                <button class="primary-button" id="start-filter" type="button">请机器人开始筛选</button>
+                <button class="primary-button" id="start-filter" type="button">请 Iris 开始筛选</button>
                 <button class="secondary-button reset-button" id="reset-experiment" type="button">重新开始</button>
                 <button class="secondary-button quick-analysis-button" id="quick-analysis" type="button">快速进入结果分析</button>
               </div>
@@ -85,12 +85,12 @@
               <p class="selection-hint" id="selection-hint" aria-live="polite">点击选择，或直接拖动卡片进行分类。</p>
             </aside>
 
-            <div class="robot-overlay" id="sorting-stage" aria-label="机器人悬浮动画层">
+            <div class="robot-overlay" id="sorting-stage" aria-label="Iris 悬浮动画层">
               <div class="robot-lane" id="robot-home">
-                <div class="lab-robot" id="lab-robot" aria-label="机器人正在中央等待">
+                <div class="lab-robot" id="lab-robot" aria-label="Iris 正在中央等待">
                   <img id="lab-robot-frame" src="assets/robot-frames/walk-0.png" alt="" />
                 </div>
-                <div class="robot-message" id="robot-message" aria-live="polite">我在这里待机，可以自动分类，也能帮你纠正。</div>
+                <div class="robot-message" id="robot-message" aria-live="polite">我是 Iris，可以自动分类，也能帮你纠正。</div>
                 <div class="manual-error" id="manual-error" hidden role="alert" aria-label="分类错误提示预留区域"></div>
                 <button class="skip-animation" id="skip-animation" type="button" hidden>跳过动画</button>
               </div>
@@ -141,8 +141,8 @@
 
           <section class="lesson-shell">
             <div class="lesson-progress" aria-label="讲解进度"><span class="is-on"></span><span></span><span></span><span></span><span></span><span></span><span></span><small id="analysis-step-label">思考 1 / 7</small></div>
-            <ml-peek-robot id="analysis-robot" src="assets/robot-peek-transparent.png" label="点我继续" accessible-label="点击小机器人进入下一步"></ml-peek-robot>
             <article class="lesson-card panel" id="analysis-card" aria-live="polite">
+              <iris-peek id="analysis-robot" label="点我继续" accessible-label="点击 Iris 进入下一步"></iris-peek>
               <p class="lesson-tag" id="analysis-tag"></p>
               <h2 id="analysis-title"></h2>
               <p class="lesson-copy" id="analysis-copy"></p>
@@ -181,7 +181,7 @@
     <script src="../../account/auth.js"></script>
     <script src="../../account/session.js"></script>
     <script src="animals-data.js"></script>
-    <script src="components/peek-robot.js"></script>
+    <script src="../../components/iris-peek.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

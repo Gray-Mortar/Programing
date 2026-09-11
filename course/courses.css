@@ -267,11 +267,36 @@
   gap: 20px;
 }
 
+.course-choice-grid {
+  margin-bottom: 110px;
+}
+
 .course-link-card {
   padding: 26px;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 16px;
+}
+
+.course-choice-card {
+  position: relative;
+  z-index: 1;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.course-choice-card.is-iris-active {
+  z-index: 2;
+  border-color: #cfc4ee;
+  box-shadow: 0 12px 30px rgba(77, 53, 144, 0.1);
+}
+
+.course-choice-card iris-peek {
+  --iris-width: 220px;
+  --iris-height: 110px;
+  --iris-left: calc(50% - 110px);
+  --iris-edge-overlap: 12px;
 }
 
 .course-link-card:hover {
@@ -815,6 +840,10 @@
 
   .matching-target-card {
     grid-template-columns: minmax(0, 1fr) minmax(170px, 0.72fr);
+  }
+
+  .course-choice-grid {
+    row-gap: 130px;
   }
 }
 

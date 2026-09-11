@@ -66,28 +66,31 @@
           </div>
         </section>
 
-        <div class="course-grid">
-          <article class="course-link-card">
+        <div class="course-grid course-choice-grid">
+          <article class="course-link-card course-choice-card">
             <span class="course-number">01</span>
             <h2>基础知识</h2>
             <p>
               系统学习机器学习全景、数学统计、数据与特征、评估验证、调参优化、工程化和模型治理。
             </p>
             <a href="basics/index.html">进入基础知识 →</a>
+            <iris-peek placement="bottom" passive animated></iris-peek>
           </article>
-          <article class="course-link-card">
+          <article class="course-link-card course-choice-card">
             <span class="course-number">02</span>
             <h2>经典算法</h2>
             <p>
               按回归、分类、树模型、集成学习、聚类降维和神经网络理解算法原理与使用边界。
             </p>
             <a href="algorithms/index.html">进入经典算法 →</a>
+            <iris-peek placement="bottom" passive animated></iris-peek>
           </article>
-          <article class="course-link-card">
+          <article class="course-link-card course-choice-card">
             <span class="course-number">03</span>
             <h2>互动练习</h2>
             <p>题库使用独立数据文件维护，新增题目无需反复修改页面结构。</p>
             <a href="practice/index.html">进入互动练习 →</a>
+            <iris-peek placement="bottom" passive animated></iris-peek>
           </article>
         </div>
       </div>
@@ -114,5 +117,7 @@
 
     <script src="../account/auth.js"></script>
     <script src="../account/session.js"></script>
+    <script src="../components/iris-peek.js"></script>
+    <script src="course-choice.js"></script>
   </body>
 </html>
