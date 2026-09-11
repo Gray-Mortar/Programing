@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2720" height="1560" viewBox="0 0 2720 1560">
+  <rect width="2720" height="1560" fill="#ffffff"/>
+  <g fill="#000" font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="1250" y="60" width="220" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="1360" y="112" text-anchor="middle" font-size="40" font-weight="700">首页</text>
+
+    <rect x="70" y="300" width="250" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="195" y="352" text-anchor="middle" font-size="34" font-weight="700">了解历史</text>
+    <rect x="420" y="300" width="250" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="545" y="352" text-anchor="middle" font-size="34" font-weight="700">课程</text>
+    <rect x="790" y="300" width="250" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="915" y="352" text-anchor="middle" font-size="34" font-weight="700">互动练习</text>
+    <rect x="1160" y="300" width="250" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="1285" y="352" text-anchor="middle" font-size="34" font-weight="700">可视化实验</text>
+    <rect x="1530" y="300" width="250" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="1655" y="352" text-anchor="middle" font-size="34" font-weight="700">学习情况</text>
+    <rect x="1900" y="300" width="250" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="2025" y="352" text-anchor="middle" font-size="34" font-weight="700">关于我们</text>
+    <rect x="2280" y="300" width="250" height="76" fill="none" stroke="#000" stroke-width="2.4"/>
+    <text x="2405" y="352" text-anchor="middle" font-size="34" font-weight="700">账户</text>
+
+    <path d="M1360 136 V218 H195 V300" fill="none" stroke="#000" stroke-width="2.2"/>
+    <path d="M1360 136 V218 H545 V300" fill="none" stroke="#000" stroke-width="2.2"/>
+    <path d="M1360 136 V218 H915 V300" fill="none" stroke="#000" stroke-width="2.2"/>
+    <path d="M1360 136 V218 H1285 V300" fill="none" stroke="#000" stroke-width="2.2"/>
+    <path d="M1360 136 V218 H1655 V300" fill="none" stroke="#000" stroke-width="2.2"/>
+    <path d="M1360 136 V218 H2025 V300" fill="none" stroke="#000" stroke-width="2.2"/>
+    <path d="M1360 136 V218 H2405 V300" fill="none" stroke="#000" stroke-width="2.2"/>
+
+    <g stroke="#000" stroke-width="2.2" fill="none">
+      <path d="M195 376 V1120 M195 470 H240"/>
+      <path d="M545 376 V1120 M545 470 H590"/>
+      <path d="M915 376 V700 M915 470 H960"/>
+      <path d="M1285 376 V700 M1285 470 H1330"/>
+      <path d="M1655 376 V860 M1655 470 H1700"/>
+      <path d="M2025 376 V700 M2025 470 H2070"/>
+      <path d="M2405 376 V620 M2405 470 H2450"/>
+    </g>
+
+    <g font-size="25">
+      <text x="260" y="438">1950 图灵测试</text>
+      <text x="260" y="518">1957 感知机诞生</text>
+      <text x="260" y="598">1986 反向传播算法</text>
+      <text x="260" y="678">1997 深蓝击败棋王</text>
+      <text x="260" y="758">2012 深度学习崛起</text>
+      <text x="260" y="838">2016 AlphaGo 获胜</text>
+      <text x="260" y="918">2022 大语言模型</text>
+      <text x="260" y="998">2024-2026 多模态</text>
+      <text x="260" y="1078">2024-2026 具身智能</text>
+
+      <text x="610" y="438">基础知识</text>
+      <text x="610" y="518">机器学习全景</text>
+      <text x="610" y="598">数学统计 / 数据特征</text>
+      <text x="610" y="678">评估验证 / 调参优化</text>
+      <text x="610" y="758">工程化 / 模型治理</text>
+      <text x="610" y="838">经典算法</text>
+      <text x="610" y="918">线性回归 / 逻辑回归</text>
+      <text x="610" y="998">KNN / 决策树 / 提升树</text>
+      <text x="610" y="1078">聚类降维 / 神经网络</text>
+
+      <text x="980" y="438">判断题</text>
+      <text x="980" y="518">选择题</text>
+      <text x="980" y="598">填空题</text>
+      <text x="980" y="678">章节筛选</text>
+      <text x="980" y="758">随机出题</text>
+
+      <text x="1350" y="438">手写数字识别</text>
+      <text x="1350" y="518">Canvas 画板</text>
+      <text x="1350" y="598">本地模型识别</text>
+      <text x="1350" y="678">KNN 鸢尾花分类</text>
+      <text x="1350" y="758">邻居可视化 / 存档</text>
+
+      <text x="1720" y="438">个人资料</text>
+      <text x="1720" y="518">课程进度</text>
+      <text x="1720" y="598">实验记录</text>
+      <text x="1720" y="678">挑战成绩</text>
+      <text x="1720" y="758">最近学习</text>
+
+      <text x="2090" y="438">项目成员</text>
+      <text x="2090" y="518">姚凌宇 / 丁子杰</text>
+      <text x="2090" y="598">曹航溪 / 胡尚东</text>
+      <text x="2090" y="678">邓智鹏</text>
+
+      <text x="2470" y="438">登录</text>
+      <text x="2470" y="518">注册</text>
+    </g>
+
+    <text x="1360" y="1290" text-anchor="middle" font-size="34" font-weight="700">图1 “ML Learn”网站核心信息架构</text>
+  </g>
+</svg>

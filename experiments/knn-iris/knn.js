@@ -29,6 +29,24 @@
     });
   }
 
+  function featureStats() {
+    const data = samples();
+    return featureIds.map(function (_, index) {
+      const values = data.map(function (sample) {
+        return sample.features[index];
+      });
+      const mean =
+        values.reduce(function (sum, value) {
+          return sum + value;
+        }, 0) / values.length;
+      const variance =
+        values.reduce(function (sum, value) {
+          return sum + Math.pow(value - mean, 2);
+        }, 0) / values.length;
+      return { mean: mean, std: Math.sqrt(variance) || 1 };
+    });
+  }
+
   function currentFeatures() {
     return featureIds.map(function (id) {
       return Number(document.getElementById(id).value);
@@ -42,22 +60,24 @@
     );
   }
 
-  function euclideanDistance(first, second) {
+  function euclideanDistance(first, second, stats) {
     return Math.sqrt(
       first.reduce(function (sum, value, index) {
-        return sum + Math.pow(value - second[index], 2);
+        const scaledDifference = (value - second[index]) / stats[index].std;
+        return sum + Math.pow(scaledDifference, 2);
       }, 0),
     );
   }
 
   function classify(features, k) {
+    const stats = featureStats();
     const scored = samples()
       .map(function (sample) {
         return {
           label: sample.label,
           index: sample.index,
           features: sample.features,
-          distance: euclideanDistance(features, sample.features),
+          distance: euclideanDistance(features, sample.features, stats),
         };
       })
       .sort(function (first, second) {
@@ -117,122 +137,93 @@
     });
   }
 
-  function scaleX(value) {
-    const padding = 38;
-    const width = 440 - padding - 14;
-    return padding + (value / 7.5) * width;
-  }
-
-  function scaleY(value) {
-    const paddingTop = 18;
-    const paddingBottom = 42;
-    const height = 300 - paddingTop - paddingBottom;
-    return paddingTop + ((3 - value) / 3) * height;
-  }
-
-  function drawScatter(result, features) {
+  function drawFeatureComparison(result, features) {
     const canvas = document.getElementById("knn-scatter");
     if (!canvas || !canvas.getContext) return;
     const ctx = canvas.getContext("2d");
     const width = canvas.width;
     const height = canvas.height;
+    const featureLabels = ["花萼长度", "花萼宽度", "花瓣长度", "花瓣宽度"];
+    const trackLeft = 86;
+    const trackRight = width - 70;
+    const trackWidth = trackRight - trackLeft;
+    const rowY = [48, 102, 156, 210];
+
+    const ranges = featureIds.map(function (_, index) {
+      let min = Infinity;
+      let max = -Infinity;
+      samples().forEach(function (sample) {
+        min = Math.min(min, sample.features[index]);
+        max = Math.max(max, sample.features[index]);
+      });
+      min = Math.min(min, features[index]);
+      max = Math.max(max, features[index]);
+      if (min === max) {
+        min -= 0.5;
+        max += 0.5;
+      }
+      return { min: min, max: max };
+    });
+
+    function trackX(value, index) {
+      const range = ranges[index];
+      return trackLeft + ((value - range.min) / (range.max - range.min)) * trackWidth;
+    }
 
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, width, height);
 
-    ctx.strokeStyle = "#e7e2f2";
-    ctx.lineWidth = 1;
-    for (let x = 0; x <= 7; x += 1) {
-      ctx.beginPath();
-      ctx.moveTo(scaleX(x), scaleY(0));
-      ctx.lineTo(scaleX(x), scaleY(3));
-      ctx.stroke();
-    }
-    for (let y = 0; y <= 3; y += 1) {
-      ctx.beginPath();
-      ctx.moveTo(scaleX(0), scaleY(y));
-      ctx.lineTo(scaleX(7), scaleY(y));
-      ctx.stroke();
-    }
+    rowY.forEach(function (y, index) {
+      const range = ranges[index];
 
-    samples().forEach(function (sample) {
-      ctx.beginPath();
-      ctx.arc(
-        scaleX(sample.features[2]),
-        scaleY(sample.features[3]),
-        3.2,
-        0,
-        Math.PI * 2,
-      );
-      ctx.fillStyle = colors[sample.label] || "#888";
-      ctx.globalAlpha = 0.55;
-      ctx.fill();
-    });
-    ctx.globalAlpha = 1;
+      ctx.fillStyle = "#eeeaf8";
+      ctx.fillRect(trackLeft, y - 3, trackWidth, 6);
 
-    const userX = scaleX(features[2]);
-    const userY = scaleY(features[3]);
+      result.neighbors.forEach(function (neighbor) {
+        ctx.beginPath();
+        ctx.arc(
+          trackX(neighbor.features[index], index),
+          y,
+          3.2,
+          0,
+          Math.PI * 2,
+        );
+        ctx.fillStyle = colors[neighbor.label] || "#8a839a";
+        ctx.globalAlpha = 0.85;
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
 
-    result.neighbors.forEach(function (neighbor) {
-      const neighborX = scaleX(neighbor.features[2]);
-      const neighborY = scaleY(neighbor.features[3]);
+      const userX = trackX(features[index], index);
       ctx.beginPath();
-      ctx.moveTo(userX, userY);
-      ctx.lineTo(neighborX, neighborY);
-      ctx.strokeStyle = colors[neighbor.label];
-      ctx.lineWidth = 1.5;
-      ctx.stroke();
-
-      ctx.beginPath();
-      ctx.arc(neighborX, neighborY, 7, 0, Math.PI * 2);
+      ctx.moveTo(userX, y - 9);
+      ctx.lineTo(userX, y + 9);
       ctx.strokeStyle = "#242033";
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 3;
       ctx.stroke();
-
-      const labelX = (userX + neighborX) / 2;
-      const labelY = (userY + neighborY) / 2;
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(labelX - 15, labelY - 9, 30, 16);
-      ctx.fillStyle = "#242033";
-      ctx.font = "10px Arial";
-      ctx.textAlign = "center";
-      ctx.fillText(neighbor.distance.toFixed(2), labelX, labelY + 3);
-    });
-
-    function drawStar(x, y) {
-      ctx.save();
-      ctx.translate(x, y);
       ctx.beginPath();
-      for (let index = 0; index < 10; index += 1) {
-        const radius = index % 2 === 0 ? 11 : 4.5;
-        const angle = -Math.PI / 2 + (index * Math.PI) / 5;
-        const px = Math.cos(angle) * radius;
-        const py = Math.sin(angle) * radius;
-        if (index === 0) ctx.moveTo(px, py);
-        else ctx.lineTo(px, py);
-      }
-      ctx.closePath();
+      ctx.arc(userX, y, 3.5, 0, Math.PI * 2);
       ctx.fillStyle = "#242033";
       ctx.fill();
       ctx.strokeStyle = "#ffffff";
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 1.5;
       ctx.stroke();
-      ctx.restore();
-    }
-    drawStar(userX, userY);
 
-    ctx.strokeStyle = "#242033";
-    ctx.lineWidth = 1;
-    ctx.fillStyle = "#6d687b";
-    ctx.font = "11px Arial";
-    ctx.textAlign = "center";
-    ctx.fillText("花瓣长度", scaleX(3.5), 292);
-    ctx.save();
-    ctx.translate(16, scaleY(1.5));
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText("花瓣宽度", 0, 0);
-    ctx.restore();
+      ctx.font = "12px 'Microsoft YaHei', 'PingFang SC', sans-serif";
+      ctx.fillStyle = "#242033";
+      ctx.textAlign = "left";
+      ctx.fillText(featureLabels[index], 8, y + 4);
+      ctx.textAlign = "right";
+      ctx.fillText(features[index].toFixed(1), width - 8, y + 4);
+
+      ctx.font = "9px 'Microsoft YaHei', 'PingFang SC', sans-serif";
+      ctx.fillStyle = "#9b96ad";
+      ctx.textAlign = "left";
+      ctx.fillText(range.min.toFixed(1), trackLeft, y + 16);
+      ctx.textAlign = "right";
+      ctx.fillText(range.max.toFixed(1), trackRight, y + 16);
+    });
   }
 
   function currentUser() {
@@ -342,7 +333,7 @@
       result: result,
     };
     updateOutputs(result, features, k);
-    drawScatter(result, features);
+    drawFeatureComparison(result, features);
   }
 
   function init() {

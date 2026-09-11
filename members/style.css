@@ -13,12 +13,12 @@
 }
 
 body {
-  height: 100vh;
   margin: 0;
   color: var(--text-main);
   background: var(--purple-50);
   font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 a {
@@ -26,8 +26,8 @@ a {
   text-decoration: none;
 }
 .container {
-  width: min(var(--page-width), calc(100% - 40px));
-  min-width: 900px;
+  width: min(1100px, calc(100% - 40px));
+  min-width: 0;
   margin: 0 auto;
 }
 
@@ -41,6 +41,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 }
 
 .brand {
@@ -69,6 +70,61 @@ a {
 }
 .back-link:hover {
   text-decoration: underline;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  color: var(--text-muted);
+}
+
+.main-nav a:hover,
+.main-nav .active {
+  color: var(--purple-700);
+}
+
+.account-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 8px 18px;
+  border: 1px solid var(--purple-600);
+  border-radius: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.button-primary {
+  color: #ffffff;
+  background: var(--purple-600);
+}
+
+.button-secondary {
+  color: var(--purple-700);
+  background: #ffffff;
+}
+
+.account-user {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 8px 16px;
+  color: var(--purple-700);
+  background: var(--purple-50);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.account-user[hidden] {
+  display: none;
 }
 
 .member-page {
@@ -152,4 +208,40 @@ h1 {
   color: var(--white);
   background: var(--purple-600);
   transform: translateY(-2px);
+}
+
+@media (max-width: 1120px) {
+  .container {
+    min-width: 0;
+    width: min(1100px, calc(100% - 40px));
+  }
+
+  .header-inner {
+    flex-wrap: wrap;
+    padding: 12px 0;
+  }
+
+  .main-nav {
+    order: 3;
+    width: 100%;
+    padding-top: 10px;
+    overflow-x: auto;
+    border-top: 1px solid var(--border);
+  }
+
+  .member-page {
+    height: auto;
+    padding: 36px 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .container {
+    min-width: 0;
+    width: min(100% - 28px, 1100px);
+  }
+
+  .member-grid {
+    grid-template-columns: 1fr;
+  }
 }

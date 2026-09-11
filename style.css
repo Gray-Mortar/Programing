@@ -15,6 +15,7 @@
 }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
 }
 body {
   margin: 0;
@@ -218,10 +219,12 @@ a {
 }
 .timeline {
   position: relative;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: 154px 154px;
+  gap: 28px 18px;
   padding-top: 40px;
-  overflow-x: auto;
+  overflow: visible;
 }
 .timeline-line {
   position: absolute;
@@ -232,12 +235,17 @@ a {
   background: linear-gradient(90deg, var(--purple-600), var(--purple-100));
   border-radius: 2px;
 }
+.timeline-line-second {
+  top: 230px;
+  right: calc(100% / 6);
+}
 .timeline-item {
   position: relative;
-  flex: 1;
-  min-width: 130px;
+  width: 100%;
+  min-width: 0;
   padding: 0 8px;
   text-align: center;
+  color: inherit;
 }
 .timeline-dot {
   position: relative;
@@ -268,6 +276,11 @@ a {
   color: var(--text-muted);
   font-size: 13px;
   line-height: 1.5;
+}
+
+.timeline-cta {
+  margin-top: 32px;
+  text-align: center;
 }
 
 /* 课程卡片 */
@@ -355,6 +368,9 @@ a {
 .visual-lab-card-tree {
   background: linear-gradient(135deg, #fff8e8, #fff);
 }
+.visual-lab-card-kmeans {
+  background: linear-gradient(135deg, #fff4fa, #fff);
+}
 .lab-icon {
   display: grid;
   width: 54px;
@@ -373,6 +389,10 @@ a {
 .visual-lab-card-tree .lab-icon {
   color: #9a6417;
   background: #fff0c9;
+}
+.visual-lab-card-kmeans .lab-icon {
+  color: #a44a7a;
+  background: #fbe4f0;
 }
 .visual-lab-card h3 {
   margin: 14px 0 8px;
@@ -471,14 +491,18 @@ a {
     align-items: flex-start;
   }
   .timeline {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto;
     gap: 20px;
+    overflow: visible;
   }
-  .timeline-line {
+  .timeline-line,
+  .timeline-line-second {
     display: none;
   }
   .timeline-item {
-    min-width: calc(33% - 16px);
+    min-width: 0;
   }
 }
 
