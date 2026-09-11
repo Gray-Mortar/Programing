@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="排列四个筛选问题，观察机器人如何逐层构建鸟类决策树，并理解基尼系数与信息熵。" />
+    <title>鸟类决策树实验 - ML Learn</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="analysis.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="../../index.html" aria-label="返回 ML Learn 首页"
+          ><span class="brand-mark">ML</span><span>ML Learn</span></a
+        >
+        <nav class="main-nav" aria-label="主导航">
+          <a href="../../index.html">首页</a
+          ><a href="../../history/index.html">了解历史</a
+          ><a href="../../course/index.html">课程</a
+          ><a href="../../course/practice/index.html">互动练习</a
+          ><a class="active" href="../index.html">可视化实验</a
+          ><a href="../../account/profile.html">学习情况</a
+          ><a href="../../members/index.html">关于我们</a>
+        </nav>
+        <div class="account-actions">
+          <a class="button button-secondary" id="login-button" href="../../account/login.html">登录</a
+          ><a class="button button-primary" id="register-button" href="../../account/register.html">注册</a
+          ><a class="account-user" id="account-user" href="../../account/profile.html" data-profile-href="../../account/profile.html" hidden>我的账号</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="lab-page" id="filter-view">
+      <div class="page-width">
+        <p class="breadcrumb"><a href="../index.html">可视化实验</a><span>/</span>决策树鸟类筛选</p>
+
+        <section class="lab-hero">
+          <div>
+            <p class="eyebrow">实验 03 · Decision Tree</p>
+            <h1>帮机器人找出鸟类</h1>
+            <p class="hero-copy">排列四个筛选问题，让机器人逐层保留符合条件的动物，并观察一棵决策树如何形成。</p>
+          </div>
+          <div class="hero-progress" aria-label="实验共四个阶段，当前处于第一个阶段">
+            <span>实验进度</span>
+            <strong>1 / 4</strong>
+            <div class="progress-track"><i></i></div>
+          </div>
+        </section>
+
+        <section class="experiment-layout" aria-label="决策树实验工作区">
+          <section class="feature-panel panel">
+            <div class="top-control-heading">
+              <div class="panel-heading">
+                <span class="step-number">1</span>
+                <div><h2>排列筛选顺序</h2><p>拖动四张问题卡，决定决策树从上到下的顺序</p></div>
+              </div>
+              <div class="current-question"><span>当前问题</span><strong id="current-question-text">这种动物会飞吗？</strong></div>
+            </div>
+            <div class="top-control-body">
+              <div class="feature-list" id="feature-list" aria-label="可拖动排序的四层筛选问题">
+                <button class="feature-option is-selected" type="button" draggable="true" data-feature="flies"><em>1</em><span><b>能否飞行</b><small>拖动调整顺序</small></span><i aria-hidden="true">⋮⋮</i></button>
+                <button class="feature-option" type="button" draggable="true" data-feature="laysEggs"><em>2</em><span><b>是否产卵</b><small>拖动调整顺序</small></span><i aria-hidden="true">⋮⋮</i></button>
+                <button class="feature-option" type="button" draggable="true" data-feature="wings"><em>3</em><span><b>是否有翅膀</b><small>拖动调整顺序</small></span><i aria-hidden="true">⋮⋮</i></button>
+                <button class="feature-option" type="button" draggable="true" data-feature="feathers"><em>4</em><span><b>是否有羽毛</b><small>拖动调整顺序</small></span><i aria-hidden="true">⋮⋮</i></button>
+              </div>
+              <div class="control-actions">
+                <button class="primary-button" id="start-filter" type="button">请机器人开始筛选</button>
+                <button class="secondary-button reset-button" id="reset-experiment" type="button">重新开始</button>
+                <button class="secondary-button quick-analysis-button" id="quick-analysis" type="button">快速进入结果分析</button>
+              </div>
+            </div>
+            <p class="build-note" id="feature-tip" hidden>先看看「能否飞行」会不会产生错误。</p>
+          </section>
+
+          <div class="sorting-layout" id="interaction-area">
+            <aside class="animal-panel panel">
+              <div class="panel-heading">
+                <span class="step-number">2</span>
+                <div><h2>动物卡片</h2><p>可手动拖到右侧筛选器</p></div>
+              </div>
+              <span class="sample-count" id="sample-count">第 1 层 · 待筛选 11 只</span>
+              <div class="animal-tray" id="animal-tray" aria-label="待分类动物"></div>
+              <p class="selection-hint" id="selection-hint" aria-live="polite">点击选择，或直接拖动卡片进行分类。</p>
+            </aside>
+
+            <div class="robot-overlay" id="sorting-stage" aria-label="机器人悬浮动画层">
+              <div class="robot-lane" id="robot-home">
+                <div class="lab-robot" id="lab-robot" aria-label="机器人正在中央等待">
+                  <img id="lab-robot-frame" src="assets/robot-frames/walk-0.png" alt="" />
+                </div>
+                <div class="robot-message" id="robot-message" aria-live="polite">我在这里待机，可以自动分类，也能帮你纠正。</div>
+                <div class="manual-error" id="manual-error" hidden role="alert" aria-label="分类错误提示预留区域"></div>
+                <button class="skip-animation" id="skip-animation" type="button" hidden>跳过动画</button>
+              </div>
+            </div>
+
+            <aside class="sorter-panel panel">
+              <div class="panel-heading">
+                <span class="step-number">3</span>
+                <div><h2>筛选器</h2><p>把卡片放入“是”或“否”分支</p></div>
+              </div>
+              <div class="branch-grid">
+                <section class="branch branch-yes" aria-labelledby="yes-heading">
+                  <header><div><span class="branch-answer">是</span><h3 id="yes-heading">会飞</h3></div><b id="yes-count">0</b></header>
+                  <div class="branch-dropzone" id="yes-dropzone" data-answer="true"><span>拖放到这里</span></div>
+                </section>
+                <section class="branch branch-no" aria-labelledby="no-heading">
+                  <header><div><span class="branch-answer">否</span><h3 id="no-heading">不会飞</h3></div><b id="no-count">0</b></header>
+                  <div class="branch-dropzone" id="no-dropzone" data-answer="false"><span>拖放到这里</span></div>
+                </section>
+              </div>
+            </aside>
+          </div>
+
+          <section class="tree-panel panel">
+            <div class="panel-heading">
+                <div><h2>四层决策树</h2><p>“是”分支继续向下，“否”分支在当前层退出</p></div>
+            </div>
+            <div class="tree-canvas" id="tree-canvas" aria-live="polite"></div>
+          </section>
+        </section>
+      </div>
+    </main>
+
+    <section class="analysis-page" id="analysis-view" hidden aria-label="决策树结果分析">
+      <div class="page-width">
+        <p class="breadcrumb"><a href="#" id="return-filter">鸟类筛选实验</a><span>/</span>结果分析</p>
+        <section class="analysis-hero">
+          <div><p class="eyebrow">实验下一步 · Result Analysis</p><h1>哪一个问题筛得更好？</h1><p>四层筛选已经完成。先观察刚才的结果，再想办法公平地比较它们。</p></div>
+          <div class="analysis-hero-actions"><div class="phase-switch"><span>筛选实验</span><i></i><strong>结果分析</strong></div><button class="secondary-button" id="analysis-return-button" type="button">返回调整筛选顺序</button></div>
+        </section>
+
+        <section class="analysis-layout">
+          <aside class="result-tree panel">
+            <div class="section-heading"><div><span class="mini-kicker">刚才的实验</span><h2>四层筛选记录</h2></div><span class="result-badge">已完成</span></div>
+            <div class="compact-tree" id="analysis-tree"></div>
+            <p class="tree-note">这里保留了你刚刚设置的真实顺序和每一层的动物数量。</p>
+          </aside>
+
+          <section class="lesson-shell">
+            <div class="lesson-progress" aria-label="讲解进度"><span class="is-on"></span><span></span><span></span><span></span><span></span><span></span><span></span><small id="analysis-step-label">思考 1 / 7</small></div>
+            <ml-peek-robot id="analysis-robot" src="assets/robot-peek-transparent.png" label="点我继续" accessible-label="点击小机器人进入下一步"></ml-peek-robot>
+            <article class="lesson-card panel" id="analysis-card" aria-live="polite">
+              <p class="lesson-tag" id="analysis-tag"></p>
+              <h2 id="analysis-title"></h2>
+              <p class="lesson-copy" id="analysis-copy"></p>
+              <div class="lesson-visual" id="analysis-visual"></div>
+              <div class="lesson-actions"><button class="secondary-button" id="analysis-back" type="button">上一步</button><button class="primary-button" id="analysis-next" type="button">继续</button></div>
+            </article>
+          </section>
+        </section>
+
+        <section class="challenge-panel panel" id="analysis-challenge" hidden>
+          <div class="challenge-copy"><span class="step-number">✓</span><div><p class="eyebrow">最终挑战</p><h2>用新动物检验决策树</h2><p id="challenge-description">完成指标学习后，神秘动物才会出现。</p></div></div>
+          <button class="locked-sample" id="challenge-sample" type="button" disabled aria-label="神秘挑战样本尚未解锁" aria-expanded="false"><span>?</span><strong>神秘动物</strong><small>完成学习后解锁</small></button>
+          <div class="challenge-comparison" id="challenge-comparison" hidden aria-live="polite"></div>
+        </section>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <a class="brand footer-brand" href="../../index.html"
+            ><span class="brand-mark">ML</span><span>ML Learn</span></a
+          >
+          <p>让机器学习变得清晰、直观、有趣。</p>
+        </div>
+        <div class="footer-links">
+          <a href="../../index.html">首页</a
+          ><a href="../../course/index.html">课程</a
+          ><a href="../../course/practice/index.html">互动练习</a
+          ><a class="active" href="../index.html">可视化实验</a>
+        </div>
+        <p class="copyright">© 2026 ML Learn</p>
+      </div>
+    </footer>
+
+    <script src="../../account/auth.js"></script>
+    <script src="../../account/session.js"></script>
+    <script src="animals-data.js"></script>
+    <script src="components/peek-robot.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

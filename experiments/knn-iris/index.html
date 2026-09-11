@@ -15,7 +15,7 @@
         >
         <nav class="main-nav">
           <a href="../../index.html">首页</a
-          ><a href="../../index.html#ml-background">了解历史</a
+          ><a href="../../history/index.html">了解历史</a
           ><a href="../../course/index.html">课程</a
           ><a href="../../course/practice/index.html">互动练习</a
           ><a class="active" href="../index.html">可视化实验</a
@@ -146,12 +146,13 @@
                 >
               </div>
               <div class="feature-vector" id="knn-vector">
-                特征向量：[5.1, 3.5, 1.4, 0.2]<br />KNN 会计算它与 150
-                个样本的距离，并按 K 个最近邻居投票。
+                特征向量：[5.1, 3.5, 1.4, 0.2]<br />KNN
+                会先标准化四个特征，再计算它与 150 个样本的距离，并按 K
+                个最近邻居投票。
               </div>
               <div class="experiment-note">
                 当前页面已接入真实 Iris
-                数据集，可以拖动滑块查看分类和可视化变化。
+                数据集。距离计算前会对四个特征做标准化，让每个滑块都能影响分类结果。
               </div>
             </div>
             <aside class="experiment-panel">
@@ -159,13 +160,15 @@
               <div class="knn-chart-box">
                 <canvas id="knn-scatter" width="440" height="300"></canvas>
                 <p class="knn-chart-caption" id="knn-scatter-caption">
-                  横轴：花瓣长度；纵轴：花瓣宽度
+                  特征对比条：每一行代表一个特征，深色竖线是待测样本，彩色圆点是 K
+                  个最近邻
                 </p>
               </div>
               <div class="knn-legend">
                 <span style="color: #6d4bd1">Setosa</span
                 ><span style="color: #2f9e73">Versicolor</span
-                ><span style="color: #e27b36">Virginica</span>
+                ><span style="color: #e27b36">Virginica</span
+                ><span style="color: #242033">待测样本</span>
               </div>
               <h3 style="margin-top: 18px">邻居投票</h3>
               <div class="vote-bars">
@@ -204,6 +207,49 @@
                 </div>
               </div>
             </aside>
+          </div>
+        </section>
+        <section class="experiment-card experiment-guide">
+          <p class="eyebrow">实验说明</p>
+          <h2>实验步骤与原理</h2>
+          <div class="experiment-guide-grid">
+            <div>
+              <h3>实验步骤</h3>
+              <ol class="guide-steps">
+                <li>
+                  <strong>调整样本特征</strong>
+                  <p>拖动四个特征滑块，确定待分类的鸢尾花样本。</p>
+                </li>
+                <li>
+                  <strong>设置 K 值</strong>
+                  <p>选择参与投票的最近邻数量。</p>
+                </li>
+                <li>
+                  <strong>计算距离</strong>
+                  <p>页面计算待分类样本到全部鸢尾花样本的欧氏距离。</p>
+                </li>
+                <li>
+                  <strong>选出最近邻</strong>
+                  <p>取距离最近的 K 个样本作为邻居。</p>
+                </li>
+                <li>
+                  <strong>多数投票</strong>
+                  <p>统计三个品种的票数，票数最高的类别作为预测结果。</p>
+                </li>
+              </ol>
+            </div>
+            <div class="guide-principle">
+              <h3>算法原理</h3>
+              <p>
+                KNN 是一种基于实例的惰性学习算法。它在训练阶段不拟合参数，
+                而是在预测时计算待分类样本与已有样本的距离，并取 K
+                个最近邻。
+              </p>
+              <p>
+                页面使用欧氏距离衡量特征空间中的接近程度：样本越近，类别越可能相似。K
+                值越小，决策边界越敏感；K 值越大，结果越平滑。最终通过多数投票输出预测类别。
+              </p>
+            </div>
           </div>
         </section>
         <section class="experiment-card">
