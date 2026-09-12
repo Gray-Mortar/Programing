@@ -123,9 +123,10 @@
     .robot-peek {
       position: fixed;
       display: block;
-      right: 0;
+      right: -18px;
       bottom: 0;
-      width: 420px;
+      width: 340px;
+      height: min(72vh, 560px);
       color: inherit;
       cursor: pointer;
       z-index: 3;
@@ -135,12 +136,13 @@
     .robot-peek:hover {
       transform: translateY(-12px);
     }
-    .robot-peek-img {
-      width: 100%;
-      height: auto;
-      display: block;
-      /* 柔和阴影让机器人更立体 */
-      filter: drop-shadow(0 4px 12px rgba(91,60,196,0.15));
+    .cover-iris {
+      --iris-width: 100%;
+      --iris-height: 161px;
+      --iris-rise-height: 100%;
+      --iris-standing-width: 68%;
+      --iris-left: 0;
+      --iris-z-index: 1;
     }
     .robot-peek:focus-visible {
       outline: 3px solid #6d4bd1;
@@ -150,7 +152,7 @@
     /* 机器人对话气泡 */
     .robot-bubble {
       position: absolute;
-      top: -80px;
+      top: 18px;
       left: 50%;
       transform: translateX(-50%);
       background: #fff;
@@ -221,7 +223,13 @@
         font-size: 22px;
       }
       .robot-peek {
+        right: -12px;
         width: 300px;
+        height: min(68vh, 480px);
+      }
+      .cover-iris {
+        --iris-height: 142px;
+        --iris-standing-width: 72%;
       }
       .robot-bubble {
         font-size: 14px;
@@ -242,7 +250,13 @@
         font-size: 20px;
       }
       .robot-peek {
+        right: -8px;
         width: 220px;
+        height: min(58vh, 360px);
+      }
+      .cover-iris {
+        --iris-height: 104px;
+        --iris-standing-width: 74%;
       }
       .robot-bubble {
         font-size: 12px;
@@ -274,17 +288,30 @@
     aria-label="点击 Iris 进入登录与注册"
   >
     <div class="robot-bubble">点我进入～</div>
-    <img
-      src="../components/assets/iris-peek.png"
-      alt="Iris 探出脑袋"
-      class="robot-peek-img"
-    />
+    <iris-peek
+      class="cover-iris"
+      placement="hero"
+      passive
+      animated
+      active
+      rise
+      standing-pose="wave"
+    ></iris-peek>
   </a>
 
   <div class="welcome-footer">© 2026 ML Learn · 机器学习互动课堂</div>
 
+  <script src="../components/iris-peek.js"></script>
   <script>
-    document.getElementById("cover-enter").addEventListener("click", function () {
+    const coverEnter = document.getElementById("cover-enter");
+    const coverIris = coverEnter.querySelector(".cover-iris");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    window.setTimeout(() => {
+      coverIris.setAttribute("standing", "");
+    }, reduceMotion ? 0 : 520);
+
+    coverEnter.addEventListener("click", function () {
       window.sessionStorage.setItem("ml-cover-entered", "1");
     });
   </script>

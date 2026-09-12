@@ -21,17 +21,11 @@
             <span class="brand-mark">ML</span>
             <span>Learning Club</span>
           </a>
-          <span class="secure-status">
-            <i></i> 账号数据仅保存在当前浏览器
-          </span>
         </header>
 
         <div class="chat-stage">
-          <aside class="bot-illustration" aria-label="学习伙伴机器人">
-            <img
-              src="../components/assets/iris-peek.png"
-              alt="学习伙伴机器人"
-            />
+          <aside class="bot-illustration" aria-label="挥手的 Iris 机器人">
+            <iris-fullbody pose="wave" passive></iris-fullbody>
           </aside>
           <div class="chat-intro">
             <p class="club-kicker">YOUR LEARNING COMPANION</p>
@@ -44,14 +38,14 @@
             aria-live="polite"
             aria-label="登录助手对话记录"
           ></div>
-          <aside class="bot-profile" aria-label="学习伙伴信息">
+          <aside class="bot-profile" aria-label="Iris 信息">
             <div class="bot-avatar">
               <img
-                src="../components/assets/iris-peek.png"
-                alt="学习伙伴"
+                src="../components/assets/iris-avatar.png"
+                alt="鸢尾花头像"
               />
             </div>
-            <strong>小 ML</strong><span>在线陪伴</span>
+            <strong>Iris</strong><span>在线陪伴</span>
           </aside>
         </div>
 
@@ -109,6 +103,7 @@
       </div>
     </section>
 
+    <script src="../components/iris-fullbody.js"></script>
     <script src="./script.js"></script>
   </body>
 </html>

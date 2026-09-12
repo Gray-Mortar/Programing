@@ -4,6 +4,15 @@
     : document.baseURI;
   const assetUrl = (name) => new URL(`assets/${name}`, scriptUrl).href;
   const defaultImageUrl = assetUrl("iris-peek.png");
+  const standingPoseUrls = {
+    standing: assetUrl("iris-standing.png"),
+    wave: assetUrl("iris-wave.png"),
+  };
+  const standingWaveFrames = {
+    mid: assetUrl("iris-wave-mid.png"),
+    raised: standingPoseUrls.wave,
+    out: assetUrl("iris-wave-out.png"),
+  };
   const defaultAnimationFrames = [
     defaultImageUrl,
     assetUrl("iris-peek-half-blink.png"),
@@ -23,6 +32,9 @@
         "active",
         "animated",
         "placement",
+        "rise",
+        "standing",
+        "standing-pose",
         "hidden",
       ];
     }
@@ -85,6 +97,10 @@
             top: auto;
             bottom: var(--iris-hero-bottom, -1px);
             left: var(--iris-left, 18px);
+          }
+
+          :host([rise]:not([placement="header"])) {
+            height: var(--iris-rise-height, 320px);
           }
 
           :host([placement="bottom"]) {
@@ -175,6 +191,46 @@
             pointer-events: none;
           }
 
+          .standing-image {
+            display: none;
+          }
+
+          :host([rise]:not([placement="header"])) .peek-image {
+            top: auto;
+            bottom: 0;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            transform-origin: 50% 100%;
+            transition:
+              opacity 180ms ease 260ms,
+              transform 460ms cubic-bezier(0.2, 0.82, 0.22, 1);
+          }
+
+          :host([rise]:not([placement="header"])) .standing-image {
+            display: block;
+            top: auto;
+            bottom: var(--iris-standing-bottom, 0px);
+            left: 50%;
+            width: var(--iris-standing-width, 74%);
+            opacity: 0;
+            transform: translate3d(-50%, 48%, 0) scale(0.9);
+            transform-origin: 50% 100%;
+            transition:
+              opacity 220ms ease 80ms,
+              transform 720ms cubic-bezier(0.16, 0.84, 0.24, 1);
+          }
+
+          :host([rise][standing]:not([placement="header"])) .peek-image {
+            opacity: 0;
+            transform: translateY(20px) scale(0.96);
+            transition-delay: 0ms;
+          }
+
+          :host([rise][standing]:not([placement="header"])) .standing-image {
+            opacity: 1;
+            transform: translate3d(-50%, 0, 0) scale(1);
+          }
+
           span {
             position: absolute;
             top: 22%;
@@ -204,16 +260,23 @@
             :host([placement="bottom"]) .figure {
               transition: none;
             }
+
+            :host([rise]:not([placement="header"])) .peek-image,
+            :host([rise]:not([placement="header"])) .standing-image {
+              transition: none;
+            }
           }
         </style>
         <div class="figure">
-          <img alt="" draggable="false" />
+          <img class="peek-image" alt="" draggable="false" />
+          <img class="standing-image" alt="" draggable="false" />
           <span></span>
         </div>
       `;
 
       this.figure = this.shadowRoot.querySelector(".figure");
-      this.image = this.shadowRoot.querySelector("img");
+      this.image = this.shadowRoot.querySelector(".peek-image");
+      this.standingImage = this.shadowRoot.querySelector(".standing-image");
       this.caption = this.shadowRoot.querySelector("span");
       this.figure.addEventListener("click", () => this.activate());
       this.figure.addEventListener("keydown", (event) => {
@@ -261,6 +324,54 @@
     stopAnimation() {
       this.animationTimers.forEach((timer) => window.clearTimeout(timer));
       this.animationTimers = [];
+    }
+
+    startStandingWaveAnimation() {
+      if (
+        !this.hasAttribute("rise") ||
+        !this.hasAttribute("standing") ||
+        (this.getAttribute("standing-pose") || "standing") !== "wave" ||
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        return;
+      }
+
+      Object.values(standingWaveFrames).forEach((source) => {
+        const image = new Image();
+        image.src = source;
+      });
+
+      const setFrame = (source) => {
+        if (
+          this.isConnected &&
+          this.hasAttribute("standing") &&
+          (this.getAttribute("standing-pose") || "standing") === "wave"
+        ) {
+          this.standingImage.src = source;
+        }
+      };
+      const schedule = (source, delay) => {
+        this.animationTimers.push(
+          window.setTimeout(() => setFrame(source), delay),
+        );
+      };
+
+      const wave = () => {
+        schedule(standingWaveFrames.mid, 0);
+        schedule(standingWaveFrames.raised, 150);
+        schedule(standingWaveFrames.out, 450);
+        schedule(standingWaveFrames.raised, 600);
+        schedule(standingWaveFrames.out, 750);
+        schedule(standingWaveFrames.raised, 900);
+        this.animationTimers.push(
+          window.setTimeout(() => {
+            this.stopAnimation();
+            wave();
+          }, 3900),
+        );
+      };
+
+      wave();
     }
 
     resetPointerReaction() {
@@ -345,6 +456,14 @@
       const passive = this.hasAttribute("passive");
       const disabled = this.hasAttribute("disabled");
       const headerScroller = this.getAttribute("placement") === "header";
+      if (this.hasAttribute("rise")) {
+        const standingPose = this.getAttribute("standing-pose") || "standing";
+        const standingSource =
+          standingPoseUrls[standingPose] || standingPoseUrls.standing;
+        if (this.standingImage.src !== standingSource) {
+          this.standingImage.src = standingSource;
+        }
+      }
       this.caption.textContent = this.getAttribute("label") || "";
       this.caption.hidden = passive || !this.caption.textContent;
 
@@ -367,6 +486,7 @@
       }
 
       this.startAnimation();
+      this.startStandingWaveAnimation();
       this.setupPointerReaction();
     }
   }

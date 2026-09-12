@@ -183,7 +183,7 @@ a {
 .iris-intro-card {
   position: relative;
   min-height: 370px;
-  padding: 34px 30px 138px 142px;
+  padding: 34px 30px 34px 225px;
   overflow: hidden;
   background: var(--white);
   border: 1px solid #d9d0f3;
@@ -274,6 +274,8 @@ a {
 .home-iris {
   --iris-width: 270px;
   --iris-height: 128px;
+  --iris-rise-height: 322px;
+  --iris-standing-width: 205px;
   --iris-left: -12px;
   --iris-z-index: 3;
 }
@@ -524,6 +526,13 @@ a {
 }
 
 /* 平板和手机适配 */
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+}
+
 @media (max-width: 820px) {
   .header-inner {
     flex-wrap: wrap;
@@ -597,12 +606,14 @@ a {
     flex-direction: column;
   }
   .iris-intro-card {
-    min-height: 380px;
-    padding: 26px 22px 138px;
+    min-height: 560px;
+    padding: 26px 22px 320px;
   }
   .home-iris {
     --iris-width: 230px;
     --iris-height: 109px;
+    --iris-rise-height: 300px;
+    --iris-standing-width: 190px;
     --iris-left: calc(50% - 115px);
   }
   .future-box {
