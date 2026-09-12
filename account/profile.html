@@ -7,6 +7,7 @@
     <title>个人中心 - ML Learn</title>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="account.css" />
+    <link rel="stylesheet" href="../components/site-header.css" />
   </head>
   <body>
     <header class="site-header">
@@ -47,6 +48,7 @@
           >
         </div>
       </div>
+      <iris-peek placement="header" passive animated active></iris-peek>
     </header>
 
     <main class="account-page profile-page">
@@ -66,95 +68,6 @@
               </p>
             </div>
           </div>
-
-          <section class="profile-section" aria-labelledby="profile-info-title">
-            <div class="profile-section-heading">
-              <h2 id="profile-info-title">基本信息</h2>
-              <button
-                class="button button-secondary profile-edit-button"
-                id="edit-profile-button"
-                type="button"
-                hidden
-              >
-                编辑基本信息
-              </button>
-            </div>
-            <div class="profile-info-grid">
-              <div class="profile-info-item">
-                <span>性别</span>
-                <strong id="profile-gender">未填写</strong>
-              </div>
-              <div class="profile-info-item">
-                <span>出生日期</span>
-                <strong id="profile-birthdate">未填写</strong>
-              </div>
-              <div class="profile-info-item">
-                <span>邮箱</span>
-                <strong id="profile-email">未填写</strong>
-              </div>
-              <div class="profile-info-item">
-                <span>注册日期</span>
-                <strong id="profile-created-at">未填写</strong>
-              </div>
-            </div>
-            <div class="profile-edit-panel" id="profile-edit-panel" hidden>
-              <div class="profile-edit-grid">
-                <div class="form-group">
-                  <label for="edit-nickname">昵称</label>
-                  <input
-                    class="form-control"
-                    id="edit-nickname"
-                    type="text"
-                    maxlength="20"
-                    placeholder="请输入昵称"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="edit-gender">性别</label>
-                  <select class="form-control" id="edit-gender">
-                    <option value="男">男</option>
-                    <option value="女">女</option>
-                    <option value="不愿透露">不愿透露</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="edit-birthdate">出生日期</label>
-                  <input
-                    class="form-control"
-                    id="edit-birthdate"
-                    type="date"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="edit-email">邮箱</label>
-                  <input
-                    class="form-control"
-                    id="edit-email"
-                    type="email"
-                    maxlength="60"
-                    placeholder="name@example.com"
-                  />
-                </div>
-              </div>
-              <div class="profile-edit-actions">
-                <button
-                  class="button button-primary"
-                  id="save-profile-button"
-                  type="button"
-                >
-                  保存
-                </button>
-                <button
-                  class="button button-secondary"
-                  id="cancel-profile-button"
-                  type="button"
-                >
-                  取消
-                </button>
-              </div>
-              <p class="profile-edit-status" id="profile-edit-status"></p>
-            </div>
-          </section>
 
           <section
             class="profile-section"
@@ -239,6 +152,7 @@
       </div>
     </footer>
 
+    <script src="../components/iris-peek.js"></script>
     <script src="auth.js"></script>
     <script src="session.js"></script>
     <script src="profile.js"></script>

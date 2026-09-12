@@ -7,6 +7,9 @@
     <title>基础知识 - ML Learn</title>
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="../courses.css" />
+    <link rel="stylesheet" href="basics.css" />
+    <link rel="stylesheet" href="tree.css" />
+    <link rel="stylesheet" href="../../components/site-header.css" />
   </head>
   <body>
     <header class="site-header">
@@ -47,6 +50,7 @@
           >
         </div>
       </div>
+      <iris-peek placement="header" passive animated active></iris-peek>
     </header>
 
     <main class="courses-page">
@@ -59,24 +63,76 @@
             <p class="eyebrow">基础知识</p>
             <h1>机器学习完整知识体系</h1>
             <p>
-              从基本概念、数学基础和经典算法，延伸到深度学习、模型评估、工程部署与可信机器学习，按章节系统学习全部核心知识点。
+              从基本概念、数学基础和经典算法，延伸到深度学习、模型评估、工程部署与可信机器学习。通过下方知识树理解整体联系，再进入各章详情。
             </p>
+            <div class="basics-hero-actions">
+              <a class="button button-primary" href="#knowledge-tree-panel"
+                >开始探索知识树</a
+              >
+            </div>
           </div>
           <div class="courses-progress">
             <span>基础章节</span>
-            <strong>13 章 / 80 点</strong>
-            <span>完整覆盖文档中的知识体系</span>
+            <strong id="course-summary-count">13 章 / 80 点</strong>
+            <span>每章使用独立页面</span>
           </div>
         </section>
 
-        <div class="course-layout">
-          <aside class="course-sidebar" aria-label="章节目录">
-            <h2>章节目录</h2>
-            <div id="course-sidebar"></div>
-          </aside>
+        <section
+          class="knowledge-tree-panel"
+          id="knowledge-tree-panel"
+          aria-labelledby="knowledge-tree-title"
+        >
+          <div class="knowledge-tree-heading">
+            <div>
+              <p class="eyebrow">知识树</p>
+              <h2 id="knowledge-tree-title">
+                一棵树连接 <span id="tree-chapter-count">13</span> 个章节与
+                <span id="tree-topic-count">80</span> 个知识点
+              </h2>
+              <p>
+                点击枝条选择章节，点击叶片查看对应知识点，并进入该知识点的章节详情页。
+              </p>
+            </div>
+            <div class="knowledge-tree-legend" aria-label="知识树图例">
+              <span><i class="legend-trunk"></i>知识体系</span>
+              <span><i class="legend-branch"></i>章节</span>
+              <span><i class="legend-leaf"></i>知识点</span>
+            </div>
+          </div>
 
-          <div class="course-content" id="course-content"></div>
-        </div>
+          <div
+            class="knowledge-tree-tabs"
+            id="tree-chapter-tabs"
+            aria-label="章节快捷导航"
+          ></div>
+
+          <div class="knowledge-tree-canvas" id="knowledge-tree-canvas">
+            <svg
+              class="knowledge-tree-svg"
+              id="knowledge-tree"
+              viewBox="0 0 1400 900"
+              role="img"
+              aria-labelledby="knowledge-tree-svg-title knowledge-tree-svg-desc"
+            >
+              <title id="knowledge-tree-svg-title">机器学习基础知识树</title>
+              <desc id="knowledge-tree-svg-desc">
+                树干连接十三个章节，每个章节枝条上的叶片代表相应知识点。
+              </desc>
+            </svg>
+            <div
+              class="tree-tooltip"
+              id="tree-tooltip"
+              role="tooltip"
+              aria-hidden="true"
+            ></div>
+          </div>
+
+          <div
+            class="knowledge-tree-inspector"
+            id="knowledge-tree-inspector"
+          ></div>
+        </section>
       </div>
     </main>
 
@@ -93,15 +149,17 @@
           <a href="../../index.html#home">首页</a>
           <a href="../index.html">课程</a>
           <a href="../practice/index.html">互动练习</a>
+          <a href="#knowledge-tree-panel">知识树</a>
           <a href="../../members/index.html">关于</a>
         </div>
         <p class="copyright">© 2026 ML Learn</p>
       </div>
     </footer>
 
+    <script src="../../components/iris-peek.js"></script>
     <script src="../../account/auth.js"></script>
     <script src="../../account/session.js"></script>
-    <script src="../content.js"></script>
     <script src="../data/basics.js"></script>
+    <script src="tree.js"></script>
   </body>
 </html>

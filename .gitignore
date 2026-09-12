@@ -11,3 +11,6 @@
 # 决策树实验的本地预览与计划书生成工具不上传
 /experiments/decision-tree-birds/previews/
 /experiments/decision-tree-birds/create-plan.ps1
+
+# 本地项目计划书（仅在本机维护，不提交到 Git）
+/plans/

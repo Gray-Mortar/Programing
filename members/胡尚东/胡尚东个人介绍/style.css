@@ -1,0 +1,263 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  padding: 40px 20px;
+  color: #3d2f24;
+  background: linear-gradient(135deg, #fdf6ec 0%, #fbeede 40%, #f7e7d3 100%);
+  font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(160, 120, 70, 0.18);
+}
+
+/* 顶部横幅 */
+.hero {
+  position: relative;
+  padding: 46px 50px 40px;
+  color: #fff;
+  background: linear-gradient(120deg, #e8874b 0%, #d96b3f 45%, #c2542f 100%);
+}
+
+.hero::after {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  content: "";
+}
+
+.hero h1 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.hero .sub {
+  margin-top: 10px;
+  font-size: 17px;
+  letter-spacing: 1px;
+  opacity: 0.95;
+}
+
+.hero .tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.hero .tags span {
+  padding: 4px 16px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+/* 主内容：左文右图 */
+.main {
+  display: flex;
+  gap: 36px;
+  padding: 40px 50px 46px;
+}
+
+.text-side {
+  flex: 1.25;
+}
+
+.photo-side {
+  display: flex;
+  flex: 0.85;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section {
+  margin-bottom: 28px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  color: #c2542f;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.section-title::before {
+  width: 6px;
+  height: 18px;
+  background: linear-gradient(#e8874b, #c2542f);
+  border-radius: 3px;
+  content: "";
+}
+
+/* 基本信息表 */
+.info-list {
+  list-style: none;
+}
+
+.info-list li {
+  display: flex;
+  align-items: baseline;
+  padding: 8px 0;
+  border-bottom: 1px dashed #e8d8c6;
+  font-size: 15px;
+}
+
+.info-list li:last-child {
+  border-bottom: none;
+}
+
+.info-list .label {
+  width: 88px;
+  flex-shrink: 0;
+  color: #a0744f;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* 爱好卡片 */
+.hobby-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.hobby-card {
+  padding: 16px 18px;
+  background: #fff8ef;
+  border: 1px solid #f0dfc8;
+  border-radius: 14px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.hobby-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(160, 120, 70, 0.15);
+}
+
+.hobby-card .icon {
+  font-size: 24px;
+}
+
+.hobby-card h3 {
+  margin: 6px 0;
+  color: #8a4b28;
+  font-size: 16px;
+}
+
+.hobby-card p {
+  color: #6b5543;
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
+/* 自我介绍段落 */
+.intro-text p {
+  margin-bottom: 12px;
+  font-size: 15px;
+  text-align: justify;
+}
+
+.intro-text p:last-child {
+  margin-bottom: 0;
+}
+
+/* 座右铭 */
+.quote {
+  margin-top: 6px;
+  padding: 14px 18px;
+  color: #8a4b28;
+  background: linear-gradient(120deg, #fff3e2, #fdecd6);
+  border-left: 4px solid #e8874b;
+  border-radius: 0 12px 12px 0;
+  font-size: 15px;
+  font-style: italic;
+}
+
+.quote b {
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* 照片区 */
+.photo-frame {
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  border: 6px solid #fff;
+  border-radius: 18px;
+  box-shadow: 0 14px 34px rgba(120, 85, 45, 0.28);
+}
+
+.photo-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.photo-caption {
+  margin-top: 14px;
+  color: #a0744f;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* 页脚 */
+.footer {
+  padding: 18px 20px 22px;
+  color: #b49a7c;
+  background: rgba(0, 0, 0, 0.02);
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* 响应式 */
+@media (max-width: 760px) {
+  .hero {
+    padding: 34px 26px;
+  }
+
+  .hero h1 {
+    font-size: 30px;
+  }
+
+  .main {
+    flex-direction: column-reverse;
+    gap: 28px;
+    padding: 26px 24px 32px;
+  }
+
+  .photo-frame img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .hobby-grid {
+    grid-template-columns: 1fr;
+  }
+}

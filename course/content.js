@@ -4,10 +4,18 @@
     if (className) {
       element.className = className;
     }
-    if (text) {
+    if (typeof text === "string") {
       element.textContent = text;
     }
     return element;
+  }
+
+  function getSections() {
+    return window.ML_COURSE_SECTIONS || [];
+  }
+
+  function getChapterHref(section) {
+    return "chapter-" + section.number + ".html";
   }
 
   function renderList(items) {
@@ -50,10 +58,11 @@
     return wrapper;
   }
 
-  function renderTopics(topics) {
+  function renderTopics(topics, sectionId) {
     const wrapper = createElement("div", "knowledge-topics");
     topics.forEach(function (topic) {
       const item = createElement("section", "knowledge-topic");
+      item.id = sectionId + "-topic-" + topic.number;
       const heading = createElement("div", "knowledge-topic-heading");
       heading.appendChild(
         createElement("span", "knowledge-topic-number", String(topic.number)),
@@ -72,17 +81,17 @@
     return wrapper;
   }
 
-  function renderCard(section) {
+  function renderCard(section, options) {
+    const settings = options || {};
     const card = document.createElement("article");
     card.className = "course-card";
     card.id = section.id;
 
-    const number = createElement("span", "course-number", section.number);
-    const title = createElement("h2", "", section.title);
-    const summary = createElement("p", "", section.summary);
-    card.appendChild(number);
-    card.appendChild(title);
-    card.appendChild(summary);
+    if (!settings.hideHeader) {
+      card.appendChild(createElement("span", "course-number", section.number));
+      card.appendChild(createElement("h2", "", section.title));
+      card.appendChild(createElement("p", "", section.summary));
+    }
 
     (section.blocks || []).forEach(function (block) {
       if (block.type === "list") {
@@ -95,7 +104,7 @@
     });
 
     if (section.topics && section.topics.length) {
-      card.appendChild(renderTopics(section.topics));
+      card.appendChild(renderTopics(section.topics, section.id));
     }
 
     return card;
@@ -111,13 +120,109 @@
     });
   }
 
-  function renderCourse() {
-    const sections = window.ML_COURSE_SECTIONS || [];
-    const content = document.getElementById("course-content");
-    const sidebar = document.getElementById("course-sidebar");
-    if (!sections.length || !content) {
+  function renderChapterView(sections, view) {
+    const requestedId = document.body.getAttribute("data-chapter-id");
+    const chapterIndex = sections.findIndex(function (section) {
+      return section.id === requestedId;
+    });
+
+    view.innerHTML = "";
+    if (chapterIndex < 0) {
+      view.appendChild(
+        createElement("p", "course-placeholder", "没有找到对应的基础章节。"),
+      );
       return;
     }
+
+    const section = sections[chapterIndex];
+    document.title = section.number + " " + section.title + " - ML Learn";
+    const description = document.querySelector('meta[name="description"]');
+    if (description) {
+      description.setAttribute(
+        "content",
+        section.title + "：机器学习基础知识第 " + section.number + " 章。",
+      );
+    }
+
+    const breadcrumbCurrent = document.getElementById("chapter-breadcrumb-current");
+    if (breadcrumbCurrent) {
+      breadcrumbCurrent.textContent = "第 " + section.number + " 章";
+    }
+
+    const hero = createElement("section", "courses-hero chapter-hero");
+    const copy = createElement("div", "chapter-hero-copy");
+    copy.appendChild(createElement("p", "eyebrow", "第 " + section.number + " 章"));
+    copy.appendChild(createElement("h1", "", section.title));
+    copy.appendChild(createElement("p", "", section.summary));
+
+    const actions = createElement("div", "chapter-hero-actions");
+    const treeLink = createElement("a", "button button-secondary", "在知识树中查看");
+    treeLink.href = "index.html#knowledge-tree-panel";
+    const indexLink = createElement("a", "text-link", "返回基础知识 →");
+    indexLink.href = "index.html";
+    actions.appendChild(treeLink);
+    actions.appendChild(indexLink);
+    copy.appendChild(actions);
+    hero.appendChild(copy);
+
+    const progress = createElement("div", "courses-progress");
+    progress.appendChild(createElement("span", "", "本章知识点"));
+    progress.appendChild(
+      createElement("strong", "", section.topics.length + " 个"),
+    );
+    progress.appendChild(createElement("span", "", "独立章节页面"));
+    hero.appendChild(progress);
+    view.appendChild(hero);
+
+    const heading = createElement("div", "chapter-detail-heading");
+    heading.appendChild(createElement("h2", "", "知识点详解"));
+    heading.appendChild(
+      createElement("span", "", "共 " + section.topics.length + " 个知识点"),
+    );
+    view.appendChild(heading);
+
+    const card = renderCard(section, { hideHeader: true });
+    card.classList.add("chapter-detail-card");
+    view.appendChild(card);
+
+    const pagination = createElement("nav", "chapter-pagination");
+    pagination.setAttribute("aria-label", "相邻章节");
+
+    const previous = sections[chapterIndex - 1];
+    const next = sections[chapterIndex + 1];
+    if (previous) {
+      const previousLink = createElement(
+        "a",
+        "pagination-link pagination-previous",
+        "← " + previous.number + " " + previous.title,
+      );
+      previousLink.href = getChapterHref(previous);
+      pagination.appendChild(previousLink);
+    }
+    if (next) {
+      const nextLink = createElement(
+        "a",
+        "pagination-link pagination-next",
+        next.number + " " + next.title + " →",
+      );
+      nextLink.href = getChapterHref(next);
+      pagination.appendChild(nextLink);
+    }
+    if (pagination.children.length) {
+      view.appendChild(pagination);
+    }
+
+    if (window.location.hash) {
+      window.requestAnimationFrame(function () {
+        const target = document.querySelector(window.location.hash);
+        if (target) {
+          target.scrollIntoView({ block: "start" });
+        }
+      });
+    }
+  }
+
+  function renderAllSections(sections, content, sidebar) {
     if (sidebar) {
       renderSidebar(sections, sidebar);
     }
@@ -127,5 +232,26 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", renderCourse);
+  function boot() {
+    const sections = getSections();
+    if (!sections.length) {
+      return;
+    }
+
+    const chapterView = document.getElementById("chapter-view");
+    if (chapterView) {
+      renderChapterView(sections, chapterView);
+    }
+
+    const content = document.getElementById("course-content");
+    if (content) {
+      renderAllSections(
+        sections,
+        content,
+        document.getElementById("course-sidebar"),
+      );
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", boot);
 })();

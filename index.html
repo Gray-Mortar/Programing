@@ -6,6 +6,13 @@
     <meta name="description" content="一个面向初学者的机器学习互动学习网站。" />
     <title>ML Learn - 机器学习互动课堂</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="components/site-header.css" />
+    <script src="account/auth.js"></script>
+    <script>
+      if (!window.MLAuth || !window.MLAuth.getCurrentUser()) {
+        window.location.replace("account/index1.html");
+      }
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -45,6 +52,13 @@
           >
         </div>
       </div>
+      <iris-peek
+        placement="header"
+        passive
+        animated
+        active
+        hidden
+      ></iris-peek>
     </header>
 
     <main>
@@ -65,11 +79,35 @@
               >
             </div>
           </div>
-          <div class="hero-placeholder" aria-label="互动演示预留区域">
-            <div class="placeholder-icon">✦</div>
-            <p>KNN / K-Means 可视化</p>
-            <span>通过调节参数观察算法运行过程</span>
-          </div>
+          <section
+            class="iris-intro-card"
+            id="iris-intro-card"
+            role="button"
+            tabindex="0"
+            aria-label="Iris 自我介绍，第 1 段，共 3 段。点击查看下一段。"
+          >
+            <div class="iris-dialogue" aria-live="polite">
+              <p class="iris-bubble iris-bubble-name is-current" data-iris-message>
+                你好，我是 Iris。
+              </p>
+              <p class="iris-bubble" data-iris-message hidden>
+                我的灵感来自机器学习中的经典案例——鸢尾花分类，所以我也戴着一朵紫色鸢尾花。
+              </p>
+              <p class="iris-bubble" data-iris-message hidden>
+                紫色代表探索、智慧与想象力。我会陪你把复杂的知识变得清晰、有趣。
+              </p>
+              <span class="iris-intro-progress" aria-hidden="true">
+                点击继续 · <b id="iris-intro-step">1</b> / 3
+              </span>
+            </div>
+            <iris-peek
+              class="home-iris"
+              placement="hero"
+              passive
+              animated
+              active
+            ></iris-peek>
+          </section>
         </div>
       </section>
 
@@ -315,7 +353,8 @@
         <p class="copyright">© 2026 ML Learn</p>
       </div>
     </footer>
-    <script src="account/auth.js"></script>
+    <script src="components/iris-peek.js"></script>
+    <script src="home-iris.js"></script>
     <script src="account/session.js"></script>
   </body>
 </html>

@@ -40,19 +40,30 @@
     getCurrentUser: getCurrentUser,
     setCurrentUser: setCurrentUser,
     login: function (username, password) {
+      const identifier = String(username || "").trim();
+      const normalizedIdentifier = identifier.toLowerCase();
       const user = getUsers().find(function (item) {
-        return item.username === username && item.password === password;
+        const matchesUsername = item.username === identifier;
+        const matchesEmail =
+          item.email && item.email.toLowerCase() === normalizedIdentifier;
+        return (matchesUsername || matchesEmail) && item.password === password;
       });
       if (!user) {
         return { ok: false, message: "用户名或密码不正确。" };
       }
-      setCurrentUser(username);
+      setCurrentUser(user.username);
       return { ok: true, message: "登录成功。" };
     },
     register: function (data) {
       const users = getUsers();
+      const normalizedEmail = String(data.email || "").trim().toLowerCase();
       const exists = users.some(function (item) {
-        return item.username === data.username;
+        return (
+          item.username === data.username ||
+          (normalizedEmail &&
+            item.email &&
+            item.email.toLowerCase() === normalizedEmail)
+        );
       });
       if (exists) {
         return { ok: false, message: "该用户名已被注册。" };
