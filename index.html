@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="components/site-header.css" />
     <script src="account/auth.js"></script>
     <script>
-      if (!window.MLAuth || !window.MLAuth.getCurrentUser()) {
+      if (window.sessionStorage.getItem("ml-cover-entered") !== "1") {
+        window.location.replace("cover/welcome.html");
+      } else if (!window.MLAuth || !window.MLAuth.getCurrentUser()) {
         window.location.replace("account/index1.html");
       }
     </script>
@@ -106,6 +108,8 @@
               passive
               animated
               active
+              rise
+              standing-pose="wave"
             ></iris-peek>
           </section>
         </div>

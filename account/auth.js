@@ -4,7 +4,17 @@
 
   function getUsers() {
     try {
-      return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+      const users = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+      const sanitizedUsers = users.map(function (user) {
+        const account = Object.assign({}, user);
+        delete account.email;
+        delete account.nickname;
+        return account;
+      });
+      if (JSON.stringify(users) !== JSON.stringify(sanitizedUsers)) {
+        localStorage.setItem(USERS_KEY, JSON.stringify(sanitizedUsers));
+      }
+      return sanitizedUsers;
     } catch (error) {
       return [];
     }
@@ -41,12 +51,8 @@
     setCurrentUser: setCurrentUser,
     login: function (username, password) {
       const identifier = String(username || "").trim();
-      const normalizedIdentifier = identifier.toLowerCase();
       const user = getUsers().find(function (item) {
-        const matchesUsername = item.username === identifier;
-        const matchesEmail =
-          item.email && item.email.toLowerCase() === normalizedIdentifier;
-        return (matchesUsername || matchesEmail) && item.password === password;
+        return item.username === identifier && item.password === password;
       });
       if (!user) {
         return { ok: false, message: "用户名或密码不正确。" };
@@ -56,26 +62,29 @@
     },
     register: function (data) {
       const users = getUsers();
-      const normalizedEmail = String(data.email || "").trim().toLowerCase();
+      const username = String(data.username || "").trim();
+      const password = String(data.password || "");
+      if (!username) {
+        return { ok: false, message: "请输入用户名。" };
+      }
+      if (!/^[A-Za-z0-9]{6,}$/.test(password)) {
+        return {
+          ok: false,
+          message: "密码至少需要 6 位，并且只能包含数字或英文字母。",
+        };
+      }
       const exists = users.some(function (item) {
-        return (
-          item.username === data.username ||
-          (normalizedEmail &&
-            item.email &&
-            item.email.toLowerCase() === normalizedEmail)
-        );
+        return item.username === username;
       });
       if (exists) {
         return { ok: false, message: "该用户名已被注册。" };
       }
       users.push({
         id: "user_" + Date.now(),
-        username: data.username,
-        password: data.password,
-        nickname: data.nickname || "",
+        username: username,
+        password: password,
         gender: data.gender || "",
         birthdate: data.birthdate || "",
-        email: data.email || "",
         createdAt: new Date().toISOString(),
       });
       saveUsers(users);

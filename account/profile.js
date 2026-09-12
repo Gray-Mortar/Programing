@@ -53,12 +53,14 @@
     if (!user) {
       nickname.textContent = "尚未登录";
       username.textContent = "请先登录后再查看个人信息";
+      username.hidden = false;
       logoutButton.hidden = true;
       return;
     }
 
-    nickname.textContent = user.nickname || user.username;
-    username.textContent = "用户名：" + user.username;
+    nickname.textContent = user.username;
+    username.textContent = "";
+    username.hidden = true;
 
     logoutButton.hidden = false;
     fillLearningStatus(user);

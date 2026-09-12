@@ -15,32 +15,20 @@
   const steps = {
     start: {
       message:
-        "嗨！我是小 ML，你的学习伙伴。今天是第一次来，还是要继续学习？",
+        "嗨！我是 Iris，你的学习伙伴。今天是第一次来，还是要继续学习？",
       options: [
         { label: "我是新学员", value: "register" },
         { label: "我已经有账号", value: "login" },
       ],
     },
-    registerName: {
-      message: "太好了，欢迎加入！我该怎么称呼你？",
-      placeholder: "例如：小明",
-      field: "name",
-      autocomplete: "name",
-    },
-    registerEmail: {
-      message: function (values) {
-        return (
-          "认识你很高兴，" +
-          values.name +
-          "。留一个常用邮箱，它也会作为你的登录账号。"
-        );
-      },
-      placeholder: "name@example.com",
-      field: "email",
-      autocomplete: "email",
+    registerUsername: {
+      message: "太好了，欢迎加入！请设置一个用户名。",
+      placeholder: "输入用户名",
+      field: "username",
+      autocomplete: "username",
     },
     registerPassword: {
-      message: "最后设置一个密码，至少 6 位字符。",
+      message: "请设置密码，至少 6 位，只使用数字或英文字母。",
       placeholder: "输入密码",
       field: "password",
       password: true,
@@ -54,8 +42,8 @@
       autocomplete: "new-password",
     },
     loginIdentifier: {
-      message: "欢迎回来！请输入用户名或注册邮箱。",
-      placeholder: "用户名或邮箱",
+      message: "欢迎回来！请输入用户名。",
+      placeholder: "用户名",
       field: "identifier",
       autocomplete: "username",
     },
@@ -77,7 +65,7 @@
     item.className = "message " + source;
     item.innerHTML =
       source === "bot"
-        ? '<span class="message-avatar">ML</span><p></p>'
+        ? '<span class="message-avatar"><img src="../components/assets/iris-avatar.png" alt="" /></span><p></p>'
         : "<p></p>";
     item.querySelector("p").textContent = text;
     conversation.appendChild(item);
@@ -110,7 +98,7 @@
   }
 
   function complete(type) {
-    const suffix = values.name ? "，" + values.name : "";
+    const suffix = values.username ? "，" + values.username : "";
     addMessage(
       type === "register"
         ? "完成啦" + suffix + "！账号已经创建并登录。"
@@ -150,21 +138,18 @@
   }
 
   function registerAccount() {
-    const username = values.email.toLowerCase();
     const result = window.MLAuth.register({
-      username: username,
+      username: values.username,
       password: values.password,
-      nickname: values.name,
-      email: username,
     });
     if (!result.ok) {
-      values.email = "";
-      showError(result.message + " 请换一个邮箱。");
-      ask("registerEmail");
+      values.username = "";
+      showError(result.message + " 请换一个用户名。");
+      ask("registerUsername");
       return;
     }
 
-    const loginResult = window.MLAuth.login(username, values.password);
+    const loginResult = window.MLAuth.login(values.username, values.password);
     if (!loginResult.ok) {
       showError("账号已创建，但自动登录失败。请重新开始并选择登录。");
       return;
@@ -173,25 +158,15 @@
   }
 
   function submitField(value) {
-    if (currentStep === "registerName") {
-      values.name = value;
-      ask("registerEmail");
-      return;
-    }
-
-    if (currentStep === "registerEmail") {
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        showError("这个邮箱格式似乎不完整，请检查后再输入。");
-        return;
-      }
-      values.email = value;
+    if (currentStep === "registerUsername") {
+      values.username = value;
       ask("registerPassword");
       return;
     }
 
     if (currentStep === "registerPassword") {
-      if (value.length < 6) {
-        showError("密码至少需要 6 位字符，请重新设置。");
+      if (!/^[A-Za-z0-9]{6,}$/.test(value)) {
+        showError("密码至少需要 6 位，并且只能包含数字或英文字母。");
         return;
       }
       values.password = value;
@@ -230,7 +205,7 @@
       addMessage(visibleText || value, "user");
       chatInput.value = "";
       quickActions.replaceChildren();
-      ask(value === "register" ? "registerName" : "loginIdentifier");
+      ask(value === "register" ? "registerUsername" : "loginIdentifier");
       return;
     }
 

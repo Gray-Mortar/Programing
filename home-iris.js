@@ -37,6 +37,7 @@
 
   function showMessage(index) {
     currentMessage = (index + messages.length) % messages.length;
+    iris.toggleAttribute("standing", currentMessage > 0);
     messages.forEach((message, messageIndex) => {
       const isCurrent = messageIndex === currentMessage;
       message.hidden = !isCurrent;

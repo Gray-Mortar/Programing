@@ -68,3 +68,22 @@
 ## 首页自由挂靠模式
 
 `placement="hero"` 用于把 Iris 放在首页介绍卡片内部。页面可以通过 `--iris-shift-x`、`--iris-shift-y` 和 `--iris-tilt` 三个变量提供轻微的鼠标反馈，而不需要复制组件或修改图片资源。
+
+需要让 Iris 从探头姿态起身时，为组件添加 `rise`；再添加或移除 `standing` 来播放正向或反向过渡：
+
+```html
+<iris-peek placement="hero" passive animated active rise standing></iris-peek>
+```
+
+`--iris-rise-height` 控制起身舞台高度，`--iris-standing-width` 控制全身 Iris 的宽度，`--iris-standing-bottom` 可以微调脚底位置。`standing-pose="standing"` 使用自然站姿，`standing-pose="wave"` 使用挥手姿态。页眉倒挂模式不会响应 `rise`，避免站立素材破坏页眉挂角布局。
+
+## 全身 Iris 组件
+
+全身挥手形态与探头起身动画相互独立。需要在其他页面单独展示全身 Iris 时，加载 `iris-fullbody.js`：
+
+```html
+<iris-fullbody pose="wave" passive></iris-fullbody>
+<script src="../components/iris-fullbody.js"></script>
+```
+
+默认 `pose="wave"` 使用挥手素材，`pose="standing"` 使用双臂自然下垂的站立素材。通过 `--iris-fullbody-width` 调整组件宽度；移除 `passive` 后，点击会派发 `iris-fullbody-activate` 事件。
