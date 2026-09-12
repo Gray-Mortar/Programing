@@ -1,0 +1,231 @@
+:root {
+  --ml-header-purple-700: var(--purple-700, #5b3cc4);
+  --ml-header-purple-600: var(--purple-600, #6d4bd1);
+  --ml-header-purple-100: var(--purple-100, #eee9ff);
+  --ml-header-purple-50: var(--purple-50, #f7f5ff);
+  --ml-header-text-muted: var(--text-muted, #6d687b);
+  --ml-header-border: var(--border, #e7e2f2);
+  --ml-header-white: var(--white, #ffffff);
+  --ml-header-page-width: 1120px;
+}
+
+/*
+ * ML Learn 标准页眉。
+ * 这里以首页页眉为唯一基准，页面自身的样式只负责正文区域。
+ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  overflow: visible;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid var(--ml-header-border);
+}
+
+.site-header .header-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(var(--ml-header-page-width), calc(100% - 40px));
+  max-width: none;
+  min-height: 72px;
+  margin: 0 auto;
+  padding: 0;
+  gap: 28px;
+}
+
+.site-header .brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--ml-header-purple-700);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.site-header .brand-mark {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  color: var(--ml-header-white);
+  background: var(--ml-header-purple-600);
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.site-header .main-nav {
+  position: absolute;
+  left: 50%;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 30px;
+  color: var(--ml-header-text-muted);
+  font-size: 16px;
+  line-height: 1.6;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.site-header .main-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-header .main-nav a:hover,
+.site-header .main-nav .active {
+  color: var(--ml-header-purple-700);
+}
+
+.site-header .account-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.site-header .button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  border: 1px solid var(--ml-header-purple-600);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    transform 0.2s;
+}
+
+.site-header .button:hover {
+  transform: translateY(-2px);
+}
+
+.site-header .button-primary {
+  color: var(--ml-header-white);
+  background: var(--ml-header-purple-600);
+}
+
+.site-header .button-primary:hover {
+  background: var(--ml-header-purple-700);
+}
+
+.site-header .button-secondary {
+  color: var(--ml-header-purple-700);
+  background: var(--ml-header-white);
+}
+
+.site-header .button-secondary:hover {
+  background: var(--ml-header-purple-50);
+}
+
+.site-header .account-user {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  padding: 8px 16px;
+  color: var(--ml-header-purple-700);
+  background: var(--ml-header-purple-50);
+  border: 1px solid var(--ml-header-purple-100);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.site-header .account-user:hover {
+  color: var(--ml-header-purple-600);
+  background: var(--ml-header-purple-100);
+}
+
+.site-header .account-user[hidden],
+.site-header .account-actions .button[hidden] {
+  display: none;
+}
+
+/* Iris 正立贴在页眉底边，不占据导航空间，也不改变页眉高度。 */
+.site-header > iris-peek[placement="header"] {
+  --iris-width: 170px;
+  --iris-height: 80px;
+  --iris-right: max(18px, calc((100vw - var(--ml-header-page-width)) / 2 - 150px));
+  --iris-header-overlap: 7px;
+}
+
+@media (min-width: 1181px) and (max-width: 1380px) {
+  .site-header > iris-peek[placement="header"] {
+    --iris-width: 72px;
+    --iris-height: 34px;
+    --iris-right: 6px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .site-header > iris-peek[placement="header"] {
+    display: none;
+  }
+
+  .site-header .header-inner {
+    gap: 18px;
+  }
+
+  .site-header .main-nav {
+    gap: 20px;
+    font-size: 15px;
+  }
+
+  .site-header .button {
+    padding-inline: 14px;
+  }
+
+}
+
+@media (max-width: 960px) {
+  .site-header .header-inner {
+    flex-wrap: wrap;
+    padding: 14px 0;
+  }
+
+  .site-header .main-nav {
+    position: static;
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    padding-top: 12px;
+    overflow-x: auto;
+    border-top: 1px solid var(--ml-header-border);
+    transform: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .site-header .header-inner {
+    width: min(100% - 28px, var(--ml-header-page-width));
+  }
+
+  .site-header .brand > span:last-child {
+    display: none;
+  }
+
+  .site-header .main-nav {
+    gap: 20px;
+    font-size: 14px;
+  }
+
+  .site-header .account-actions {
+    flex-wrap: wrap;
+  }
+}
