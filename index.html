@@ -7,6 +7,12 @@
     <title>ML Learn - 机器学习互动课堂</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="components/site-header.css" />
+    <script src="account/auth.js"></script>
+    <script>
+      if (!window.MLAuth || !window.MLAuth.getCurrentUser()) {
+        window.location.replace("account/index1.html");
+      }
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -349,7 +355,6 @@
     </footer>
     <script src="components/iris-peek.js"></script>
     <script src="home-iris.js"></script>
-    <script src="account/auth.js"></script>
     <script src="account/session.js"></script>
   </body>
 </html>

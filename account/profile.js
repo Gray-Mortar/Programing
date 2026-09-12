@@ -72,7 +72,7 @@
 
     logoutButton.addEventListener("click", function () {
       window.MLAuth.setCurrentUser("");
-      window.location.href = "../index.html";
+      window.location.replace("index1.html");
     });
   }
 
