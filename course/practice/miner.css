@@ -1,0 +1,770 @@
+/* Robot miner theme for multiple-choice questions */
+.quiz-options.mining-game {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  margin: 4px 0 18px;
+  color: #f4ead7;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(93, 142, 196, 0.24), transparent 36%),
+    #101a28;
+  border: 1px solid #334963;
+  border-radius: 18px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 18px 45px rgba(25, 18, 48, 0.16);
+  isolation: isolate;
+}
+
+.quiz-options.mining-game::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.42);
+}
+
+.mining-game.is-correct {
+  box-shadow:
+    inset 0 0 0 1px rgba(91, 210, 139, 0.22),
+    0 0 0 3px rgba(56, 183, 111, 0.14),
+    0 18px 45px rgba(25, 18, 48, 0.16);
+}
+
+.mining-game.is-wrong {
+  animation: mine-game-shake 0.42s ease-in-out 1;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 94, 94, 0.22),
+    0 0 0 3px rgba(213, 55, 55, 0.13),
+    0 18px 45px rgba(25, 18, 48, 0.16);
+}
+
+.mining-scene {
+  position: relative;
+  z-index: 4;
+  height: 150px;
+  overflow: visible;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(107, 166, 224, 0.32) 0 2px, transparent 3px),
+    radial-gradient(circle at 76% 26%, rgba(207, 225, 255, 0.42) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 62% 8%, rgba(107, 166, 224, 0.28) 0 2px, transparent 3px),
+    linear-gradient(180deg, #172b43 0%, #152235 65%, #171a20 100%);
+  border-bottom: 8px solid #0b1119;
+}
+
+.mining-scene::before {
+  content: "";
+  position: absolute;
+  right: 7%;
+  bottom: 7px;
+  left: 7%;
+  height: 30px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 0 7%, #4a5b6f 7% 10%, transparent 10% 90%, #4a5b6f 90% 93%, transparent 93%),
+    repeating-linear-gradient(90deg, transparent 0 27px, rgba(118, 139, 159, 0.65) 27px 30px);
+  border-top: 4px solid #6f8195;
+  transform: perspective(80px) rotateX(45deg);
+}
+
+.mining-hud {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  z-index: 7;
+  padding: 5px 9px;
+  color: #9fffc9;
+  background: rgba(7, 15, 25, 0.72);
+  border: 1px solid rgba(99, 223, 157, 0.3);
+  border-radius: 999px;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.mining-hud::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: #67e99f;
+  border-radius: 50%;
+  box-shadow: 0 0 9px #67e99f;
+  animation: miner-online 1.45s ease-in-out infinite;
+}
+
+.miner-robot {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  z-index: 5;
+  width: 98px;
+  height: 132px;
+  transform: translateX(-50%);
+  animation: miner-idle 2.5s ease-in-out infinite;
+}
+
+.robot-antenna {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: 19px;
+  background: #90a5b8;
+  transform: translateX(-50%);
+}
+
+.robot-antenna::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background: #62e7ff;
+  border: 2px solid #d9fbff;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #4ed8f3;
+  transform: translateX(-50%);
+}
+
+.robot-head {
+  position: absolute;
+  z-index: 3;
+  top: 17px;
+  left: 13px;
+  width: 72px;
+  height: 49px;
+  background: linear-gradient(145deg, #d8e0e7 0%, #7c8d9d 46%, #455666 100%);
+  border: 3px solid #263b4d;
+  border-radius: 20px 20px 15px 15px;
+  box-shadow:
+    inset 0 4px 0 rgba(255, 255, 255, 0.26),
+    0 6px 0 #172634;
+}
+
+.robot-face {
+  position: absolute;
+  top: 14px;
+  left: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 46px;
+  height: 17px;
+  padding: 5px 8px 0;
+  background: #132433;
+  border: 2px solid #0a121b;
+  border-radius: 8px;
+  box-shadow: inset 0 0 8px rgba(48, 213, 255, 0.3);
+}
+
+.robot-eye {
+  width: 11px;
+  height: 5px;
+  background: #5ce7ff;
+  border-radius: 999px;
+  box-shadow: 0 0 7px #38d6f1;
+  transition: transform 0.2s ease, height 0.2s ease;
+}
+
+.robot-mouth {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 15px;
+  height: 3px;
+  background: #344c60;
+  border-radius: 3px;
+  transform: translateX(-50%);
+}
+
+.robot-body {
+  position: absolute;
+  z-index: 1;
+  top: 67px;
+  left: 8px;
+  width: 82px;
+  height: 58px;
+  background: linear-gradient(145deg, #96a8b7 0%, #526779 48%, #2d4254 100%);
+  border: 3px solid #213645;
+  border-radius: 16px 16px 20px 20px;
+  box-shadow:
+    inset 0 5px 0 rgba(255, 255, 255, 0.2),
+    0 7px 0 #142532;
+}
+
+.robot-core {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  display: grid;
+  width: 42px;
+  height: 28px;
+  place-items: center;
+  color: #d8fbff;
+  background: radial-gradient(circle, #0f8eae 0%, #0d455d 65%, #092635 100%);
+  border: 2px solid #64d7ed;
+  border-radius: 8px;
+  box-shadow:
+    0 0 14px rgba(62, 213, 240, 0.5),
+    inset 0 0 10px rgba(91, 225, 255, 0.3);
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.robot-arm {
+  position: absolute;
+  z-index: 2;
+  top: 74px;
+  width: 12px;
+  height: 46px;
+  background: linear-gradient(90deg, #4c6173, #c0ccd5 50%, #465b6d);
+  border: 2px solid #263b4d;
+  border-radius: 999px;
+  transform-origin: 50% 8px;
+}
+
+.robot-arm::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 21px;
+  height: 18px;
+  background: #a9b8c3;
+  border: 2px solid #263b4d;
+  border-radius: 9px 9px 12px 12px;
+  transform: translateX(-50%);
+}
+
+.robot-arm-left {
+  left: -3px;
+}
+
+.robot-arm-right {
+  right: -3px;
+  transform: scaleX(-1);
+}
+
+.mine-hook {
+  position: absolute;
+  top: 106px;
+  left: 50%;
+  z-index: 12;
+  width: 3px;
+  height: 0;
+  background: repeating-linear-gradient(180deg, #c6d4dd 0 5px, #627789 5px 8px);
+  border-radius: 999px;
+  box-shadow: 0 0 5px rgba(185, 220, 239, 0.55);
+  transform: translateX(-50%);
+  transition:
+    left 0.78s cubic-bezier(0.22, 0.82, 0.3, 1),
+    height 0.78s cubic-bezier(0.22, 0.82, 0.3, 1);
+  pointer-events: none;
+}
+
+.hook-claw {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 32px;
+  height: 29px;
+  transform: translateX(-50%);
+}
+
+.hook-claw::before,
+.hook-claw::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  width: 5px;
+  height: 25px;
+  background: linear-gradient(180deg, #d6e2e9, #718697);
+  border: 1px solid #354b5e;
+  border-radius: 999px;
+  transform-origin: 50% 2px;
+  transition: transform 0.18s ease;
+}
+
+.hook-claw::before {
+  left: 8px;
+  transform: rotate(27deg);
+}
+
+.hook-claw::after {
+  right: 8px;
+  transform: rotate(-27deg);
+}
+
+.mine-hook.is-grabbing .hook-claw::before {
+  transform: rotate(4deg);
+}
+
+.mine-hook.is-grabbing .hook-claw::after {
+  transform: rotate(-4deg);
+}
+
+.mine-field {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 22px 16px 12px;
+  background:
+    radial-gradient(circle at 15% 19%, rgba(224, 167, 63, 0.13) 0 3px, transparent 4px),
+    radial-gradient(circle at 78% 65%, rgba(224, 167, 63, 0.11) 0 2px, transparent 3px),
+    repeating-linear-gradient(145deg, rgba(255, 255, 255, 0.018) 0 8px, transparent 8px 20px),
+    linear-gradient(180deg, #3b3021 0%, #2b241a 100%);
+  border-top: 3px solid #20170f;
+}
+
+.mine-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.28), transparent 16%, transparent 82%, rgba(0, 0, 0, 0.2));
+}
+
+.mine-option {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-width: 0;
+  min-height: 168px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 5px 8px;
+  color: #f7edd9;
+  background: transparent;
+  border: 0;
+  border-radius: 14px;
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+}
+
+.mine-option::before {
+  content: "";
+  position: absolute;
+  right: 4%;
+  bottom: 3px;
+  left: 4%;
+  height: 54px;
+  background: radial-gradient(ellipse at center, #090705 0 42%, #18120d 43% 63%, transparent 65%);
+  border-radius: 50%;
+  filter: blur(0.3px);
+}
+
+.mine-option:focus-visible {
+  outline: 3px solid #ffd76a;
+  outline-offset: 3px;
+}
+
+.mine-option:disabled {
+  color: #f7edd9;
+  opacity: 1;
+  cursor: wait;
+}
+
+.mining-payload {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  transition:
+    transform 0.86s cubic-bezier(0.2, 0.76, 0.32, 1),
+    opacity 0.72s ease;
+}
+
+.mine-option:not(.is-pulled):hover .mining-payload {
+  transform: translateY(-6px);
+}
+
+.mine-label {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  width: min(96%, 330px);
+  min-height: 50px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  color: #352918;
+  background: linear-gradient(180deg, #fff9e8 0%, #eadbb9 100%);
+  border: 2px solid #9d7b40;
+  border-radius: 8px;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.4),
+    0 5px 0 #5d4929,
+    0 9px 13px rgba(0, 0, 0, 0.26);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mine-letter {
+  display: grid;
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  color: #fff8e6;
+  background: #72501d;
+  border-radius: 50%;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mine-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.mine-rock {
+  position: relative;
+  width: min(72%, 210px);
+  height: 76px;
+  margin-top: -4px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.17), transparent 32%),
+    radial-gradient(circle at 66% 35%, #e3a73e 0 6%, #a96824 7% 13%, transparent 14%),
+    linear-gradient(150deg, #8a7b6a 0%, #554c43 46%, #302b27 100%);
+  clip-path: polygon(8% 25%, 25% 4%, 55% 0, 84% 17%, 100% 52%, 90% 88%, 61% 100%, 21% 92%, 0 64%);
+  filter: drop-shadow(0 11px 7px rgba(0, 0, 0, 0.34));
+  transition: border-color 0.2s ease, filter 0.2s ease;
+}
+
+.mine-rock::before {
+  content: "";
+  position: absolute;
+  top: 28%;
+  left: 22%;
+  width: 12px;
+  height: 12px;
+  background: #f7d16c;
+  border: 2px solid rgba(92, 58, 14, 0.7);
+  box-shadow: 0 0 9px rgba(248, 194, 77, 0.62);
+  transform: rotate(45deg);
+}
+
+.mine-option:nth-child(2) .mine-rock {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.17), transparent 32%),
+    radial-gradient(circle at 64% 36%, #68c7d2 0 6%, #277681 7% 13%, transparent 14%),
+    linear-gradient(150deg, #7c8384 0%, #4d5556 46%, #293031 100%);
+}
+
+.mine-option:nth-child(3) .mine-rock {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.17), transparent 32%),
+    radial-gradient(circle at 66% 35%, #a984e1 0 6%, #65449a 7% 13%, transparent 14%),
+    linear-gradient(150deg, #887f91 0%, #554c5c 46%, #302b35 100%);
+}
+
+.mine-option:nth-child(4) .mine-rock {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.17), transparent 32%),
+    radial-gradient(circle at 66% 35%, #83cf78 0 6%, #3a843f 7% 13%, transparent 14%),
+    linear-gradient(150deg, #7e897c 0%, #4d594c 46%, #29332b 100%);
+}
+
+.mine-option:not(.is-pulled):hover .mine-label {
+  border-color: #f1bd45;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.5),
+    0 5px 0 #5d4929,
+    0 9px 17px rgba(0, 0, 0, 0.34),
+    0 0 0 3px rgba(255, 209, 92, 0.13);
+}
+
+.mine-option:not(.is-pulled):hover .mine-rock {
+  filter: drop-shadow(0 13px 8px rgba(0, 0, 0, 0.38)) brightness(1.1);
+}
+
+.mine-option.is-selected .mine-label {
+  border-color: #ffce55;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.48),
+    0 5px 0 #5d4929,
+    0 0 0 4px rgba(255, 204, 77, 0.17),
+    0 9px 18px rgba(0, 0, 0, 0.34);
+}
+
+.mine-option.is-hooked .mine-label {
+  animation: mine-label-grab 0.22s ease-in-out 1;
+}
+
+.mine-option.is-pulled .mining-payload {
+  opacity: 0.18;
+  transform: translate(var(--pull-x, 0), var(--pull-y, -220px)) scale(0.52) rotate(8deg);
+}
+
+.mine-option.is-answer .mine-label {
+  border-color: #5be18e;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.48),
+    0 5px 0 #315d3e,
+    0 0 0 4px rgba(70, 221, 133, 0.2),
+    0 9px 18px rgba(0, 0, 0, 0.34);
+}
+
+.mine-option.is-wrong-choice .mine-label {
+  color: #8b1f18;
+  background: linear-gradient(180deg, #fff0ed 0%, #efc3bd 100%);
+  border-color: #cf4a3d;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.44),
+    0 5px 0 #763329,
+    0 0 0 4px rgba(220, 66, 55, 0.18);
+}
+
+.mining-status {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  padding: 9px 14px 11px;
+  color: #cdd8df;
+  background: #121c28;
+  border-top: 1px solid rgba(142, 173, 194, 0.16);
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.mining-status::before {
+  content: "●";
+  color: #f2be4f;
+  font-size: 10px;
+  animation: miner-online 1.4s ease-in-out infinite;
+}
+
+.mining-game.is-mining .mining-status::before {
+  color: #62e7ff;
+  animation-duration: 0.6s;
+}
+
+.mining-game.is-correct .mining-status {
+  color: #8cf0b5;
+  background: #12271e;
+}
+
+.mining-game.is-correct .mining-status::before {
+  color: #5ee896;
+  animation: none;
+}
+
+.mining-game.is-wrong .mining-status {
+  color: #ff9a91;
+  background: #2a1717;
+}
+
+.mining-game.is-wrong .mining-status::before {
+  color: #ff5b4d;
+  animation: none;
+}
+
+.mining-game.is-correct .miner-robot {
+  animation: miner-celebrate 0.48s ease-in-out 3;
+}
+
+.mining-game.is-correct .robot-eye {
+  height: 9px;
+  border-radius: 50% 50% 20% 20%;
+  transform: rotate(45deg);
+}
+
+.mining-game.is-correct .robot-arm-left {
+  animation: robot-clap-left 0.36s ease-in-out 5;
+}
+
+.mining-game.is-correct .robot-arm-right {
+  animation: robot-clap-right 0.36s ease-in-out 5;
+}
+
+.mining-game.is-wrong .miner-robot {
+  animation: miner-error 0.35s ease-in-out 2;
+}
+
+.mining-game.is-wrong .robot-eye {
+  background: #ff5c51;
+  box-shadow: 0 0 8px #f13c31;
+}
+
+@keyframes miner-idle {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-3px);
+  }
+}
+
+@keyframes miner-celebrate {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-8px) rotate(-2deg);
+  }
+}
+
+@keyframes miner-error {
+  0%,
+  100% {
+    transform: translateX(-50%);
+  }
+  25% {
+    transform: translateX(calc(-50% - 7px));
+  }
+  75% {
+    transform: translateX(calc(-50% + 7px));
+  }
+}
+
+@keyframes robot-clap-left {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: translate(12px, -7px) rotate(58deg);
+  }
+}
+
+@keyframes robot-clap-right {
+  0%,
+  100% {
+    transform: scaleX(-1) rotate(0);
+  }
+  50% {
+    transform: translate(-12px, -7px) scaleX(-1) rotate(58deg);
+  }
+}
+
+@keyframes miner-online {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes mine-label-grab {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px) rotate(-1deg);
+  }
+}
+
+@keyframes mine-game-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-7px);
+  }
+  40% {
+    transform: translateX(6px);
+  }
+  60% {
+    transform: translateX(-4px);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+
+@media (max-width: 700px) {
+  .mining-scene {
+    height: 142px;
+  }
+
+  .mining-hud {
+    right: 9px;
+    font-size: 9px;
+  }
+
+  .mine-field {
+    gap: 10px;
+    padding: 20px 10px 10px;
+  }
+
+  .mine-option {
+    min-height: 158px;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .mine-label {
+    min-height: 48px;
+    padding: 7px;
+    font-size: 12px;
+  }
+
+  .mine-rock {
+    width: min(82%, 180px);
+    height: 68px;
+  }
+}
+
+@media (max-width: 470px) {
+  .mining-hud {
+    display: none;
+  }
+
+  .mine-field {
+    grid-template-columns: 1fr;
+  }
+
+  .mine-option {
+    min-height: 150px;
+  }
+
+  .mine-label {
+    width: min(92%, 330px);
+  }
+
+  .mine-rock {
+    width: min(68%, 190px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .miner-robot,
+  .mining-hud::before,
+  .mining-status::before {
+    animation: none;
+  }
+
+  .mine-hook,
+  .mining-payload {
+    transition-duration: 0.01ms;
+  }
+}
