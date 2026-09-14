@@ -8,6 +8,7 @@
   const enabledKey = "ml_bgm_enabled";
   const volumeKey = "ml_bgm_volume";
   const timeKey = "ml_bgm_current_time";
+  const stateKey = "ml_bgm_playback_state";
 
   function readStorage(storage, key, fallback) {
     try {
@@ -26,12 +27,79 @@
     }
   }
 
+  function readPlaybackState() {
+    try {
+      const state = JSON.parse(
+        readStorage(window.sessionStorage, stateKey, "null"),
+      );
+      if (state && Number.isFinite(Number(state.time))) {
+        return {
+          time: Number(state.time),
+          savedAt: Number(state.savedAt) || 0,
+          playing: Boolean(state.playing),
+        };
+      }
+    } catch (error) {
+      // 兼容旧版本仅保存播放秒数的记录。
+    }
+    return {
+      time: Number(readStorage(window.sessionStorage, timeKey, 0)) || 0,
+      savedAt: 0,
+      playing: false,
+    };
+  }
+
+  const initialVolume = Number(
+    readStorage(window.localStorage, volumeKey, "0.18"),
+  );
+  const initiallyEnabled =
+    readStorage(window.localStorage, enabledKey, "1") !== "0";
+  const sharedAudio = new Audio();
+  sharedAudio.loop = true;
+  sharedAudio.preload = "auto";
+  sharedAudio.volume = Number.isFinite(initialVolume)
+    ? Math.min(1, Math.max(0, initialVolume))
+    : 0.18;
+  sharedAudio.src = audioUrl;
+
+  function restoreSharedProgress() {
+    const state = readPlaybackState();
+    if (state.time <= 0) return;
+    const elapsed = state.playing && state.savedAt
+      ? Math.min(2, Math.max(0, (Date.now() - state.savedAt) / 1000))
+      : 0;
+    const target = state.time + elapsed;
+    sharedAudio.currentTime = sharedAudio.duration
+      ? target % sharedAudio.duration
+      : target;
+  }
+
+  if (sharedAudio.readyState >= HTMLMediaElement.HAVE_METADATA) {
+    restoreSharedProgress();
+  } else {
+    sharedAudio.addEventListener("loadedmetadata", restoreSharedProgress, {
+      once: true,
+    });
+  }
+
+  if (initiallyEnabled) {
+    const startEarlyPlayback = () => {
+      const result = sharedAudio.play();
+      if (result && typeof result.catch === "function") result.catch(() => {});
+    };
+    if (sharedAudio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
+      startEarlyPlayback();
+    } else {
+      sharedAudio.addEventListener("canplay", startEarlyPlayback, { once: true });
+    }
+  }
+
+  sharedAudio.load();
+
   class SiteBgm extends HTMLElement {
     constructor() {
       super();
-      this.audio = new Audio(audioUrl);
-      this.audio.loop = true;
-      this.audio.preload = "metadata";
+      this.audio = sharedAudio;
       const savedVolume = Number(
         readStorage(window.localStorage, volumeKey, "0.18"),
       );
@@ -45,6 +113,9 @@
         this.play();
       };
       this.handlePageHide = () => this.saveProgress();
+      this.handlePageShow = () => {
+        if (this.enabled) this.play();
+      };
       this.handleOutsidePointer = (event) => {
         if (!event.composedPath().includes(this)) this.closePanel();
       };
@@ -275,12 +346,6 @@
           this.saveProgress();
         }
       });
-      this.audio.addEventListener("loadedmetadata", () => {
-        const savedTime = Number(readStorage(window.sessionStorage, timeKey, 0));
-        if (Number.isFinite(savedTime) && savedTime > 0) {
-          this.audio.currentTime = Math.min(savedTime, this.audio.duration || savedTime);
-        }
-      });
     }
 
     connectedCallback() {
@@ -289,6 +354,7 @@
       document.addEventListener("pointerdown", this.handleOutsidePointer);
       document.addEventListener("keydown", this.handlePanelKeydown);
       window.addEventListener("pagehide", this.handlePageHide);
+      window.addEventListener("pageshow", this.handlePageShow);
       this.updateButton();
       if (this.enabled) this.play();
     }
@@ -299,6 +365,7 @@
       document.removeEventListener("pointerdown", this.handleOutsidePointer);
       document.removeEventListener("keydown", this.handlePanelKeydown);
       window.removeEventListener("pagehide", this.handlePageHide);
+      window.removeEventListener("pageshow", this.handlePageShow);
       this.saveProgress();
       this.audio.pause();
     }
@@ -306,6 +373,15 @@
     saveProgress() {
       if (Number.isFinite(this.audio.currentTime)) {
         writeStorage(window.sessionStorage, timeKey, this.audio.currentTime);
+        writeStorage(
+          window.sessionStorage,
+          stateKey,
+          JSON.stringify({
+            time: this.audio.currentTime,
+            savedAt: Date.now(),
+            playing: this.enabled && !this.audio.paused,
+          }),
+        );
       }
     }
 
