@@ -9,7 +9,7 @@ const featureInfo = {
 
 const $ = (selector) => document.querySelector(selector);
 const elements = {
-  tray: $("#animal-tray"), count: $("#sample-count"), hint: $("#selection-hint"),
+  tray: $("#animal-tray"), stage: $("#sorting-stage"), count: $("#sample-count"), hint: $("#selection-hint"),
   featureList: $("#feature-list"), question: $("#current-question-text"),
   yesHeading: $("#yes-heading"), noHeading: $("#no-heading"), yesZone: $("#yes-dropzone"), noZone: $("#no-dropzone"),
   yesCount: $("#yes-count"), noCount: $("#no-count"), start: $("#start-filter"), reset: $("#reset-experiment"), quickAnalysis: $("#quick-analysis"),
@@ -38,6 +38,7 @@ let awaitingNext = false;
 let running = false;
 let skipRequested = false;
 let runToken = 0;
+const activeAnimations = new Set();
 let draggedFeature = null;
 let analysisStep = 0;
 const carryCardX = [79, 80, 80, 80, 82, 81];
@@ -101,13 +102,14 @@ function recalculateForCurrentOrder() {
   latestSplit = history[3];
   currentCandidates = latestSplit.animals.slice();
   awaitingNext = false;
+  const cards = [...document.querySelectorAll(".animal-card")];
   resetZone(elements.yesZone); resetZone(elements.noZone);
   elements.yesCount.textContent = "0"; elements.noCount.textContent = "0";
   const finalIds = new Set(currentCandidates.map((animal) => animal.id));
-  document.querySelectorAll(".animal-card").forEach((card) => {
+  cards.forEach((card) => {
     card.classList.remove("is-sorted", "is-transporting", "is-returning", "is-dragging");
     card.removeAttribute("style");
-    if (!finalIds.has(card.dataset.animalId)) retiredCards.append(card);
+    if (finalIds.has(card.dataset.animalId)) elements.tray.append(card); else retiredCards.append(card);
   });
   latestSplit.yes.forEach((animal) => addToBranch(animal, true));
   latestSplit.no.forEach((animal) => addToBranch(animal, false));
@@ -155,7 +157,7 @@ function createCard(animal) {
 function resetZone(zone) { zone.innerHTML = "<span>拖放到这里</span>"; }
 
 function resetAll() {
-  runToken += 1;
+  cancelRobotAnimation();
   running = false; started = false; awaitingNext = false; skipRequested = false;
   activeLevel = 0; currentCandidates = []; history = []; latestSplit = null; analysisStep = 0;
   elements.filterView.hidden = false; elements.analysisView.hidden = true; elements.analysisChallenge.hidden = true;
@@ -197,52 +199,136 @@ function restoreRobotHome() {
 }
 function hand(frame, rect) { return { x: carryCardX[frame] / 175 * rect.width, y: 202 / 350 * rect.height, width: 72 / 175 * rect.width, height: 46 / 350 * rect.height }; }
 
+function cancelRobotAnimation() {
+  runToken += 1;
+  [...activeAnimations].forEach((animation) => animation.cancel());
+  document.querySelectorAll(".animal-card.is-transporting").forEach((card) => {
+    card.classList.remove("is-transporting", "is-returning");
+    card.removeAttribute("style");
+  });
+  running = false;
+  skipRequested = false;
+  elements.skip.hidden = true;
+  elements.skip.disabled = false;
+  restoreRobotHome();
+}
+
+function resolvePoint(point) { return typeof point === "function" ? point() : point; }
+function toStagePoint(rect) {
+  const stageRect = elements.stage.getBoundingClientRect();
+  return { x: rect.left - stageRect.left, y: rect.top - stageRect.top };
+}
+function placeTransportCard(card, rect) {
+  const stageRect = elements.stage.getBoundingClientRect();
+  Object.assign(card.style, {
+    left: `${stageRect.left + rect.x}px`,
+    top: `${stageRect.top + rect.y}px`,
+    width: `${rect.width}px`,
+    height: `${rect.height}px`,
+  });
+}
+
 function moveRobot({ from, to, type, duration, token, onMove }) {
   return new Promise((resolve) => {
     if (skipRequested || token !== runToken) return resolve(false);
     const start = performance.now(); const actual = matchMedia("(prefers-reduced-motion: reduce)").matches ? 80 : duration;
-    elements.robot.classList.toggle("is-mirrored", to.x < from.x);
-    function tick(now) {
-      if (skipRequested || token !== runToken) return resolve(false);
-      const p = Math.min(1, (now - start) / actual); const e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
-      const x = from.x + (to.x - from.x) * e; const y = from.y + (to.y - from.y) * e; const frame = Math.floor((now - start) / 100) % 6;
-      elements.robot.style.transform = `translate3d(${x}px,${y}px,0)`; setRobotFrame(type, frame); onMove?.(x, y, frame);
-      if (p < 1) requestAnimationFrame(tick); else resolve(true);
+    let animationFrame = 0;
+    let settled = false;
+    const animation = {
+      cancel() {
+        cancelAnimationFrame(animationFrame);
+        finish(false);
+      },
+    };
+    function finish(result) {
+      if (settled) return;
+      settled = true;
+      activeAnimations.delete(animation);
+      resolve(result);
     }
-    requestAnimationFrame(tick);
+    const initialFrom = resolvePoint(from); const initialTo = resolvePoint(to);
+    elements.robot.classList.toggle("is-mirrored", initialTo.x < initialFrom.x);
+    function tick(now) {
+      if (skipRequested || token !== runToken) return finish(false);
+      const currentFrom = resolvePoint(from); const currentTo = resolvePoint(to);
+      const p = Math.min(1, (now - start) / actual); const e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      const x = currentFrom.x + (currentTo.x - currentFrom.x) * e; const y = currentFrom.y + (currentTo.y - currentFrom.y) * e; const frame = Math.floor((now - start) / 100) % 6;
+      elements.robot.style.transform = `translate3d(${x}px,${y}px,0)`; setRobotFrame(type, frame); onMove?.(x, y, frame);
+      if (p < 1) animationFrame = requestAnimationFrame(tick); else finish(true);
+    }
+    activeAnimations.add(animation);
+    animationFrame = requestAnimationFrame(tick);
   });
 }
 
 function cardToHand(card, source, pickup, robotRect, token) {
   return new Promise((resolve) => {
-    const anchor = hand(0, robotRect); const target = { x: pickup.x + anchor.x, y: pickup.y + anchor.y, width: anchor.width, height: anchor.height };
+    const anchor = hand(0, robotRect);
     const start = performance.now(); const duration = matchMedia("(prefers-reduced-motion: reduce)").matches ? 60 : 180;
-    card.classList.add("is-transporting"); Object.assign(card.style, { left: `${source.left}px`, top: `${source.top}px`, width: `${source.width}px`, height: `${source.height}px` });
-    function tick(now) {
-      if (skipRequested || token !== runToken) return resolve(false);
-      const p = Math.min(1, (now - start) / duration); const e = 1 - Math.pow(1 - p, 3);
-      card.style.left = `${source.left + (target.x - source.left) * e}px`; card.style.top = `${source.top + (target.y - source.top) * e}px`;
-      card.style.width = `${source.width + (target.width - source.width) * e}px`; card.style.height = `${source.height + (target.height - source.height) * e}px`;
-      if (p < 1) requestAnimationFrame(tick); else resolve(true);
+    let animationFrame = 0;
+    let settled = false;
+    const animation = {
+      cancel() {
+        cancelAnimationFrame(animationFrame);
+        finish(false);
+      },
+    };
+    function finish(result) {
+      if (settled) return;
+      settled = true;
+      activeAnimations.delete(animation);
+      resolve(result);
     }
-    requestAnimationFrame(tick);
+    card.classList.add("is-transporting");
+    placeTransportCard(card, source);
+    function tick(now) {
+      if (skipRequested || token !== runToken) return finish(false);
+      const pickupPoint = resolvePoint(pickup);
+      const target = { x: pickupPoint.x + anchor.x, y: pickupPoint.y + anchor.y, width: anchor.width, height: anchor.height };
+      const p = Math.min(1, (now - start) / duration); const e = 1 - Math.pow(1 - p, 3);
+      placeTransportCard(card, {
+        x: source.x + (target.x - source.x) * e,
+        y: source.y + (target.y - source.y) * e,
+        width: source.width + (target.width - source.width) * e,
+        height: source.height + (target.height - source.height) * e,
+      });
+      if (p < 1) animationFrame = requestAnimationFrame(tick); else finish(true);
+    }
+    activeAnimations.add(animation);
+    animationFrame = requestAnimationFrame(tick);
   });
 }
 
 async function transport(animal, index, total, token) {
   const answer = Boolean(animal[selectedFeature]); const card = $(`.animal-card[data-animal-id="${animal.id}"]`); const zone = answer ? elements.yesZone : elements.noZone;
-  const source = card.getBoundingClientRect(); const robotRect = elements.robot.getBoundingClientRect(); const zoneRect = zone.getBoundingClientRect(); const anchor = hand(0, robotRect);
-  const home = { x: robotRect.left, y: robotRect.top };
-  const pickup = { x: Math.max(6, source.left - anchor.x), y: Math.max(76, Math.min(innerHeight - robotRect.height - 8, source.top - anchor.y)) };
-  const drop = { x: zoneRect.left + Math.max(8, (zoneRect.width - anchor.width) / 2) - anchor.x, y: Math.max(76, zoneRect.top + 58 - anchor.y) };
+  const sourceRect = card.getBoundingClientRect(); const robotRect = elements.robot.getBoundingClientRect(); const anchor = hand(0, robotRect);
+  const sourcePoint = toStagePoint(sourceRect); const source = { ...sourcePoint, width: sourceRect.width, height: sourceRect.height };
+  const home = toStagePoint(robotRect);
+  const pickup = () => {
+    const stageRect = elements.stage.getBoundingClientRect();
+    const cardRect = card.classList.contains("is-transporting") ? sourceRect : card.getBoundingClientRect();
+    const point = card.classList.contains("is-transporting") ? source : { ...toStagePoint(cardRect), width: cardRect.width, height: cardRect.height };
+    return {
+      x: Math.max(6, point.x - anchor.x),
+      y: Math.max(6, Math.min(stageRect.height - robotRect.height - 8, point.y - anchor.y)),
+    };
+  };
+  const drop = () => {
+    const stageRect = elements.stage.getBoundingClientRect(); const zoneRect = zone.getBoundingClientRect();
+    return {
+      x: zoneRect.left - stageRect.left + Math.max(8, (zoneRect.width - anchor.width) / 2) - anchor.x,
+      y: Math.max(6, Math.min(stageRect.height - robotRect.height - 8, zoneRect.top - stageRect.top + 58 - anchor.y)),
+    };
+  };
   elements.robot.classList.add("is-active"); elements.robot.style.transform = `translate3d(${home.x}px,${home.y}px,0)`;
   elements.message.textContent = `第 ${index + 1}/${total} 张：我去拿${animal.name}`;
   if (!await moveRobot({ from: home, to: pickup, type: "walk", duration: 430, token })) return false;
   if (!await cardToHand(card, source, pickup, robotRect, token)) return false;
   elements.message.textContent = `把${animal.name}送往“${answer ? featureInfo[selectedFeature].yes : featureInfo[selectedFeature].no}”`;
-  if (!await moveRobot({ from: pickup, to: drop, type: "carry", duration: 650, token, onMove: (x, y, frame) => { const a = hand(frame, robotRect); Object.assign(card.style, { left: `${x + a.x}px`, top: `${y + a.y}px`, width: `${a.width}px`, height: `${a.height}px` }); } })) return false;
+  if (!await moveRobot({ from: pickup, to: drop, type: "carry", duration: 650, token, onMove: (x, y, frame) => { const a = hand(frame, robotRect); placeTransportCard(card, { x: x + a.x, y: y + a.y, width: a.width, height: a.height }); } })) return false;
+  const reachedDrop = resolvePoint(drop);
   addToBranch(animal, answer);
-  const done = await moveRobot({ from: drop, to: home, type: "walk", duration: 430, token });
+  const done = await moveRobot({ from: reachedDrop, to: home, type: "walk", duration: 430, token });
   if (done) restoreRobotHome();
   return done;
 }
@@ -368,9 +454,9 @@ function enterAnalysis() {
 }
 
 function quickEnterAnalysis() {
-  runToken += 1;
-  running = false; skipRequested = false; awaitingNext = false;
-  elements.skip.hidden = true; elements.manualError.hidden = true;
+  cancelRobotAnimation();
+  awaitingNext = false;
+  elements.manualError.hidden = true;
   if (!started) beginExperiment();
   recalculateForCurrentOrder();
   elements.message.classList.add("is-complete");
