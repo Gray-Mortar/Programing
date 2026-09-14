@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>丁子杰 | 个人主页</title>
+    <link rel="stylesheet" href="../../member-profile-common.css" />
     <style>
       :root {
         --primary-color: #2c3e50;
@@ -25,7 +26,7 @@
         align-items: center;
         min-height: 100vh;
         margin: 0;
-        padding: 40px 20px;
+        padding: 76px 20px 40px;
         box-sizing: border-box;
       }
 
@@ -192,9 +193,61 @@
         height: 100%;
         object-fit: cover;
       }
+
+      @media (max-width: 720px) {
+        body {
+          align-items: flex-start;
+          padding: 64px 12px 20px;
+        }
+
+        .profile-container {
+          border-radius: 14px;
+        }
+
+        .header {
+          padding: 32px 22px;
+        }
+
+        .header h1 {
+          font-size: 2rem;
+        }
+
+        .content {
+          flex-direction: column;
+          gap: 24px;
+          padding: 26px 20px;
+        }
+
+        .left-panel,
+        .right-panel {
+          width: 100%;
+          min-width: 0;
+        }
+
+        .info-list li {
+          gap: 8px;
+        }
+
+        .info-list span.label {
+          width: 76px;
+          flex: 0 0 76px;
+        }
+
+        .hobbies-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .photo-box {
+          height: auto;
+          aspect-ratio: 4 / 3;
+        }
+      }
     </style>
   </head>
   <body>
+    <a class="member-back-link" href="../../index.html">
+      <span aria-hidden="true">←</span> 返回项目成员
+    </a>
     <div class="profile-container">
       <div class="header">
         <h1>丁子杰</h1>
@@ -269,5 +322,6 @@
         </div>
       </div>
     </div>
+    <script src="../../../components/site-bgm.js"></script>
   </body>
 </html>

@@ -102,14 +102,6 @@ a {
   box-shadow: 0 14px 35px rgba(31, 51, 59, 0.2);
 }
 
-.intro-label {
-  margin: 0 0 12px;
-  color: var(--aqua-dark);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-}
-
 .profile-content h1 {
   margin: 0;
   font-family: Georgia, "Times New Roman", "Microsoft YaHei", serif;
@@ -233,20 +225,12 @@ a {
   overflow-y: auto; /*纵向滚动条*/
 }
 
-.dialog-label {
-  margin: 0 0 8px;
-  color: var(--aqua-dark);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-}
-
 .dialog-content h2 {
   margin: 0 0 18px;
   font-size: 30px;
 }
 
-.dialog-content > p:not(.dialog-label) {
+.dialog-content > p {
   margin: 8px 0;
   color: var(--ink-soft);
 }

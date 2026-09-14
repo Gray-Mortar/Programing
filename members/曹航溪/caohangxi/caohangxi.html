@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>曹航溪 · 个人介绍</title>
+    <link rel="stylesheet" href="../../member-profile-common.css" />
     <style>
       :root {
         --bg: #f7f6ff;
@@ -110,14 +111,6 @@
         z-index: -1;
       }
 
-      .eyebrow {
-        color: var(--lime);
-        letter-spacing: 0.3em;
-        font-size: 0.85rem;
-        margin: 0 0 16px;
-        text-transform: uppercase;
-      }
-
       h1 {
         margin: 0;
         font-size: clamp(3rem, 10vw, 6.4rem);
@@ -198,13 +191,6 @@
 
       .panel {
         margin-top: 46px;
-      }
-
-      .section-label {
-        color: var(--magenta);
-        font-size: 0.85rem;
-        letter-spacing: 0.3em;
-        margin-bottom: 10px;
       }
 
       h2 {
@@ -341,14 +327,6 @@
         margin: 0;
       }
 
-      .card-index {
-        display: inline-block;
-        margin-bottom: 8px;
-        font-size: 0.8rem;
-        color: var(--magenta);
-        letter-spacing: 0.25em;
-      }
-
       .contact-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -468,17 +446,13 @@
 
       .page {
         max-width: 1080px;
-        padding: 20px 5vw 28px;
+        padding: 72px 5vw 28px;
       }
 
       .hero {
         min-height: auto;
         gap: 28px;
         padding: 14px 0 8px;
-      }
-
-      .eyebrow {
-        color: var(--cyan);
       }
 
       h1 {
@@ -528,11 +502,6 @@
         font-size: 1.7rem;
         margin: 0 0 16px;
         text-align: left;
-      }
-
-      .section-label {
-        color: var(--cyan);
-        font-size: 0.8rem;
       }
 
       .about-grid {
@@ -649,16 +618,25 @@
           grid-template-columns: 1fr;
         }
       }
+
+      @media (max-width: 520px) {
+        .page {
+          padding-right: 16px;
+          padding-left: 16px;
+        }
+      }
     </style>
   </head>
   <body>
+    <a class="member-back-link" href="../../index.html">
+      <span aria-hidden="true">←</span> 返回项目成员
+    </a>
     <div class="bg-grid"></div>
     <div class="scanlines"></div>
 
     <main class="page">
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">CAOHANGXI / PROFILE</p>
           <h1>曹航溪</h1>
           <p class="hero-sub">
             你好，我是曹航溪，来自云南曲靖。喜欢音乐、乒乓球和美剧，也在尽力把自己的生活过得有趣一些。
@@ -680,7 +658,6 @@
       </section>
 
       <section class="panel about-panel" id="about">
-        <div class="section-label">01 / ABOUT</div>
         <h2>基本情况</h2>
         <div class="about-grid">
           <div class="photo-card">
@@ -713,23 +690,19 @@
       </section>
 
       <section class="panel hobby-panel" id="hobbies">
-        <div class="section-label">02 / HOBBIES</div>
         <h2>爱好广泛</h2>
         <div class="hobby-grid">
           <article class="card">
-            <span class="card-index">MUSIC</span>
             <h3>音乐</h3>
             <p>
               音乐是我的日常背景音。不管是华语流行、电子节拍，还是深夜循环的轻音乐，都能让情绪有地方安放。偶尔也会跟着节奏晃，假装自己很有乐感。
             </p>
           </article>
           <article class="card">
-            <span class="card-index">TABLE TENNIS</span>
             <h3>乒乓球</h3>
             <p>一个乒乓球菜鸟，偶尔能打出几个好球，主要看我的运气和状态</p>
           </article>
           <article class="card">
-            <span class="card-index">SERIES</span>
             <h3>美剧</h3>
             <p>
               美剧对我来说像一种平行世界旅行。看了很多，喜欢看人物成长、烧脑反转，也喜欢各种乱七八糟的剧，经常随着剧情越想越远，最近在看REACHER。
@@ -739,7 +712,6 @@
       </section>
 
       <section class="panel contact-panel" id="contact">
-        <div class="section-label">03 / CONTACT</div>
         <h2>联系方式</h2>
         <div class="contact-grid">
           <a class="contact-card" href="mailto:3597508931@qq.com">
@@ -758,6 +730,7 @@
       </section>
     </main>
 
-    <footer>曹航溪 · PERSONAL SPACE · 2026</footer>
+    <footer>曹航溪 · 个人空间 · 2026</footer>
+    <script src="../../../components/site-bgm.js"></script>
   </body>
 </html>

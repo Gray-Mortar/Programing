@@ -121,6 +121,7 @@
 
     /* 右下角探出的机器人 */
     .robot-peek {
+      --iris-peek-height: 161px;
       position: fixed;
       display: block;
       right: -18px;
@@ -128,13 +129,7 @@
       width: 340px;
       height: min(72vh, 560px);
       color: inherit;
-      cursor: pointer;
       z-index: 3;
-      text-decoration: none;
-      transition: transform 0.4s ease;
-    }
-    .robot-peek:hover {
-      transform: translateY(-12px);
     }
     .cover-iris {
       --iris-width: 100%;
@@ -144,27 +139,31 @@
       --iris-left: 0;
       --iris-z-index: 1;
     }
-    .robot-peek:focus-visible {
-      outline: 3px solid #6d4bd1;
-      outline-offset: -8px;
-      border-radius: 24px;
-    }
     /* 机器人对话气泡 */
     .robot-bubble {
       position: absolute;
-      top: 18px;
+      top: auto;
+      bottom: calc(var(--iris-peek-height) + 16px);
       left: 50%;
       transform: translateX(-50%);
       background: #fff;
       border: 2.5px solid #6d4bd1;
-      border-radius: 18px;
-      padding: 12px 24px;
-      font-size: 17px;
+      border-radius: 14px;
+      padding: 8px 15px;
+      font-size: 14px;
       font-weight: 700;
       color: #5b3cc4;
       box-shadow: 0 6px 16px rgba(109,75,209,0.2);
       white-space: nowrap;
+      cursor: default;
+      z-index: 3;
       animation: bubble-float 2.5s ease-in-out infinite;
+    }
+    .robot-peek.is-revealed .robot-bubble {
+      top: 18px;
+      bottom: auto;
+      padding: 10px 18px;
+      font-size: 16px;
     }
     .robot-bubble::after {
       content: '';
@@ -192,8 +191,8 @@
       z-index: 1;
     }
     @keyframes bubble-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -8px); }
     }
 
     /* 页脚 */
@@ -223,6 +222,7 @@
         font-size: 22px;
       }
       .robot-peek {
+        --iris-peek-height: 142px;
         right: -12px;
         width: 300px;
         height: min(68vh, 480px);
@@ -232,8 +232,8 @@
         --iris-standing-width: 72%;
       }
       .robot-bubble {
-        font-size: 14px;
-        padding: 10px 16px;
+        font-size: 13px;
+        padding: 7px 13px;
       }
     }
 
@@ -250,6 +250,7 @@
         font-size: 20px;
       }
       .robot-peek {
+        --iris-peek-height: 104px;
         right: -8px;
         width: 220px;
         height: min(58vh, 360px);
@@ -260,7 +261,12 @@
       }
       .robot-bubble {
         font-size: 12px;
-        padding: 8px 12px;
+        padding: 6px 10px;
+      }
+      .robot-peek.is-revealed .robot-bubble {
+        top: 10px;
+        padding: 7px 12px;
+        font-size: 12px;
       }
       .welcome-center {
         transform: translate(-50%, -50%);
@@ -279,41 +285,58 @@
     <p class="welcome-subtitle">在互动中理解机器学习 · 开启你的学习之旅</p>
   </div>
 
-  <!-- 右下角探出的机器人 -->
-  <a
-    class="robot-peek"
-    id="cover-enter"
-    href="../account/index1.html"
-    title="点击进入登录与注册"
-    aria-label="点击 Iris 进入登录与注册"
-  >
-    <div class="robot-bubble">点我进入～</div>
+  <!-- 右下角 Iris：提示框负责唤出，Iris 负责进入登录与注册 -->
+  <div class="robot-peek" id="cover-iris-stage">
+    <div class="robot-bubble" id="iris-invitation" aria-live="polite">
+      移到这里，叫醒 Iris～
+    </div>
     <iris-peek
+      id="cover-enter"
       class="cover-iris"
       placement="hero"
-      passive
       animated
       active
       rise
       standing-pose="wave"
+      accessible-label="点击 Iris 进入登录与注册"
+      title="点击 Iris 进入登录与注册"
     ></iris-peek>
-  </a>
+  </div>
 
   <div class="welcome-footer">© 2026 ML Learn · 机器学习互动课堂</div>
 
   <script src="../components/iris-peek.js"></script>
   <script>
-    const coverEnter = document.getElementById("cover-enter");
-    const coverIris = coverEnter.querySelector(".cover-iris");
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coverIris = document.getElementById("cover-enter");
+    const irisInvitation = document.getElementById("iris-invitation");
+    const irisStage = document.getElementById("cover-iris-stage");
+    let revealTimer = 0;
+    let irisRevealed = false;
 
-    window.setTimeout(() => {
+    function revealIris() {
+      if (irisRevealed) return;
+      irisRevealed = true;
+      irisStage.classList.add("is-revealed");
       coverIris.setAttribute("standing", "");
-    }, reduceMotion ? 0 : 520);
+      irisInvitation.textContent = "点击 Iris 进入～";
+    }
 
-    coverEnter.addEventListener("click", function () {
+    irisInvitation.addEventListener("mouseenter", function () {
+      revealTimer = window.setTimeout(revealIris, 320);
+    });
+
+    irisInvitation.addEventListener("mouseleave", function () {
+      window.clearTimeout(revealTimer);
+    });
+
+    irisInvitation.addEventListener("click", revealIris);
+    coverIris.addEventListener("focusin", revealIris);
+
+    coverIris.addEventListener("iris-activate", function () {
       window.sessionStorage.setItem("ml-cover-entered", "1");
+      window.location.href = "../account/index1.html";
     });
   </script>
+  <script src="../components/site-bgm.js"></script>
 </body>
 </html>

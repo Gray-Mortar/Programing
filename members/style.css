@@ -142,14 +142,6 @@ a {
   box-shadow: 0 16px 40px rgba(77, 53, 144, 0.08);
 }
 
-.eyebrow {
-  margin: 0 0 6px;
-  color: var(--purple-600);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
 h1 {
   margin: 0 0 20px;
   font-size: 40px;

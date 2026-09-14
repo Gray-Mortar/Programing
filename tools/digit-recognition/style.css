@@ -104,13 +104,6 @@ button {
 .intro {
   margin-bottom: 28px;
 }
-.eyebrow {
-  margin: 0 0 6px;
-  color: var(--purple-600);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
 .intro h1 {
   margin: 0;
   font-size: clamp(36px, 5vw, 52px);

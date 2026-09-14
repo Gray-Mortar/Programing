@@ -351,10 +351,7 @@ a {
   text-align: center;
 }
 
-/* 课程卡片 */
-.content-section {
-  padding: 88px 0;
-}
+/* 区块标题与卡片编号 */
 .section-heading {
   max-width: 620px;
   margin-bottom: 38px;
@@ -368,43 +365,14 @@ a {
 .future-box > p {
   color: var(--text-muted);
 }
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 22px;
-}
-.content-card {
-  min-height: 250px;
-  padding: 28px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-}
-.content-card:hover {
-  border-color: #cfc4ee;
-  box-shadow: 0 12px 30px rgba(77, 53, 144, 0.08);
-}
 .card-number {
   color: var(--purple-600);
   font-size: 14px;
   font-weight: 700;
 }
-.content-card h3 {
-  margin: 24px 0 10px;
-  font-size: 22px;
-}
-.content-card p {
-  color: var(--text-muted);
-}
-.content-card a {
-  display: inline-block;
-  margin-top: 12px;
-  color: var(--purple-700);
-  font-weight: 600;
-}
-
 /* 可视化实验入口 */
 .visual-lab-section {
-  padding: 0 0 88px;
+  padding: 88px 0;
   background: var(--white);
 }
 .visual-lab-grid {
@@ -549,7 +517,6 @@ a {
     padding: 64px 0;
   }
   .hero-inner,
-  .card-grid,
   .visual-lab-grid {
     grid-template-columns: 1fr;
   }

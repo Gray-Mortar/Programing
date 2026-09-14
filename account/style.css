@@ -13,7 +13,7 @@ button, input { font: inherit; } button, a { -webkit-tap-highlight-color: transp
 .chat-stage { position: relative; width: min(780px, 100%); margin: 0 auto; padding: 58px 0 148px; }
 .bot-illustration { position: absolute; z-index: 1; top: 170px; left: -265px; width: 235px; transform: rotate(-3deg); }
 .bot-illustration iris-fullbody { display: block; --iris-fullbody-width: 100%; }
-.chat-intro { position: relative; z-index: 2; margin-bottom: 40px; } .club-kicker { margin: 0 0 13px; color: var(--purple); font-size: 11px; font-weight: 700; letter-spacing: .2em; }
+.chat-intro { position: relative; z-index: 2; margin-bottom: 40px; }
 h1 { margin: 0; font-family: "Noto Serif SC", serif; font-size: clamp(35px, 5vw, 60px); line-height: 1.2; letter-spacing: -.03em; } h1 em { color: var(--purple); font-style: normal; }
 .chat-intro > p:last-child { margin: 17px 0 0; color: var(--muted); font-size: 15px; }
 .conversation { position: relative; z-index: 2; display: grid; gap: 19px; max-height: 39vh; padding: 4px 10px 20px 0; overflow-y: auto; scrollbar-color: #d5ccf6 transparent; }
@@ -37,11 +37,10 @@ h1 { margin: 0; font-family: "Noto Serif SC", serif; font-size: clamp(35px, 5vw,
 .loading-orbit::after { inset: -17px; border: 1px solid #f6d98a; border-left-color: transparent; animation-duration: 1.8s; animation-direction: reverse; }
 .loading-orbit span { position: absolute; width: 8px; height: 8px; background: var(--yellow); border-radius: 50%; transform: translate(31px, -31px); }
 .loading-panel h2, .ready-panel h2 { margin: 0; font-family: "Noto Serif SC", serif; font-size: 28px; line-height: 1.35; }
-.loading-copy, .ready-panel > p:not(.club-kicker) { margin: 13px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.loading-copy, .ready-panel > p { margin: 13px 0 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .loading-track { height: 6px; margin-top: 29px; overflow: hidden; background: #ebe6fb; border-radius: 99px; }
 .loading-track span { display: block; width: 42%; height: 100%; background: var(--purple); border-radius: inherit; animation: loading 2.2s ease-in-out forwards; }
 .ready-check { display: grid; width: 66px; height: 66px; place-items: center; margin: 0 auto 25px; color: #fff; background: #4fa578; border-radius: 22px; font-size: 34px; }
-.ready-panel .club-kicker { margin-bottom: 10px; }
 .start-learning { min-height: 48px; margin-top: 28px; padding: 0 24px; color: var(--white); background: var(--ink); border: 0; border-radius: 11px; cursor: pointer; font-size: 14px; font-weight: 700; transition: background .2s, transform .2s; }
 .start-learning:hover { background: var(--purple); transform: translateY(-2px); }
 @keyframes orbit { to { transform: rotate(360deg); } }
