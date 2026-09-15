@@ -1,3 +1,4 @@
+/* Shared knowledge-tree styles for course modules. */
 .knowledge-tree-panel {
   margin-top: 26px;
   padding: 30px;
@@ -359,6 +360,50 @@
   margin-top: 22px;
 }
 
+.tree-iris-guide {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  grid-column: 1 / -1;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid #ded7ef;
+  border-left: 4px solid var(--purple-600);
+  border-radius: 12px;
+}
+
+.tree-iris-avatar {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+}
+
+.tree-iris-guide-copy {
+  min-width: 0;
+}
+
+.tree-iris-guide-title {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--purple-700);
+  font-size: 13px;
+}
+
+.tree-iris-guide-message,
+.tree-iris-guide-detail {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.tree-iris-guide-detail {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
 .tree-inspector-summary {
   padding: 22px;
   background: rgba(255, 255, 255, 0.86);
@@ -529,5 +574,15 @@
 
   .tree-topic-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tree-iris-guide {
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .tree-iris-avatar {
+    width: 44px;
+    height: 44px;
   }
 }

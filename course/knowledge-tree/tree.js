@@ -1,7 +1,13 @@
+// Shared knowledge-tree renderer for course modules.
 (function () {
   "use strict";
 
   var SVG_NS = "http://www.w3.org/2000/svg";
+  var scriptUrl = document.currentScript
+    ? document.currentScript.src
+    : document.baseURI;
+  var irisCourse = window.ML_CourseIris;
+  var treeGuide = null;
 
 
   var COLORS = [
@@ -85,6 +91,56 @@
     return element;
   }
 
+  function createTreeGuide(section) {
+    var guide = createElement("aside", "tree-iris-guide");
+    guide.setAttribute("aria-label", "Iris 知识树路线提示");
+
+    var image = document.createElement("img");
+    image.className = "tree-iris-avatar";
+    image.src = new URL(
+      "../../components/assets/iris-avatar.png",
+      scriptUrl,
+    ).href;
+    image.alt = "";
+    image.setAttribute("aria-hidden", "true");
+
+    var copy = createElement("div", "tree-iris-guide-copy");
+    var title = createElement("strong", "tree-iris-guide-title", "");
+    var message = createElement("p", "tree-iris-guide-message", "");
+    var detail = createElement("p", "tree-iris-guide-detail", "");
+    copy.appendChild(title);
+    copy.appendChild(message);
+    copy.appendChild(detail);
+
+    guide.appendChild(image);
+    guide.appendChild(copy);
+    treeGuide = {
+      section: section,
+      title: title,
+      message: message,
+      detail: detail,
+    };
+    updateTreeGuide(section, state.activeTopicNumber);
+    return guide;
+  }
+
+  function updateTreeGuide(section, topicNumber) {
+    if (!treeGuide) {
+      return;
+    }
+
+    var content = irisCourse
+      ? irisCourse.buildTreeGuide(section, topicNumber)
+      : {
+          title: "Iris 路线提示",
+          message: "先理解本章主线，再查看具体知识点。",
+          detail: "悬停知识点可以查看前后学习关系。",
+        };
+    treeGuide.title.textContent = content.title;
+    treeGuide.message.textContent = content.message;
+    treeGuide.detail.textContent = content.detail;
+  }
+
   function getChapterPage(section) {
     return "chapter-" + section.number + ".html";
   }
@@ -141,13 +197,20 @@
   function getBranchLayout(section, index) {
     var progress = sections.length === 1 ? 0.5 : index / (sections.length - 1);
     var angle = ((190 + progress * 160) * Math.PI) / 180;
+    var endpointIndex =
+      sections.length === 1
+        ? Math.floor((BRANCH_ENDPOINTS.length - 1) / 2)
+        : Math.round(
+            (index * (BRANCH_ENDPOINTS.length - 1)) / (sections.length - 1),
+          );
+    var endpoint = BRANCH_ENDPOINTS[endpointIndex];
     var origin = {
       x: 700,
       y: 820 - progress * 300,
     };
     var end = {
-      x: BRANCH_ENDPOINTS[index] ? BRANCH_ENDPOINTS[index].x : 700 + Math.cos(angle) * 520,
-      y: BRANCH_ENDPOINTS[index] ? BRANCH_ENDPOINTS[index].y : 700 + Math.sin(angle) * 390,
+      x: endpoint ? endpoint.x : 700 + Math.cos(angle) * 520,
+      y: endpoint ? endpoint.y : 700 + Math.sin(angle) * 390,
     };
     var side = end.x < 699 ? -1 : end.x > 701 ? 1 : index % 2 === 0 ? -1 : 1;
     var controlA = {
@@ -571,9 +634,10 @@
         applySelection();
       });
       inspectorLinksByNumber[topic.number] = link;
-      grid.appendChild(link);
+    grid.appendChild(link);
     });
 
+    inspector.appendChild(createTreeGuide(section));
     inspector.appendChild(summary);
     inspector.appendChild(grid);
   }
@@ -605,10 +669,12 @@
         Number(number) === topicNumber,
       );
     });
+    updateTreeGuide(sections[state.activeSectionIndex], topicNumber);
   }
 
   function applySelection() {
     var activeSection = sections[state.activeSectionIndex];
+    updateTreeGuide(activeSection, state.activeTopicNumber);
 
     branches.forEach(function (branch) {
       var isActive = branch.index === state.activeSectionIndex;
@@ -687,5 +753,6 @@
   buildBranches();
   renderTabs();
   updateCounts();
+  document.body.classList.add("course-has-iris-guide");
   selectChapter(0, null, false);
 })();

@@ -1,4 +1,11 @@
 (function () {
+  const scriptUrl = document.currentScript
+    ? document.currentScript.src
+    : document.baseURI;
+  const componentAssetUrl = (name) =>
+    new URL(`../components/assets/${name}`, scriptUrl).href;
+  const irisCourse = window.ML_CourseIris;
+
   function createElement(tag, className, text) {
     const element = document.createElement(tag);
     if (className) {
@@ -10,8 +17,25 @@
     return element;
   }
 
+  function createIrisAvatar(className) {
+    const image = document.createElement("img");
+    image.className = className || "iris-course-avatar";
+    image.src = componentAssetUrl("iris-avatar.png");
+    image.alt = "";
+    image.setAttribute("aria-hidden", "true");
+    return image;
+  }
+
   function getSections() {
     return window.ML_COURSE_SECTIONS || [];
+  }
+
+  function getCourseName() {
+    return document.body.getAttribute("data-course-name") || "基础知识";
+  }
+
+  function getCourseIndex() {
+    return document.body.getAttribute("data-course-index") || "index.html";
   }
 
   function getChapterHref(section) {
@@ -60,7 +84,7 @@
 
   function renderTopics(topics, sectionId) {
     const wrapper = createElement("div", "knowledge-topics");
-    topics.forEach(function (topic) {
+    topics.forEach(function (topic, topicIndex) {
       const item = createElement("section", "knowledge-topic");
       item.id = sectionId + "-topic-" + topic.number;
       const heading = createElement("div", "knowledge-topic-heading");
@@ -70,15 +94,115 @@
       heading.appendChild(createElement("h3", "", topic.title));
       item.appendChild(heading);
       item.appendChild(createElement("p", "knowledge-topic-text", topic.text));
+
+      const annotation = irisCourse
+        ? irisCourse.buildTopicIris(topic, topicIndex)
+        : null;
+      if (annotation) {
+        const callout = createElement(
+          "aside",
+          "iris-topic-callout iris-topic-callout--" + annotation.kind,
+        );
+        callout.appendChild(createIrisAvatar("iris-topic-avatar"));
+        const copy = createElement("div", "iris-topic-callout-copy");
+        copy.appendChild(createElement("strong", "", annotation.title));
+        copy.appendChild(createElement("p", "", annotation.message));
+        callout.appendChild(copy);
+        item.appendChild(callout);
+      }
+
       if (topic.formula) {
         item.appendChild(createElement("p", "topic-formula", topic.formula));
       }
-      if (topic.note) {
+      if (topic.note && (!annotation || annotation.kind !== "note")) {
         item.appendChild(createElement("p", "topic-note", topic.note));
       }
       wrapper.appendChild(item);
     });
     return wrapper;
+  }
+
+  function renderChapterIrisGuide(section) {
+    const guide = createElement("aside", "chapter-iris-guide");
+    guide.setAttribute("aria-label", "Iris 本章导学");
+    const guideContent = irisCourse
+      ? irisCourse.buildChapterIris(section)
+      : {
+          title: "Iris 领学",
+          message: "先抓本章主线，再进入知识点。",
+          objectives: section.topics.slice(0, 3).map((topic) => topic.title),
+        };
+
+    const stage = createElement("div", "chapter-iris-stage");
+    const iris = document.createElement("iris-peek");
+    iris.setAttribute("placement", "hero");
+    iris.setAttribute("passive", "");
+    iris.setAttribute("animated", "");
+    iris.setAttribute("active", "");
+    iris.setAttribute("rise", "");
+    iris.setAttribute("standing", "");
+    iris.setAttribute("standing-pose", "wave");
+    iris.setAttribute("aria-hidden", "true");
+    stage.appendChild(iris);
+
+    const copy = createElement("div", "chapter-iris-copy");
+    copy.appendChild(createElement("strong", "", guideContent.title));
+    copy.appendChild(createElement("p", "", guideContent.message));
+    const objectives = createElement("ul", "chapter-iris-objectives");
+    guideContent.objectives.forEach(function (objective) {
+      objectives.appendChild(createElement("li", "", objective));
+    });
+    copy.appendChild(objectives);
+
+    guide.appendChild(stage);
+    guide.appendChild(copy);
+    return guide;
+  }
+
+  function renderChapterReview(section) {
+    const reviewContent = irisCourse
+      ? irisCourse.buildChapterReview(section, {
+          practiceHref: "../practice/index.html",
+          experimentHref: "../../experiments/index.html",
+        })
+      : null;
+    if (!reviewContent) {
+      return null;
+    }
+
+    const review = createElement("section", "chapter-iris-review");
+    review.setAttribute("aria-label", "Iris 本章收束");
+    review.appendChild(createIrisAvatar("chapter-iris-review-avatar"));
+
+    const copy = createElement("div", "chapter-iris-review-copy");
+    copy.appendChild(createElement("p", "eyebrow", reviewContent.title));
+    copy.appendChild(createElement("h2", "", reviewContent.message));
+    copy.appendChild(createElement("p", "", reviewContent.prompt));
+    const tags = createElement("div", "chapter-iris-review-topics");
+    reviewContent.topics.forEach(function (topic) {
+      tags.appendChild(createElement("span", "", topic));
+    });
+    copy.appendChild(tags);
+
+    const actions = createElement("div", "chapter-iris-review-actions");
+    const practice = createElement(
+      "a",
+      "button button-primary",
+      "去互动练习验证",
+    );
+    practice.href = reviewContent.practiceHref;
+    const experiment = createElement(
+      "a",
+      "button button-secondary",
+      "去可视化实验观察",
+    );
+    experiment.href = reviewContent.experimentHref;
+    actions.appendChild(practice);
+    actions.appendChild(experiment);
+    copy.appendChild(actions);
+
+    review.appendChild(copy);
+    return review;
   }
 
   function renderCard(section, options) {
@@ -129,18 +253,24 @@
     view.innerHTML = "";
     if (chapterIndex < 0) {
       view.appendChild(
-        createElement("p", "course-placeholder", "没有找到对应的基础章节。"),
+        createElement(
+          "p",
+          "course-placeholder",
+          "没有找到对应的" + getCourseName() + "章节。",
+        ),
       );
       return;
     }
 
     const section = sections[chapterIndex];
+    const courseName = getCourseName();
+    const courseIndex = getCourseIndex();
     document.title = section.number + " " + section.title + " - ML Learn";
     const description = document.querySelector('meta[name="description"]');
     if (description) {
       description.setAttribute(
         "content",
-        section.title + "：机器学习基础知识第 " + section.number + " 章。",
+        section.title + "：" + courseName + "第 " + section.number + " 章。",
       );
     }
 
@@ -157,13 +287,18 @@
 
     const actions = createElement("div", "chapter-hero-actions");
     const treeLink = createElement("a", "button button-secondary", "在知识树中查看");
-    treeLink.href = "index.html#knowledge-tree-panel";
-    const indexLink = createElement("a", "text-link", "返回基础知识 →");
-    indexLink.href = "index.html";
+    treeLink.href = courseIndex + "#knowledge-tree-panel";
+    const indexLink = createElement(
+      "a",
+      "text-link",
+      "返回" + courseName + " →",
+    );
+    indexLink.href = courseIndex;
     actions.appendChild(treeLink);
     actions.appendChild(indexLink);
     copy.appendChild(actions);
     hero.appendChild(copy);
+    hero.appendChild(renderChapterIrisGuide(section));
 
     const progress = createElement("div", "courses-progress");
     progress.appendChild(createElement("span", "", "本章知识点"));
@@ -184,6 +319,11 @@
     const card = renderCard(section, { hideHeader: true });
     card.classList.add("chapter-detail-card");
     view.appendChild(card);
+
+    const review = renderChapterReview(section);
+    if (review) {
+      view.appendChild(review);
+    }
 
     const pagination = createElement("nav", "chapter-pagination");
     pagination.setAttribute("aria-label", "相邻章节");
@@ -240,6 +380,7 @@
 
     const chapterView = document.getElementById("chapter-view");
     if (chapterView) {
+      document.body.classList.add("course-has-iris-guide");
       renderChapterView(sections, chapterView);
     }
 

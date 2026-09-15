@@ -19,6 +19,12 @@
   const key = "ml_knn_records";
   let lastResult = null;
 
+  function announce(eventName, context) {
+    if (window.MLIrisExperiment) {
+      window.MLIrisExperiment.announce("knn", eventName, context);
+    }
+  }
+
   function samples() {
     return (window.IRIS_SAMPLES || []).map(function (sample, index) {
       return {
@@ -321,6 +327,7 @@
     storageSet(records);
     renderStatus("已保存 " + records.length + " 条操作记录");
     renderHistory();
+    announce("save", { count: records.length });
   }
 
   function run() {
@@ -349,6 +356,14 @@
         const output = document.getElementById(outputId);
         if (output) output.textContent = input.value;
         run();
+        if (id === "knn-k") {
+          announce("parameter", { k: currentK() });
+        } else if (lastResult) {
+          announce("result", {
+            k: lastResult.k,
+            result: lastResult.result,
+          });
+        }
       });
     });
 
@@ -364,6 +379,7 @@
       });
 
     run();
+    announce("ready", {});
     renderHistory();
   }
 

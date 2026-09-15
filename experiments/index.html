@@ -6,6 +6,7 @@
     <title>可视化实验 - ML Learn</title>
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="experiments.css" />
+    <link rel="stylesheet" href="iris-lab.css" />
     <link rel="stylesheet" href="../components/site-header.css" />
     <link rel="preload" href="../bgm/Kyle%20Xian%20-%20%E4%BA%91%E9%9B%80.mp3" as="audio" type="audio/mpeg" data-site-bgm-preload />
     <script src="../components/site-bgm.js" defer></script>
@@ -64,6 +65,24 @@
           </div>
           <div class="experiment-badge">识别 + 分类 + 聚类 + 决策树</div>
         </section>
+        <iris-lab-companion data-experiment="overview" data-state="idle">
+          <div class="iris-lab-figure">
+            <img
+              src="../components/assets/iris-avatar.png"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
+          <div class="iris-lab-copy">
+            <span class="iris-lab-label">Iris 实验搭档</span>
+            <p class="iris-lab-message" data-iris-lab-message>
+              选择实验后，我会解释参数、观察过程和结果差异。
+            </p>
+            <p class="iris-lab-detail" data-iris-lab-detail>
+              每个实验都有不同的任务角色，但都会保留同一套观察方式。
+            </p>
+          </div>
+        </iris-lab-companion>
         <section class="visual-lab-section experiment-list">
           <div class="container experiment-list-inner">
             <div class="section-heading">
@@ -81,6 +100,7 @@
                   在 Canvas 画板上书写
                   0-9，观察模型输出的预测数字与完整置信度分布。
                 </p>
+                <span class="lab-iris-role">Iris 识别观察员</span>
                 <span class="lab-link">进入实验 →</span></a
               ><a
                 class="visual-lab-card visual-lab-card-knn"
@@ -92,6 +112,7 @@
                   调节四个花朵特征和 K
                   值，查看最近邻、距离连线以及分类投票过程。
                 </p>
+                <span class="lab-iris-role">Iris 分类查证员</span>
                 <span class="lab-link">进入实验 →</span></a
               ><a
                 class="visual-lab-card visual-lab-card-tree"
@@ -102,6 +123,7 @@
                 <p>
                   排列四层筛选问题，让 Iris 移动动物卡片，并用反例检验决策树是否合理。
                 </p>
+                <span class="lab-iris-role">Iris 分类建树员</span>
                 <span class="lab-link">进入实验 →</span></a
               >
               <a
@@ -114,6 +136,7 @@
                   点击画布添加样本或生成示例数据，观察样本分配、质心更新与
                   SSE 收敛过程。
                 </p>
+                <span class="lab-iris-role">Iris 聚类巡检员</span>
                 <span class="lab-link">进入实验 →</span></a
               >
             </div>
@@ -138,6 +161,7 @@
       </div>
     </footer>
     <script src="../components/iris-peek.js"></script>
+    <script src="iris-lab.js"></script>
     <script src="../account/auth.js"></script>
     <script src="../account/session.js"></script>
 </body>

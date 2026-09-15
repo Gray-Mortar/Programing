@@ -323,9 +323,33 @@
 
   const list = document.getElementById("milestone-list");
   const detail = document.getElementById("detail-panel");
+  const timeline = document.querySelector(".history-timeline");
+  const irisMarker = document.getElementById("timeline-iris");
+  const irisLabel = document.getElementById("timeline-iris-label");
+  const irisHistory = window.MLIrisHistory;
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  let activeId = milestones[0].id;
+  let movementToken = 0;
 
-  function detailMarkup(m) {
+  function detailMarkup(m, index) {
+    const guide = irisHistory
+      ? irisHistory.buildHistoryGuide(m, index, milestones.length)
+      : {
+          title: "Iris 时间向导",
+          message: `来到 ${m.year} 年，查看“${m.title}”。`,
+          detail: m.short,
+        };
     return `
+      <div class="history-iris-detail">
+        <img src="../components/assets/iris-avatar.png" alt="" aria-hidden="true">
+        <div>
+          <strong>${guide.title}</strong>
+          <p>${guide.message}</p>
+          <span>${guide.detail}</span>
+        </div>
+      </div>
       <div class="detail-heading">
         <span class="detail-year">${m.year}</span>
         <div>
@@ -358,15 +382,79 @@
     `;
   }
 
-  function setActive(id) {
+  function moveTimelineIris(id, animate) {
+    const milestoneIndex = milestones.findIndex((item) => item.id === id);
+    const selected = milestones[milestoneIndex] || milestones[0];
+    const button = list.querySelector(`[data-year="${selected.id}"]`);
+    const dot = button ? button.querySelector(".milestone-dot") : null;
+
+    if (!timeline || !irisMarker || !button || !dot) {
+      return Promise.resolve();
+    }
+
+    const timelineRect = timeline.getBoundingClientRect();
+    const dotRect = dot.getBoundingClientRect();
+    const markerWidth = irisMarker.getBoundingClientRect().width || 78;
+    const x = Math.max(
+      markerWidth / 2,
+      Math.min(
+        timeline.clientWidth - markerWidth / 2,
+        dotRect.left - timelineRect.left + dotRect.width / 2,
+      ),
+    );
+    const y = dotRect.top - timelineRect.top + dotRect.height / 2;
+    const nextToken = ++movementToken;
+
+    if (irisLabel) {
+      irisLabel.textContent = selected.year;
+    }
+
+    if (!animate || reduceMotion) {
+      irisMarker.classList.remove("is-walking", "is-arrived");
+      irisMarker.style.setProperty("--timeline-iris-x", `${x}px`);
+      irisMarker.style.setProperty("--timeline-iris-y", `${y}px`);
+      return Promise.resolve();
+    }
+
+    irisMarker.classList.remove("is-arrived");
+    irisMarker.classList.add("is-walking");
+    irisMarker.style.setProperty("--timeline-iris-x", `${x}px`);
+    irisMarker.style.setProperty("--timeline-iris-y", `${y}px`);
+
+    return new Promise((resolve) => {
+      window.setTimeout(() => {
+        if (nextToken !== movementToken) {
+          resolve();
+          return;
+        }
+        irisMarker.classList.remove("is-walking");
+        irisMarker.classList.add("is-arrived");
+        window.setTimeout(() => irisMarker.classList.remove("is-arrived"), 460);
+        resolve();
+      }, reduceMotion ? 0 : 590);
+    });
+  }
+
+  function setActive(id, options) {
+    const settings = options || {};
     document.querySelectorAll(".milestone-button").forEach((btn) => {
       const active = btn.dataset.year === id;
       btn.classList.toggle("active", active);
       btn.setAttribute("aria-pressed", active ? "true" : "false");
     });
 
-    const selected = milestones.find((m) => m.id === id) || milestones[0];
-    detail.innerHTML = detailMarkup(selected);
+    const selectedIndex = Math.max(
+      0,
+      milestones.findIndex((m) => m.id === id),
+    );
+    const selected = milestones[selectedIndex] || milestones[0];
+    activeId = selected.id;
+    detail.innerHTML = detailMarkup(selected, selectedIndex);
+
+    const movement = moveTimelineIris(selected.id, Boolean(settings.animate));
+    if (settings.afterMove) {
+      movement.then(settings.afterMove);
+    }
   }
 
   list.innerHTML = milestones
@@ -395,20 +483,33 @@
     const btn = event.target.closest(".milestone-button");
     if (!btn) return;
     const id = btn.dataset.year;
-    setActive(id);
+    setActive(id, {
+      animate: true,
+      afterMove: function () {
+        scrollDetail(true);
+      },
+    });
     try {
       history.replaceState(null, "", `?year=${id}`);
     } catch (_) {
       // 本地文件打开时不强制改写地址栏。
     }
-    scrollDetail(true);
   });
 
   const initial = new URLSearchParams(window.location.search).get("year");
-  setActive(initial || milestones[0].id);
-  if (initial) {
-    requestAnimationFrame(function () {
-      scrollDetail(false);
+  document.body.classList.add("history-has-iris");
+  requestAnimationFrame(function () {
+    setActive(initial || milestones[0].id, {
+      animate: Boolean(initial),
+      afterMove: initial
+        ? function () {
+            scrollDetail(false);
+          }
+        : null,
     });
-  }
+  });
+
+  window.addEventListener("resize", function () {
+    moveTimelineIris(activeId, false);
+  });
 })();

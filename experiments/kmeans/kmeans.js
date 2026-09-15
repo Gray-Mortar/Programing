@@ -37,6 +37,12 @@
   let animatingAssign = false;
   let assignIndex = 0;
 
+  function announce(eventName, context) {
+    if (window.MLIrisExperiment) {
+      window.MLIrisExperiment.announce("kmeans", eventName, context);
+    }
+  }
+
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
   }
@@ -194,6 +200,7 @@
     updateInfoPanel();
     render();
     setStatus(clearPoints ? "状态：已清空数据" : "状态：就绪");
+    if (clearPoints) announce("ready", {});
   }
 
   function generateData() {
@@ -240,6 +247,7 @@
     setStatus(
       "状态：已生成 " + points.length + " 个示例数据点，可开始聚类",
     );
+    announce("data", { count: points.length, k: k });
   }
 
   function initCentroids(k) {
@@ -363,10 +371,22 @@
           sse.toFixed(1),
         "success",
       );
+      announce("complete", {
+        iteration: iteration,
+        sse: sse.toFixed(1),
+      });
     } else if (isStepMode) {
       setStatus("第 " + iteration + " 轮分配完成，点击单步执行继续");
+      announce("step", {
+        iteration: iteration,
+        sse: sse.toFixed(1),
+      });
     } else {
       setStatus("第 " + iteration + " 轮完成，继续下一轮...");
+      announce("step", {
+        iteration: iteration,
+        sse: sse.toFixed(1),
+      });
       autoTimer = setTimeout(function () {
         startAssignAnimation(k);
       }, getPointDelay() * 3);
@@ -386,6 +406,7 @@
     render();
     updateInfoPanel();
     setStatus("状态：自动运行中，正在逐点分配...");
+    announce("run", { k: k });
     startAssignAnimation(k);
   }
 
@@ -438,6 +459,7 @@
       render();
       updateInfoPanel();
       setStatus("状态：质心已初始化，点击单步执行开始分配");
+      announce("run", { k: k });
       return;
     }
 
@@ -457,6 +479,7 @@
       updateInfoPanel();
       render();
       setStatus("状态：已添加数据点，可开始聚类");
+      announce("data", { count: points.length, k: currentK() });
     });
 
     canvas.addEventListener("mousemove", function (event) {
@@ -472,6 +495,7 @@
     kSlider.addEventListener("input", function () {
       kValueDisplay.textContent = kSlider.value;
       setStatus("状态：K 值已更新，重新运行后生效");
+      announce("parameter", { k: currentK() });
     });
 
     speedSlider.addEventListener("input", function () {

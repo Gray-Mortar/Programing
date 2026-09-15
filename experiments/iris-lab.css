@@ -1,0 +1,155 @@
+.has-iris-lab .site-header > iris-peek[placement="header"] {
+  display: none;
+}
+
+iris-lab-companion {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: #f7f6fc;
+  border: 1px solid #dfd9f0;
+  border-left: 5px solid #6d4bd1;
+  border-radius: 14px;
+}
+
+iris-lab-companion[data-state="observing"] {
+  background: #f1f7fb;
+  border-left-color: #3f74c9;
+}
+
+iris-lab-companion[data-state="success"] {
+  background: #f0faf5;
+  border-left-color: #2f9e73;
+}
+
+iris-lab-companion[data-state="warning"] {
+  background: #fff8e8;
+  border-left-color: #d9a72f;
+}
+
+.iris-lab-figure {
+  display: grid;
+  width: 84px;
+  height: 84px;
+  place-items: center;
+}
+
+.iris-lab-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 220ms ease;
+}
+
+iris-lab-companion[data-state="observing"] .iris-lab-figure img {
+  transform: translateY(-3px) rotate(-2deg);
+}
+
+iris-lab-companion[data-state="success"] .iris-lab-figure img {
+  transform: translateY(-5px);
+}
+
+iris-lab-companion[data-state="warning"] .iris-lab-figure img {
+  transform: rotate(4deg);
+}
+
+.iris-lab-copy {
+  min-width: 0;
+}
+
+.iris-lab-label {
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #6543bd;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.iris-lab-message {
+  margin: 0;
+  color: #29243b;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.iris-lab-detail {
+  margin: 4px 0 0;
+  color: #6b7080;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.iris-experiment-caption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #eeeaf8;
+}
+
+.iris-experiment-caption img {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.iris-experiment-caption strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #6543bd;
+  font-size: 13px;
+}
+
+.iris-experiment-caption p {
+  margin: 0;
+  color: #6b7080;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.lab-iris-role {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  margin-top: 12px;
+  padding: 5px 9px;
+  color: #6543bd;
+  background: #f3f0ff;
+  border: 1px solid #ded6f4;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.visual-lab-card .lab-iris-role {
+  margin-bottom: 4px;
+}
+
+@media (max-width: 640px) {
+  iris-lab-companion {
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 12px;
+    padding: 15px;
+  }
+
+  .iris-lab-figure {
+    width: 58px;
+    height: 58px;
+  }
+
+  .iris-lab-message {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iris-lab-figure img {
+    transition: none;
+  }
+}
