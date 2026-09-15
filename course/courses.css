@@ -2,6 +2,10 @@
   background: var(--purple-50);
 }
 
+.course-has-iris-guide .site-header > iris-peek[placement="header"] {
+  display: none;
+}
+
 .courses-shell {
   width: min(var(--page-width), calc(100% - 40px));
   margin: 0 auto;
@@ -30,6 +34,83 @@
   margin: 0;
   color: var(--text-muted);
   font-size: 16px;
+}
+
+.chapter-hero {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(180px, 220px)
+    minmax(160px, 190px);
+  align-items: stretch;
+}
+
+.chapter-hero-copy {
+  align-self: center;
+}
+
+.chapter-iris-guide {
+  display: grid;
+  min-width: 0;
+  align-content: end;
+  padding: 0 8px 0 18px;
+  border-left: 1px solid #e7e2f2;
+}
+
+.chapter-iris-stage {
+  position: relative;
+  min-height: 205px;
+}
+
+.chapter-iris-stage iris-peek {
+  --iris-width: 154px;
+  --iris-rise-height: 205px;
+  --iris-standing-width: 94%;
+  --iris-standing-bottom: 2px;
+  --iris-left: 50%;
+  transform: translateX(-50%);
+}
+
+.chapter-iris-copy strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--purple-700);
+  font-size: 14px;
+}
+
+.course-card .chapter-iris-copy > p,
+.chapter-iris-copy > p {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.chapter-iris-objectives {
+  display: grid;
+  gap: 6px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chapter-iris-objectives li {
+  position: relative;
+  padding-left: 17px;
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.chapter-iris-objectives li::before {
+  position: absolute;
+  top: 0.58em;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: #e9b83f;
+  border-radius: 50%;
+  content: "";
 }
 
 .courses-progress {
@@ -251,6 +332,113 @@
   background: #fff8df;
   border-left: 3px solid #e2b93b;
   line-height: 1.7;
+}
+
+.iris-topic-callout {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 11px;
+  align-items: start;
+  margin-top: 14px;
+  padding: 12px 14px 12px 12px;
+  background: #f7f5fc;
+  border-left: 3px solid var(--purple-600);
+  border-radius: 0 9px 9px 0;
+}
+
+.iris-topic-callout--note {
+  background: #fff9e8;
+  border-left-color: #d9a72f;
+}
+
+.iris-topic-callout--formula {
+  background: #eef7f3;
+  border-left-color: #3b9a77;
+}
+
+.iris-topic-callout--checkpoint {
+  background: #f3f0ff;
+  border-left-color: #7657d4;
+}
+
+.iris-topic-avatar {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.iris-topic-callout-copy strong {
+  display: block;
+  margin: 1px 0 3px;
+  color: var(--text-main);
+  font-size: 13px;
+}
+
+.course-card .iris-topic-callout-copy p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.chapter-iris-review {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  margin-top: 26px;
+  padding: 26px;
+  background: #f5faf6;
+  border: 1px solid #cfe1d3;
+  border-radius: 16px;
+}
+
+.chapter-iris-review-avatar {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+}
+
+.chapter-iris-review-copy .eyebrow {
+  margin: 0 0 7px;
+  color: #28734f;
+}
+
+.chapter-iris-review-copy h2 {
+  margin: 0 0 8px;
+  color: var(--text-main);
+  font-size: 23px;
+  line-height: 1.4;
+}
+
+.chapter-iris-review-copy > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+.chapter-iris-review-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.chapter-iris-review-topics span {
+  padding: 5px 9px;
+  color: #35614b;
+  background: #ffffff;
+  border: 1px solid #cfe1d3;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.chapter-iris-review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 .course-placeholder {
@@ -815,6 +1003,28 @@
     width: 100%;
   }
 
+  .chapter-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-iris-guide {
+    grid-template-columns: 150px minmax(0, 1fr);
+    align-items: center;
+    padding: 18px 0 0;
+    border-top: 1px solid #e7e2f2;
+    border-left: 0;
+  }
+
+  .chapter-iris-stage {
+    min-height: 165px;
+  }
+
+  .chapter-iris-stage iris-peek {
+    --iris-width: 126px;
+    --iris-rise-height: 165px;
+    --iris-standing-width: 94%;
+  }
+
   .course-layout {
     grid-template-columns: 1fr;
   }
@@ -858,6 +1068,42 @@
   .course-link-card,
   .quiz-panel {
     padding: 22px;
+  }
+
+  .chapter-iris-guide {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .chapter-iris-stage {
+    width: 100%;
+    min-height: 150px;
+  }
+
+  .chapter-iris-copy {
+    width: 100%;
+  }
+
+  .chapter-iris-review {
+    grid-template-columns: 58px minmax(0, 1fr);
+    padding: 20px;
+  }
+
+  .chapter-iris-review-avatar {
+    width: 58px;
+    height: 58px;
+  }
+
+  .chapter-iris-review-copy h2 {
+    font-size: 20px;
+  }
+
+  .chapter-iris-review-actions {
+    flex-direction: column;
+  }
+
+  .chapter-iris-review-actions .button {
+    width: 100%;
   }
 
   .quiz-heading,

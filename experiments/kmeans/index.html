@@ -6,6 +6,7 @@
     <title>K-Means 聚类 - ML Learn</title>
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="../experiments.css" />
+    <link rel="stylesheet" href="../iris-lab.css" />
     <link rel="stylesheet" href="../../components/site-header.css" />
   </head>
   <body>
@@ -62,6 +63,24 @@
           </div>
           <div class="experiment-badge">无监督聚类 · K=2-6</div>
         </section>
+        <iris-lab-companion data-experiment="kmeans" data-state="idle">
+          <div class="iris-lab-figure">
+            <img
+              src="../../components/assets/iris-avatar.png"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
+          <div class="iris-lab-copy">
+            <span class="iris-lab-label">Iris 聚类巡检员</span>
+            <p class="iris-lab-message" data-iris-lab-message>
+              先准备样本并选择 K，我会解释每次质心更新。
+            </p>
+            <p class="iris-lab-detail" data-iris-lab-detail>
+              聚类没有标签，重点是观察结构是否稳定和可解释。
+            </p>
+          </div>
+        </iris-lab-companion>
         <section class="experiment-card">
           <h2>聚类实验台</h2>
           <p>左侧调整参数，中间观察聚类过程，右侧查看数据点与收敛指标。</p>
@@ -222,6 +241,7 @@
       </div>
     </footer>
     <script src="../../components/iris-peek.js"></script>
+    <script src="../iris-lab.js"></script>
     <script src="../../account/auth.js"></script>
     <script src="../../account/session.js"></script>
     <script src="kmeans.js"></script>

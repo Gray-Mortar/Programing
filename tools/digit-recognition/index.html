@@ -6,6 +6,7 @@
     <meta name="description" content="在浏览器中体验手写数字识别。" />
     <title>手写数字识别｜ML Learn</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../../experiments/iris-lab.css" />
     <link rel="stylesheet" href="../../components/site-header.css" />
   </head>
   <body>
@@ -54,6 +55,29 @@
         <h1>手写数字识别</h1>
         <p>在画板中央写下一个 0～9 的数字，模型将在浏览器本地完成识别。</p>
       </section>
+
+      <iris-lab-companion
+        class="container"
+        data-experiment="digit"
+        data-state="idle"
+      >
+        <div class="iris-lab-figure">
+          <img
+            src="../../components/assets/iris-avatar.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+        <div class="iris-lab-copy">
+          <span class="iris-lab-label">Iris 识别观察员</span>
+          <p class="iris-lab-message" data-iris-lab-message>
+            写下一个数字，我会解释模型如何得到最终概率。
+          </p>
+          <p class="iris-lab-detail" data-iris-lab-detail>
+            整个过程都在浏览器本地完成。
+          </p>
+        </div>
+      </iris-lab-companion>
 
       <section class="container workspace" aria-label="手写数字识别工具">
         <div class="drawing-panel panel">
@@ -191,6 +215,7 @@
 
     <script src="vendor/ort.min.js"></script>
     <script src="../../components/iris-peek.js"></script>
+    <script src="../../experiments/iris-lab.js"></script>
     <script src="../../account/auth.js"></script>
     <script src="../../account/session.js"></script>
     <script src="app.js"></script>

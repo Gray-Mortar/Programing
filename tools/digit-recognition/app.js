@@ -18,6 +18,13 @@ const probabilityList = document.querySelector("#probabilityList");
 let session = null;
 let drawing = false;
 let hasInk = false;
+let irisDrawingAnnounced = false;
+
+function announce(eventName, context) {
+  if (window.MLIrisExperiment) {
+    window.MLIrisExperiment.announce("digit", eventName, context);
+  }
+}
 
 function initializeCanvas() {
   drawingContext.fillStyle = "#000";
@@ -56,6 +63,10 @@ function pointerPosition(event) {
 function startDrawing(event) {
   drawing = true;
   hasInk = true;
+  if (!irisDrawingAnnounced) {
+    irisDrawingAnnounced = true;
+    announce("drawing", {});
+  }
   canvasHint.classList.add("hidden");
   drawingCanvas.setPointerCapture(event.pointerId);
   const point = pointerPosition(event);
@@ -98,11 +109,13 @@ function clearCanvas() {
   drawingContext.fillStyle = "#000";
   drawingContext.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
   hasInk = false;
+  irisDrawingAnnounced = false;
   canvasHint.classList.remove("hidden");
   resetResults();
   message.textContent = session
     ? "请在画板中央写一个数字。"
     : "请等待模型加载完成。";
+  if (session) announce("ready", {});
 }
 
 function findInkBounds(imageData) {
@@ -200,20 +213,30 @@ async function predict() {
     const scores = Array.from(results[session.outputNames[0]].data);
     const probabilities = softmax(scores);
     const bestDigit = probabilities.indexOf(Math.max(...probabilities));
+    const ranked = probabilities
+      .map((probability, digit) => ({ digit, probability }))
+      .sort((first, second) => second.probability - first.probability);
 
     predictedDigit.textContent = String(bestDigit);
     confidenceText.textContent = `置信度 ${(probabilities[bestDigit] * 100).toFixed(1)}%`;
     showProbabilities(probabilities);
     message.textContent = "识别完成。结果仅供互动演示。";
+    announce("result", {
+      digit: bestDigit,
+      confidence: probabilities[bestDigit],
+      runnerUp: ranked[1] ? ranked[1].probability : 0,
+    });
   } catch (error) {
     console.error(error);
     message.textContent = `识别失败：${error.message}`;
+    announce("error", { message: error.message });
   } finally {
     predictButton.disabled = false;
   }
 }
 
 async function loadModel() {
+  announce("loading", {});
   try {
     ort.env.wasm.wasmPaths = new URL("vendor/", window.location.href).href;
     ort.env.wasm.numThreads = 1;
@@ -224,11 +247,13 @@ async function loadModel() {
     modelStatus.classList.add("ready");
     predictButton.disabled = false;
     message.textContent = "请在画板中央写一个数字。";
+    announce("ready", {});
   } catch (error) {
     console.error(error);
     modelStatus.textContent = "模型加载失败";
     modelStatus.classList.add("error");
     message.textContent = `模型加载失败：${error.message}`;
+    announce("error", { message: error.message });
   }
 }
 

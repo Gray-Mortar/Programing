@@ -6,6 +6,7 @@
     <title>KNN 鸢尾花分类 - ML Learn</title>
     <link rel="stylesheet" href="../../style.css" />
     <link rel="stylesheet" href="../experiments.css" />
+    <link rel="stylesheet" href="../iris-lab.css" />
     <link rel="stylesheet" href="../../components/site-header.css" />
   </head>
   <body>
@@ -62,14 +63,31 @@
           </div>
           <div class="experiment-badge">150 samples · K=1-15</div>
         </section>
+        <iris-lab-companion data-experiment="knn" data-state="idle">
+          <div class="iris-lab-figure">
+            <img
+              src="../../components/assets/iris-avatar.png"
+              alt=""
+              aria-hidden="true"
+            />
+          </div>
+          <div class="iris-lab-copy">
+            <span class="iris-lab-label">Iris 分类查证员</span>
+            <p class="iris-lab-message" data-iris-lab-message>
+              设置 K 值，我会帮你核对最近邻和投票过程。
+            </p>
+            <p class="iris-lab-detail" data-iris-lab-detail>
+              票数越集中，分类结果通常越稳定。
+            </p>
+          </div>
+        </iris-lab-companion>
         <section class="experiment-card">
           <h2>分类实验控制台</h2>
           <p>
-            左侧调整待分类样本，中央查看分类结果，右侧观察 K
-            个最近邻居和投票过程。
+            左侧调整待分类样本，中间观察最近邻和特征对比，右侧查看分类结果与投票。
           </p>
-          <div class="experiment-grid">
-            <aside class="experiment-panel">
+          <div class="experiment-grid knn-experiment-grid">
+            <aside class="experiment-panel knn-controls-panel">
               <h3>样本特征</h3>
               <div class="control-group">
                 <label
@@ -138,7 +156,7 @@
                 存档本次操作
               </button>
             </aside>
-            <div class="experiment-panel">
+            <div class="experiment-panel knn-result-panel">
               <h3>分类结果</h3>
               <div class="result-card">
                 <span class="result-label">预测品种</span
@@ -157,10 +175,10 @@
                 数据集。距离计算前会对四个特征做标准化，让每个滑块都能影响分类结果。
               </div>
             </div>
-            <aside class="experiment-panel">
+            <aside class="experiment-panel knn-visual-panel">
               <h3>运行过程可视化</h3>
               <div class="knn-chart-box">
-                <canvas id="knn-scatter" width="440" height="300"></canvas>
+                <canvas id="knn-scatter" width="720" height="520"></canvas>
                 <p class="knn-chart-caption" id="knn-scatter-caption">
                   特征对比条：每一行代表一个特征，深色竖线是待测样本，彩色圆点是 K
                   个最近邻
@@ -283,6 +301,7 @@
       </div>
     </footer>
     <script src="../../components/iris-peek.js"></script>
+    <script src="../iris-lab.js"></script>
     <script src="../../account/auth.js"></script>
     <script src="../../account/session.js"></script>
     <script src="iris-data.js"></script>
