@@ -8,17 +8,69 @@
   if (!app?.addListener) return;
 
   const exitWindowMs = 2200;
+  const navigationStackKey = "ml_app_navigation_stack";
+  const returningToKey = "ml_app_navigation_returning_to";
   let lastExitRequest = 0;
   let exitHint = null;
   let exitHintTimer = 0;
 
-  function isAppRoot() {
-    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  function currentLocation() {
+    return `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  }
+
+  function isAppRoot(location = currentLocation()) {
+    const path = location.split(/[?#]/, 1)[0].replace(/\/+$/, "") || "/";
     return (
       path === "/" ||
       path === "/index.html" ||
       path === "/cover/welcome.html"
     );
+  }
+
+  function readNavigationStack() {
+    try {
+      const stack = JSON.parse(sessionStorage.getItem(navigationStackKey));
+      return Array.isArray(stack) ? stack.filter((item) => typeof item === "string") : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function writeNavigationStack(stack) {
+    sessionStorage.setItem(navigationStackKey, JSON.stringify(stack.slice(-40)));
+  }
+
+  function initializeNavigationStack() {
+    const current = currentLocation();
+    const returningTo = sessionStorage.getItem(returningToKey);
+    let stack = readNavigationStack();
+
+    if (returningTo === current) {
+      sessionStorage.removeItem(returningToKey);
+      if (stack.at(-1) !== current) stack.push(current);
+    } else if (stack.at(-1) !== current) {
+      stack.push(current);
+    }
+
+    if (isAppRoot(current)) stack = [current];
+    writeNavigationStack(stack);
+    return stack;
+  }
+
+  let navigationStack = initializeNavigationStack();
+
+  function navigateToPreviousPage() {
+    const current = currentLocation();
+    while (navigationStack.length > 1 && navigationStack.at(-1) === current) {
+      navigationStack.pop();
+    }
+    const target = navigationStack.at(-1);
+    if (!target || target === current) return false;
+
+    writeNavigationStack(navigationStack);
+    sessionStorage.setItem(returningToKey, target);
+    window.location.replace(target);
+    return true;
   }
 
   function closeTransientSurface() {
@@ -77,6 +129,11 @@
 
   app.addListener("backButton", ({ canGoBack }) => {
     if (closeTransientSurface()) return;
+
+    if (!isAppRoot() && navigateToPreviousPage()) {
+      lastExitRequest = 0;
+      return;
+    }
 
     if (!isAppRoot() && canGoBack) {
       lastExitRequest = 0;
