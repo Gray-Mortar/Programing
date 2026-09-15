@@ -466,6 +466,16 @@
   }
 
   function mount() {
+    if (
+      window.Capacitor?.getPlatform?.() === "android" &&
+      !document.querySelector("script[data-ml-app-navigation]")
+    ) {
+      const navigation = document.createElement("script");
+      navigation.src = new URL("app-navigation.js", scriptUrl).href;
+      navigation.dataset.mlAppNavigation = "";
+      document.head.append(navigation);
+    }
+
     if (!document.querySelector("site-bgm")) {
       const player = document.createElement("site-bgm");
       const accountActions = document.querySelector(
