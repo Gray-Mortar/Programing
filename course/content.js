@@ -14,6 +14,14 @@
     return window.ML_COURSE_SECTIONS || [];
   }
 
+  function getCourseName() {
+    return document.body.getAttribute("data-course-name") || "基础知识";
+  }
+
+  function getCourseIndex() {
+    return document.body.getAttribute("data-course-index") || "index.html";
+  }
+
   function getChapterHref(section) {
     return "chapter-" + section.number + ".html";
   }
@@ -129,18 +137,24 @@
     view.innerHTML = "";
     if (chapterIndex < 0) {
       view.appendChild(
-        createElement("p", "course-placeholder", "没有找到对应的基础章节。"),
+        createElement(
+          "p",
+          "course-placeholder",
+          "没有找到对应的" + getCourseName() + "章节。",
+        ),
       );
       return;
     }
 
     const section = sections[chapterIndex];
+    const courseName = getCourseName();
+    const courseIndex = getCourseIndex();
     document.title = section.number + " " + section.title + " - ML Learn";
     const description = document.querySelector('meta[name="description"]');
     if (description) {
       description.setAttribute(
         "content",
-        section.title + "：机器学习基础知识第 " + section.number + " 章。",
+        section.title + "：" + courseName + "第 " + section.number + " 章。",
       );
     }
 
@@ -157,9 +171,13 @@
 
     const actions = createElement("div", "chapter-hero-actions");
     const treeLink = createElement("a", "button button-secondary", "在知识树中查看");
-    treeLink.href = "index.html#knowledge-tree-panel";
-    const indexLink = createElement("a", "text-link", "返回基础知识 →");
-    indexLink.href = "index.html";
+    treeLink.href = courseIndex + "#knowledge-tree-panel";
+    const indexLink = createElement(
+      "a",
+      "text-link",
+      "返回" + courseName + " →",
+    );
+    indexLink.href = courseIndex;
     actions.appendChild(treeLink);
     actions.appendChild(indexLink);
     copy.appendChild(actions);

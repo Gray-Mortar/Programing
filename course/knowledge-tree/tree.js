@@ -1,3 +1,4 @@
+// Shared knowledge-tree renderer for course modules.
 (function () {
   "use strict";
 
@@ -141,13 +142,20 @@
   function getBranchLayout(section, index) {
     var progress = sections.length === 1 ? 0.5 : index / (sections.length - 1);
     var angle = ((190 + progress * 160) * Math.PI) / 180;
+    var endpointIndex =
+      sections.length === 1
+        ? Math.floor((BRANCH_ENDPOINTS.length - 1) / 2)
+        : Math.round(
+            (index * (BRANCH_ENDPOINTS.length - 1)) / (sections.length - 1),
+          );
+    var endpoint = BRANCH_ENDPOINTS[endpointIndex];
     var origin = {
       x: 700,
       y: 820 - progress * 300,
     };
     var end = {
-      x: BRANCH_ENDPOINTS[index] ? BRANCH_ENDPOINTS[index].x : 700 + Math.cos(angle) * 520,
-      y: BRANCH_ENDPOINTS[index] ? BRANCH_ENDPOINTS[index].y : 700 + Math.sin(angle) * 390,
+      x: endpoint ? endpoint.x : 700 + Math.cos(angle) * 520,
+      y: endpoint ? endpoint.y : 700 + Math.sin(angle) * 390,
     };
     var side = end.x < 699 ? -1 : end.x > 701 ? 1 : index % 2 === 0 ? -1 : 1;
     var controlA = {
