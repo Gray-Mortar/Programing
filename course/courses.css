@@ -560,6 +560,18 @@
   align-items: start;
 }
 
+.matching-tap-instruction {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 12px 14px;
+  color: var(--purple-700);
+  background: var(--purple-50);
+  border: 1px solid #ded6f4;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
 .matching-column {
   min-width: 0;
 }
@@ -836,6 +848,16 @@
 
   .matching-board {
     grid-template-columns: 1fr;
+  }
+
+  .matching-board.is-tap-mode .matching-source-card {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .matching-board.is-tap-mode .matching-target-card:not(.is-locked) {
+    cursor: pointer;
+    touch-action: manipulation;
   }
 
   .matching-target-card {

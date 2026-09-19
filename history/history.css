@@ -262,22 +262,61 @@
   }
 
   .timeline-scroller {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: auto;
-    gap: 18px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
     overflow: visible;
+    padding: 0 0 8px;
   }
 
   .milestone-button {
+    display: grid;
+    grid-template-columns: 46px 64px minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    align-items: center;
     width: 100%;
     min-width: 0;
-    min-height: 108px;
+    min-height: 72px;
+    padding: 8px 0;
+    text-align: left;
   }
 
-  .history-timeline::before,
+  .history-timeline {
+    padding: 12px 0 18px;
+  }
+
+  .history-timeline::before {
+    display: block;
+    top: 30px;
+    right: auto;
+    bottom: 36px;
+    left: 21px;
+    width: 4px;
+    height: auto;
+    background: linear-gradient(180deg, var(--accent), var(--teal), var(--amber));
+  }
+
   .history-timeline::after {
     display: none;
+  }
+
+  .milestone-dot {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    margin: 0 auto;
+  }
+
+  .milestone-button strong {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin: 0;
+  }
+
+  .milestone-button > span:last-child {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    max-width: none;
   }
 
   .detail-shell {

@@ -533,18 +533,48 @@ a {
     align-items: flex-start;
   }
   .timeline {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: auto;
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 8px;
     overflow: visible;
   }
-  .timeline-line,
+  .timeline-line {
+    display: block;
+    top: 16px;
+    right: auto;
+    bottom: 30px;
+    left: 11px;
+    width: 3px;
+    height: auto;
+    background: linear-gradient(180deg, var(--purple-600), var(--purple-100));
+  }
   .timeline-line-second {
     display: none;
   }
   .timeline-item {
+    display: grid;
+    grid-template-columns: 24px 64px minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
     min-width: 0;
+    padding: 0 0 24px;
+    text-align: left;
+  }
+  .timeline-dot {
+    grid-column: 1;
+    margin: 1px auto 0;
+  }
+  .timeline-year {
+    grid-column: 2;
+    margin: 0;
+    line-height: 1.4;
+  }
+  .timeline-content {
+    grid-column: 3;
+  }
+  .timeline-content h3 {
+    margin-top: 0;
   }
 }
 

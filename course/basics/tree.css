@@ -511,20 +511,23 @@
   }
 
   .knowledge-tree-canvas {
-    height: 500px;
-    min-height: 430px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 14 / 9;
+    overflow: hidden;
   }
 
   .knowledge-tree-svg {
-    width: 1000px;
-    max-width: none;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
   }
 
   .knowledge-tree-canvas::after {
-    position: sticky;
-    left: 14px;
+    right: 10px;
+    bottom: 8px;
+    font-size: 9px;
   }
 
   .tree-topic-grid {

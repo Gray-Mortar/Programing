@@ -151,6 +151,9 @@
 
   function renderMatchingQuestion(question) {
     const optionWrap = document.getElementById("quiz-options");
+    const mobileTapMode =
+      window.matchMedia("(pointer: coarse)").matches ||
+      Math.min(window.innerWidth, window.innerHeight) <= 600;
     const key = matchingQuestionKey(question);
     if (matchingState.questionKey !== key) {
       resetMatchingState(key);
@@ -168,9 +171,18 @@
 
     optionWrap.className = "quiz-options is-matching";
     optionWrap.innerHTML =
-      '<div class="matching-board">' +
+      '<div class="matching-board' +
+      (mobileTapMode ? ' is-tap-mode' : '') +
+      '">' +
+      (mobileTapMode
+        ? '<p class="matching-tap-instruction">先点击一个选项卡，再滚动到对应说明并点击空位，即可完成配对。</p>'
+        : '') +
       '<div class="matching-column matching-source-column">' +
-      '<div class="matching-column-heading"><strong>拖动卡片</strong><span>也可以先点卡片，再点右侧目标</span></div>' +
+      '<div class="matching-column-heading"><strong>' +
+      (mobileTapMode ? '选择卡片' : '拖动卡片') +
+      '</strong><span>' +
+      (mobileTapMode ? '点击后会保持选中' : '也可以先点卡片，再点右侧目标') +
+      '</span></div>' +
       '<div class="matching-source-pool" id="matching-source-pool"></div>' +
       "</div>" +
       '<div class="matching-column matching-target-column">' +
@@ -195,8 +207,12 @@
       if (matchingState.selectedId === sourceId) {
         card.classList.add("is-selected");
       }
-      card.draggable = true;
+      card.draggable = !mobileTapMode;
       card.dataset.sourceId = sourceId;
+      card.setAttribute(
+        "aria-pressed",
+        matchingState.selectedId === sourceId ? "true" : "false",
+      );
       card.innerHTML =
         createMatchingVisual(pair.visual || pair.id) +
         '<span class="matching-card-label">' +
@@ -207,15 +223,17 @@
           matchingState.selectedId === sourceId ? "" : sourceId;
         renderMatchingQuestion(question);
       });
-      card.addEventListener("dragstart", function (event) {
-        matchingState.selectedId = sourceId;
-        event.dataTransfer.effectAllowed = "move";
-        event.dataTransfer.setData("text/plain", sourceId);
-        card.classList.add("is-dragging");
-      });
-      card.addEventListener("dragend", function () {
-        card.classList.remove("is-dragging");
-      });
+      if (!mobileTapMode) {
+        card.addEventListener("dragstart", function (event) {
+          matchingState.selectedId = sourceId;
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", sourceId);
+          card.classList.add("is-dragging");
+        });
+        card.addEventListener("dragend", function () {
+          card.classList.remove("is-dragging");
+        });
+      }
       sourcePool.appendChild(card);
     });
 
@@ -245,7 +263,9 @@
             "<span>" +
             pairMap[placedSourceId].label +
             '</span><b aria-hidden="true">×</b></button>'
-          : '<span class="matching-drop-hint">拖到这里</span>') +
+          : '<span class="matching-drop-hint">' +
+            (mobileTapMode ? '点击此处放入' : '拖到这里') +
+            '</span>') +
         "</div>";
       target.addEventListener("click", function (event) {
         const removeButton = event.target.closest("[data-remove-source]");
@@ -259,22 +279,24 @@
           placeMatchingItem(question, matchingState.selectedId, targetId);
         }
       });
-      target.addEventListener("dragover", function (event) {
-        event.preventDefault();
-        target.classList.add("is-dragover");
-      });
-      target.addEventListener("dragleave", function () {
-        target.classList.remove("is-dragover");
-      });
-      target.addEventListener("drop", function (event) {
-        event.preventDefault();
-        target.classList.remove("is-dragover");
-        placeMatchingItem(
-          question,
-          event.dataTransfer.getData("text/plain"),
-          targetId,
-        );
-      });
+      if (!mobileTapMode) {
+        target.addEventListener("dragover", function (event) {
+          event.preventDefault();
+          target.classList.add("is-dragover");
+        });
+        target.addEventListener("dragleave", function () {
+          target.classList.remove("is-dragover");
+        });
+        target.addEventListener("drop", function (event) {
+          event.preventDefault();
+          target.classList.remove("is-dragover");
+          placeMatchingItem(
+            question,
+            event.dataTransfer.getData("text/plain"),
+            targetId,
+          );
+        });
+      }
       targetList.appendChild(target);
     });
   }
