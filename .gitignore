@@ -17,3 +17,7 @@
 
 # 本地说明文档不上传 GitHub
 /docs/
+
+# 本地依赖与生成产物不上传 GitHub
+/node_modules/
+/app-dist/

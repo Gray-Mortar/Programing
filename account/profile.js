@@ -24,7 +24,11 @@
       return !record.username || record.username === user.username;
     });
     const knnRecords = storageGet(KNN_RECORDS_KEY).filter(function (record) {
-      return !record.username || record.username === user.username;
+      return (
+        !record.username ||
+        record.username === user.username ||
+        record.username === "guest"
+      );
     });
     const done = list.length;
     const correct = list.filter(function (record) {
@@ -41,6 +45,18 @@
       : "暂无记录";
     document.getElementById("profile-experiment-record").textContent =
       knnRecords.length ? knnRecords.length + " 次 KNN 实验" : "暂无实验记录";
+
+    const experimentLink = document.getElementById("profile-experiment-link");
+    if (experimentLink && knnRecords.length) {
+      const latestRecord = knnRecords[knnRecords.length - 1];
+      experimentLink.href =
+        "../experiments/knn-iris/history.html?time=" +
+        encodeURIComponent(latestRecord.time);
+      experimentLink.textContent = "查看最近记录";
+    } else if (experimentLink) {
+      experimentLink.href = "../experiments/knn-iris/index.html";
+      experimentLink.textContent = "开始实验";
+    }
   }
 
   function fillProfile() {

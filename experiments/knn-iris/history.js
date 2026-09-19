@@ -10,12 +10,35 @@
     }
   }
 
+  function currentUser() {
+    const auth = window.MLAuth;
+    const user = auth && auth.getCurrentUser ? auth.getCurrentUser() : null;
+    return user ? user.username : "guest";
+  }
+
+  function userRecords(records) {
+    const username = currentUser();
+    if (username === "guest") {
+      return records.filter(function (record) {
+        return !record.username || record.username === "guest";
+      });
+    }
+    return records.filter(function (record) {
+      return (
+        !record.username ||
+        record.username === username ||
+        record.username === "guest"
+      );
+    });
+  }
+
   function findRecord() {
     const params = new URLSearchParams(window.location.search);
     const time = params.get("time");
-    if (!time) return null;
+    const records = userRecords(storageGet());
+    if (!time) return records.length ? records[records.length - 1] : null;
     return (
-      storageGet().find(function (record) {
+      records.find(function (record) {
         return record.time === time;
       }) || null
     );
