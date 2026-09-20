@@ -1,6 +1,12 @@
 # ML Learn｜机器学习互动教学网站
 
-## ⚠️ 运行前请先阅读
+## 在线体验
+
+项目已发布至 GitHub Pages：[打开 ML Learn 在线网站](https://gray-mortar.github.io/Programing/)
+
+如果只需要体验网站，可以直接访问上述地址；以下说明适用于本地运行。
+
+## ⚠️ 本地运行前请先阅读
 
 ### 必须使用 Live Server 打开网站
 

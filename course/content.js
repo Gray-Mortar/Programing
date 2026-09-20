@@ -380,7 +380,9 @@
 
     const chapterView = document.getElementById("chapter-view");
     if (chapterView) {
-      document.body.classList.add("course-has-iris-guide");
+      // The chapter guide renders a real, animated Iris component in the body,
+      // so suppress the header instance to avoid showing the robot twice.
+      document.body.classList.add("course-has-iris-robot");
       renderChapterView(sections, chapterView);
     }
 

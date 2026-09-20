@@ -2,7 +2,7 @@
   background: var(--purple-50);
 }
 
-.course-has-iris-guide .site-header > iris-peek[placement="header"] {
+.course-has-iris-robot .site-header > iris-peek[placement="header"] {
   display: none;
 }
 

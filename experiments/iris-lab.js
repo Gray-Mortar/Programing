@@ -241,9 +241,6 @@
       var initial = buildMessage(experiment, "ready", {});
       applyMessage(element, initial);
     });
-    if (document.querySelector("iris-lab-companion")) {
-      document.body.classList.add("has-iris-lab");
-    }
   }
 
   if (typeof document !== "undefined") {
