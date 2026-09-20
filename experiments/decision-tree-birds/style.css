@@ -584,6 +584,13 @@ h1, h2, h3, p { margin-top: 0; }
   transform: translateX(-50%);
 }
 
+/* 手机端不保留 Iris 的待机占位；动作和即时反馈触发时再显示。 */
+.robot-overlay.is-phone-layout.is-iris-idle .lab-robot,
+.robot-overlay.is-phone-layout.is-iris-idle .robot-message {
+  visibility: hidden;
+  opacity: 0;
+}
+
 @media (max-width: 1100px) {
   .sorting-layout { grid-template-columns: 300px 370px; column-gap: 150px; max-width: 820px; }
   .animal-panel .animal-tray { grid-template-columns: 1fr; }

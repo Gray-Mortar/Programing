@@ -1,0 +1,24 @@
+{
+  "name": "ml-learning-club-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Android wrapper build workspace for ML Learning Club",
+  "scripts": {
+    "build": "node scripts/build-app-dist.mjs",
+    "build:app": "node scripts/build-app-dist.mjs",
+    "android:add": "cap add android",
+    "android:sync": "cap sync android",
+    "android:prepare": "npm run build:app && cap sync android"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/app": "^8.1.1",
+    "@capacitor/core": "8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.2"
+  }
+}

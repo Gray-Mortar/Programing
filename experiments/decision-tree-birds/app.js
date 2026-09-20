@@ -192,10 +192,18 @@ function addToBranch(animal, answer) {
 }
 
 function setRobotFrame(type, frame) { elements.robotFrame.src = `assets/robot-frames/${type}-${frame}.png`; }
+function syncPhoneRobotMode() {
+  const shortestScreenSide = Math.min(window.screen.width, window.screen.height);
+  elements.stage.classList.toggle("is-phone-layout", shortestScreenSide < 600);
+}
+function setRobotIdle(idle) {
+  elements.stage.classList.toggle("is-iris-idle", idle);
+}
 function restoreRobotHome() {
   elements.robot.className = "lab-robot";
   elements.robot.removeAttribute("style");
   setRobotFrame("walk", 0);
+  setRobotIdle(true);
 }
 function hand(frame, rect) { return { x: carryCardX[frame] / 175 * rect.width, y: 202 / 350 * rect.height, width: 72 / 175 * rect.width, height: 46 / 350 * rect.height }; }
 
@@ -300,6 +308,7 @@ function cardToHand(card, source, pickup, robotRect, token) {
 }
 
 async function transport(animal, index, total, token) {
+  setRobotIdle(false);
   const answer = Boolean(animal[selectedFeature]); const card = $(`.animal-card[data-animal-id="${animal.id}"]`); const zone = answer ? elements.yesZone : elements.noZone;
   const sourceRect = card.getBoundingClientRect(); const robotRect = elements.robot.getBoundingClientRect(); const anchor = hand(0, robotRect);
   const sourcePoint = toStagePoint(sourceRect); const source = { ...sourcePoint, width: sourceRect.width, height: sourceRect.height };
@@ -580,6 +589,13 @@ elements.returnFilter.addEventListener("click", (event) => {
   event.preventDefault(); elements.filterView.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 elements.analysisReturnButton.addEventListener("click", () => elements.filterView.scrollIntoView({ behavior: "smooth", block: "start" }));
+document.addEventListener("ml:android-back", (event) => {
+  if (elements.analysisView.hidden) return;
+  const analysisTop = elements.analysisView.getBoundingClientRect().top;
+  if (analysisTop > window.innerHeight * 0.35) return;
+  event.preventDefault();
+  elements.filterView.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 [elements.yesZone, elements.noZone].forEach((zone) => {
   zone.addEventListener("dragover", (event) => { if (running || awaitingNext || !started) return; event.preventDefault(); zone.classList.add("is-drag-over"); });
   zone.addEventListener("dragleave", () => zone.classList.remove("is-drag-over"));
@@ -587,4 +603,6 @@ elements.analysisReturnButton.addEventListener("click", () => elements.filterVie
 });
 
 const fragment = document.createDocumentFragment(); trainingAnimals.forEach((animal) => fragment.append(createCard(animal))); elements.tray.append(fragment);
+syncPhoneRobotMode();
+window.addEventListener("resize", syncPhoneRobotMode);
 refreshOrder(); resetAll();

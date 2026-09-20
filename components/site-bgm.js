@@ -54,7 +54,9 @@
   );
   const initiallyEnabled =
     readStorage(window.localStorage, enabledKey, "1") !== "0";
+  const initialPlaybackState = readPlaybackState();
   const sharedAudio = new Audio();
+  let sharedPlayPromise = null;
   sharedAudio.loop = true;
   sharedAudio.preload = "auto";
   sharedAudio.volume = Number.isFinite(initialVolume)
@@ -63,7 +65,7 @@
   sharedAudio.src = audioUrl;
 
   function restoreSharedProgress() {
-    const state = readPlaybackState();
+    const state = initialPlaybackState;
     if (state.time <= 0) return;
     const elapsed = state.playing && state.savedAt
       ? Math.min(2, Math.max(0, (Date.now() - state.savedAt) / 1000))
@@ -74,6 +76,26 @@
       : target;
   }
 
+  function requestSharedPlayback() {
+    if (!sharedAudio.paused) return Promise.resolve(true);
+    if (sharedPlayPromise) return sharedPlayPromise;
+
+    try {
+      const result = sharedAudio.play();
+      if (!result || typeof result.then !== "function") {
+        return Promise.resolve(!sharedAudio.paused);
+      }
+      sharedPlayPromise = result
+        .then(() => true, () => false)
+        .finally(() => {
+          sharedPlayPromise = null;
+        });
+      return sharedPlayPromise;
+    } catch (error) {
+      return Promise.resolve(false);
+    }
+  }
+
   if (sharedAudio.readyState >= HTMLMediaElement.HAVE_METADATA) {
     restoreSharedProgress();
   } else {
@@ -82,10 +104,9 @@
     });
   }
 
-  if (initiallyEnabled) {
+  if (initiallyEnabled && initialPlaybackState.playing) {
     const startEarlyPlayback = () => {
-      const result = sharedAudio.play();
-      if (result && typeof result.catch === "function") result.catch(() => {});
+      requestSharedPlayback();
     };
     if (sharedAudio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA) {
       startEarlyPlayback();
@@ -107,14 +128,19 @@
         ? Math.min(1, Math.max(0, savedVolume))
         : 0.18;
       this.enabled = readStorage(window.localStorage, enabledKey, "1") !== "0";
+      this.resumeRequested = this.enabled && initialPlaybackState.playing;
       this.lastSavedSecond = -1;
       this.handleUnlock = (event) => {
         if (event.composedPath().includes(this) || !this.enabled) return;
+        this.resumeRequested = true;
         this.play();
       };
-      this.handlePageHide = () => this.saveProgress();
+      this.handlePageHide = () => {
+        if (this.enabled && !this.audio.paused) this.resumeRequested = true;
+        this.saveProgress();
+      };
       this.handlePageShow = () => {
-        if (this.enabled) this.play();
+        if (this.enabled && this.resumeRequested) this.play();
       };
       this.handleOutsidePointer = (event) => {
         if (!event.composedPath().includes(this)) this.closePanel();
@@ -337,7 +363,11 @@
         this.audio.volume = Number(this.volumeInput.value) / 100;
         writeStorage(window.localStorage, volumeKey, this.audio.volume);
       });
-      this.audio.addEventListener("play", () => this.updateButton());
+      this.audio.addEventListener("play", () => {
+        this.resumeRequested = true;
+        this.saveProgress();
+        this.updateButton();
+      });
       this.audio.addEventListener("pause", () => this.updateButton());
       this.audio.addEventListener("timeupdate", () => {
         const second = Math.floor(this.audio.currentTime);
@@ -356,7 +386,7 @@
       window.addEventListener("pagehide", this.handlePageHide);
       window.addEventListener("pageshow", this.handlePageShow);
       this.updateButton();
-      if (this.enabled) this.play();
+      if (this.enabled && this.resumeRequested) this.play();
     }
 
     disconnectedCallback() {
@@ -379,7 +409,7 @@
           JSON.stringify({
             time: this.audio.currentTime,
             savedAt: Date.now(),
-            playing: this.enabled && !this.audio.paused,
+            playing: this.enabled && this.resumeRequested,
           }),
         );
       }
@@ -410,19 +440,19 @@
 
     play() {
       if (!this.enabled || !this.audio.paused) return;
-      const result = this.audio.play();
-      if (result && typeof result.catch === "function") {
-        result.catch(() => this.updateButton());
-      }
+      this.resumeRequested = true;
+      requestSharedPlayback().then(() => this.updateButton());
     }
 
     toggle() {
       if (this.audio.paused) {
         this.enabled = true;
+        this.resumeRequested = true;
         writeStorage(window.localStorage, enabledKey, "1");
         this.play();
       } else {
         this.enabled = false;
+        this.resumeRequested = false;
         writeStorage(window.localStorage, enabledKey, "0");
         this.audio.pause();
         this.saveProgress();
@@ -436,6 +466,16 @@
   }
 
   function mount() {
+    if (
+      window.Capacitor?.getPlatform?.() === "android" &&
+      !document.querySelector("script[data-ml-app-navigation]")
+    ) {
+      const navigation = document.createElement("script");
+      navigation.src = new URL("app-navigation.js", scriptUrl).href;
+      navigation.dataset.mlAppNavigation = "";
+      document.head.append(navigation);
+    }
+
     if (!document.querySelector("site-bgm")) {
       const player = document.createElement("site-bgm");
       const accountActions = document.querySelector(
